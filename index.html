@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bookit. — Monthly Performance Reports</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:
+    radial-gradient(1000px 400px at 100% -10%,rgba(143,130,231,.10),transparent 60%),
+    radial-gradient(700px 300px at -10% 0%,rgba(21,183,158,.06),transparent 55%),
+    #FBFAFE;
+  color:#221E33;
+  min-height:100vh;
+  padding:0 0 80px;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,.num{font-family:'Plus Jakarta Sans',sans-serif}
+
+/* NAV */
+.topbar{
+  background:rgba(251,250,254,.88);
+  backdrop-filter:saturate(160%) blur(12px);
+  border-bottom:1px solid #E9E6F5;
+  padding:16px 24px;
+}
+.topbar-inner{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-family:'Plus Jakarta Sans';font-weight:800;font-size:22px;letter-spacing:-.03em;color:#352C6B;display:flex;align-items:baseline}
+.logo .dot{width:8px;height:8px;border-radius:50%;background:#8F82E7;display:inline-block;margin-left:2px;transform:translateY(-1px)}
+.powered{font-size:11.5px;color:#9A96AE;font-weight:500}
+.powered span{color:#8F82E7;font-weight:600}
+
+/* HERO */
+.hero{max-width:760px;margin:52px auto 0;padding:0 24px}
+.hero-kicker{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8F82E7;margin-bottom:10px}
+.hero h1{font-size:32px;font-weight:800;letter-spacing:-.03em;color:#352C6B;line-height:1.15;margin-bottom:10px}
+.hero p{font-size:15px;color:#75718C;font-weight:500;line-height:1.6;max-width:520px}
+
+/* REPORT LIST */
+.list-wrap{max-width:760px;margin:40px auto 0;padding:0 24px}
+.list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.list-title{font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9A96AE}
+.report-count{font-size:12px;color:#9A96AE;font-weight:500}
+
+.report-card{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  background:#fff;
+  border:1px solid #E9E6F5;
+  border-radius:16px;
+  padding:20px 24px;
+  margin-bottom:12px;
+  text-decoration:none;
+  transition:all .15s;
+  box-shadow:0 1px 2px rgba(53,44,107,.04),0 4px 16px rgba(53,44,107,.05);
+}
+.report-card:hover{border-color:#8F82E7;box-shadow:0 0 0 3px rgba(143,130,231,.10),0 4px 20px rgba(53,44,107,.08);transform:translateY(-1px)}
+.report-card.latest{border-color:#8F82E7;box-shadow:0 0 0 3px rgba(143,130,231,.12),0 4px 20px rgba(53,44,107,.07)}
+
+.rc-left{display:flex;align-items:center;gap:16px}
+.rc-icon{width:44px;height:44px;border-radius:12px;background:#F2F0FC;display:flex;align-items:center;justify-content:center;flex:none}
+.rc-icon svg{width:20px;height:20px;color:#8F82E7}
+.rc-meta{}
+.rc-month{font-family:'Plus Jakarta Sans';font-weight:700;font-size:16px;color:#352C6B;line-height:1.2}
+.rc-sub{font-size:12.5px;color:#75718C;font-weight:500;margin-top:2px}
+.rc-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;
+  background:#F2F0FC;color:#8F82E7;border:1px solid #E9E6F5;margin-top:6px}
+.rc-badge.new{background:#D6F3EE;color:#0E9F73;border-color:#B8EAE2}
+
+.rc-right{display:flex;align-items:center;gap:8px;flex:none}
+.rc-arrow{width:36px;height:36px;border-radius:999px;background:#F2F0FC;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.report-card:hover .rc-arrow{background:#8F82E7}
+.report-card:hover .rc-arrow svg{color:#fff}
+.rc-arrow svg{width:16px;height:16px;color:#8F82E7;transition:color .15s}
+
+/* EMPTY STATE (future-proofing) */
+.coming-soon{
+  background:#F2F0FC;border:1.5px dashed #C7BFF2;border-radius:16px;
+  padding:28px 24px;text-align:center;color:#9A96AE;font-size:14px;font-weight:500;
+  margin-bottom:12px;
+}
+
+/* FOOTER */
+.footer{max-width:760px;margin:48px auto 0;padding:0 24px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  border-top:1px solid #E9E6F5;padding-top:24px}
+.footer-brand{font-size:12px;color:#9A96AE;font-weight:500}
+.footer-brand span{color:#8F82E7;font-weight:600}
+.footer-note{font-size:11.5px;color:#C7BFF2}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">bookit<span class="dot"></span></div>
+    <div class="powered">Managed by <span>Adelevate</span></div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-kicker">Performance Reports</div>
+  <h1>Monthly Ad Reports</h1>
+  <p>Your Meta Ads performance, month by month. Each report includes campaign breakdowns, creative insights, funnel analysis, and strategic recommendations.</p>
+</div>
+
+<div class="list-wrap">
+  <div class="list-head">
+    <div class="list-title">All Reports</div>
+    <div class="report-count" id="report-count">1 report</div>
+  </div>
+
+  <!-- JUNE 2026 -->
+  <a href="june-2026.html" class="report-card latest">
+    <div class="rc-left">
+      <div class="rc-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </div>
+      <div class="rc-meta">
+        <div class="rc-month">June 2026</div>
+        <div class="rc-sub">Meta Ads · Launchit-Bookit</div>
+        <div class="rc-badge new">● Latest</div>
+      </div>
+    </div>
+    <div class="rc-right">
+      <div class="rc-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </div>
+    </div>
+  </a>
+
+  <!-- PLACEHOLDER: future months will be added above this line -->
+  <div class="coming-soon">July 2026 report will appear here after the month closes</div>
+
+</div>
+
+<div class="footer">
+  <div class="footer-brand">Prepared by <span>Adelevate Marketing</span> · adelevate.ads@gmail.com</div>
+  <div class="footer-note">Reports are confidential and intended for bookit. internal use only.</div>
+</div>
+
+</body>
+</html>
