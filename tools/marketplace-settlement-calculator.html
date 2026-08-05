@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketplace Settlement Calculator · SG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─── Reset & Base ──────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:#F4F5F7;
+  color:#1C1C2E;
+  min-height:100vh;
+  padding-bottom:80px;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,button{font-family:'Plus Jakarta Sans',sans-serif}
+input[type=number]::-webkit-inner-spin-button{opacity:.4}
+
+/* ─── Header ────────────────────────────────────────────────── */
+.header{
+  background:#fff;
+  border-bottom:1px solid #E5E7EB;
+  position:sticky;top:0;z-index:50;
+}
+.header-inner{
+  max-width:1280px;margin:0 auto;
+  padding:18px 24px 0;
+  display:flex;flex-direction:column;gap:0;
+}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.header-title{font-size:19px;font-weight:800;letter-spacing:-.02em;color:#111}
+.header-sub{font-size:12px;color:#9CA3AF;margin-top:2px;font-weight:500}
+.sgd-badge{
+  font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;
+  background:#ECFDF5;color:#059669;border:1px solid #A7F3D0;letter-spacing:.04em;
+}
+
+/* ─── Platform Tabs ─────────────────────────────────────────── */
+.tabs{display:flex;gap:0;border-top:1px solid #F3F4F6}
+.tab-btn{
+  padding:11px 22px 13px;
+  font-size:13.5px;font-weight:700;
+  border:none;background:none;cursor:pointer;
+  color:#9CA3AF;border-bottom:2.5px solid transparent;
+  transition:all .15s;display:flex;align-items:center;gap:7px;
+  white-space:nowrap;
+}
+.tab-btn:hover{color:#374151}
+.tab-btn.active.shopee{color:#EE4D2D;border-bottom-color:#EE4D2D}
+.tab-btn.active.tiktok{color:#111;border-bottom-color:#111}
+.tab-btn.active.website{color:#4F46E5;border-bottom-color:#4F46E5}
+
+/* ─── Main Layout ───────────────────────────────────────────── */
+.main{max-width:1280px;margin:0 auto;padding:24px}
+.platform-panel{display:none}
+.platform-panel.active{display:block}
+
+/* ─── Settings Panel ─────────────────────────────────────────── */
+.settings-card{
+  background:#fff;border:1px solid #E5E7EB;border-radius:14px;
+  margin-bottom:20px;overflow:hidden;
+}
+.settings-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 18px;cursor:pointer;user-select:none;
+}
+.settings-label{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#6B7280}
+.settings-arrow{font-size:11px;color:#9CA3AF;transition:transform .2s}
+.settings-arrow.open{transform:rotate(180deg)}
+.settings-body{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:14px;padding:16px 18px;border-top:1px solid #F3F4F6;
+}
+.settings-body.hidden{display:none}
+.field label{
+  display:block;font-size:11px;font-weight:700;color:#9CA3AF;
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;
+}
+.field input{
+  width:100%;padding:7px 10px;
+  border:1.5px solid #E5E7EB;border-radius:8px;
+  font-size:13px;font-family:'Inter',sans-serif;color:#1C1C2E;
+  background:#FAFAFA;transition:border-color .15s;
+}
+.field input:focus{outline:none;border-color:var(--active)}
+.field .hint{font-size:10.5px;color:#D1D5DB;margin-top:3px}
+
+/* ─── Section Header ─────────────────────────────────────────── */
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sec-title{font-size:14.5px;font-weight:700}
+.btn-add{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border:none;border-radius:9px;
+  font-size:13px;font-weight:700;cursor:pointer;
+  color:#fff;background:var(--active);
+  transition:all .15s;font-family:'Plus Jakarta Sans',sans-serif;
+}
+.btn-add:hover{opacity:.88;transform:translateY(-1px)}
+
+/* ─── Table ──────────────────────────────────────────────────── */
+.table-wrap{
+  overflow-x:auto;border-radius:14px;
+  border:1px solid #E5E7EB;background:#fff;
+  box-shadow:0 1px 3px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.06);
+}
+table{width:100%;border-collapse:collapse;min-width:860px;font-size:13px}
+
+/* Head */
+thead tr{background:#F9FAFB;border-bottom:1.5px solid #E5E7EB}
+thead th{
+  padding:9px 11px;text-align:left;
+  font-size:10.5px;font-weight:700;color:#9CA3AF;
+  text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;
+}
+thead th.c{background:var(--calc-head)}
+
+/* Body */
+tbody tr{border-bottom:1px solid #F3F4F6;transition:background .08s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#FAFAFA}
+tbody td{padding:7px 11px;vertical-align:middle}
+tbody td.c{background:var(--calc-cell)}
+
+/* Inputs inside cells */
+.ti{
+  border:none;border-bottom:1.5px solid #E9EBF0;
+  padding:3px 0;font-size:13px;font-family:'Inter',sans-serif;
+  color:#1C1C2E;background:transparent;width:100%;
+  transition:border-color .15s;
+}
+.ti.nm{min-width:140px}
+.ti.sm{min-width:70px}
+.ti:focus{outline:none;border-bottom-color:var(--active)}
+.ti::placeholder{color:#D1D5DB}
+
+/* Calculated cells */
+.tc{font-weight:600;color:#374151;white-space:nowrap}
+.tc.big{font-weight:800;font-size:14px;color:var(--active)}
+.tc.pos{color:#059669;font-weight:700}
+.tc.neg{color:#DC2626;font-weight:700}
+.tc.na{color:#D1D5DB;font-weight:400;font-size:11.5px}
+
+/* Totals foot */
+tfoot tr{background:#F9FAFB;border-top:2px solid #E5E7EB}
+tfoot td{padding:11px 11px;font-weight:700;font-size:13px}
+tfoot td.c{background:var(--calc-foot)}
+tfoot td.lbl{color:#9CA3AF;font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+
+/* Delete btn */
+.btn-del{
+  background:none;border:none;cursor:pointer;
+  color:#D1D5DB;padding:4px 6px;border-radius:6px;
+  font-size:14px;transition:all .15s;line-height:1;
+}
+.btn-del:hover{background:#FEE2E2;color:#DC2626}
+
+/* Row number */
+.rn{color:#D1D5DB;font-size:11px;font-weight:600;text-align:center;width:24px}
+
+/* ─── No-rows state ──────────────────────────────────────────── */
+.empty-row td{
+  text-align:center;padding:36px;color:#D1D5DB;font-size:13.5px;
+}
+
+/* ─── Fee breakdown tooltip pill ────────────────────────────── */
+.breakdown{font-size:10px;color:#9CA3AF;white-space:nowrap}
+
+/* ─── Footer ─────────────────────────────────────────────────── */
+.footer{
+  max-width:1280px;margin:32px auto 0;padding:0 24px;
+  font-size:11.5px;color:#9CA3AF;text-align:center;line-height:1.7;
+}
+.footer b{color:#6B7280}
+
+/* ─── Privacy Bar ────────────────────────────────────────────── */
+.privacy-bar{
+  max-width:1280px;margin:32px auto 0;padding:12px 20px;
+  background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;
+  font-size:12.5px;color:#166534;text-align:center;line-height:1.5;
+}
+.privacy-bar b{color:#14532D}
+
+/* ─── Platform color tokens (set by JS) ─────────────────────── */
+:root{
+  --active:#EE4D2D;
+  --calc-head:rgba(238,77,45,.06);
+  --calc-cell:rgba(238,77,45,.025);
+  --calc-foot:rgba(238,77,45,.08);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top">
+      <div>
+        <h1 class="header-title">Marketplace Settlement Calculator</h1>
+        <div class="header-sub">Adelevate · auto-calculates platform fees &amp; net settlement</div>
+      </div>
+      <div class="sgd-badge">S$ SGD</div>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active shopee" data-p="shopee" onclick="switchTab('shopee')">
+        🛍 Shopee SG
+      </button>
+      <button class="tab-btn tiktok" data-p="tiktok" onclick="switchTab('tiktok')">
+        🎵 TikTok Shop SG
+      </button>
+      <button class="tab-btn website" data-p="website" onclick="switchTab('website')">
+        🌐 Website / Direct
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<div class="main">
+
+<!-- ──────── SHOPEE PANEL ──────── -->
+<div id="panel-shopee" class="platform-panel active">
+
+  <!-- Settings -->
+  <div class="settings-card">
+    <div class="settings-head" onclick="toggleSettings('s-settings')">
+      <span class="settings-label">⚙ Fee Rates · Shopee SG</span>
+      <span class="settings-arrow open" id="s-settings-arrow">▾</span>
+    </div>
+    <div class="settings-body" id="s-settings">
+      <div class="field">
+        <label>Commission Rate (%)</label>
+        <input type="number" id="s-rI" value="3.00" step="0.01" min="0" oninput="recalcAll('shopee')">
+        <div class="hint">2–5% non-Mall · varies by category</div>
+      </div>
+      <div class="field">
+        <label>Service Fee (%)</label>
+        <input type="number" id="s-rJ" value="0.00" step="0.01" min="0" oninput="recalcAll('shopee')">
+        <div class="hint">Enter if applicable · typically 0% for SG</div>
+      </div>
+      <div class="field">
+        <label>Transaction Fee (%)</label>
+        <input type="number" id="s-rK" value="2.00" step="0.01" min="0" oninput="recalcAll('shopee')">
+        <div class="hint">2% of order subtotal (verify in Seller Centre)</div>
+      </div>
+      <div class="field">
+        <label>Platform Support Fee (S$)</label>
+        <input type="number" id="s-O" value="0.00" step="0.01" min="0" oninput="recalcAll('shopee')">
+        <div class="hint">flat fee per order · enter if charged</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="sec-head">
+    <div class="sec-title">Products</div>
+    <button class="btn-add" onclick="addRow('shopee')">+ Add Item</button>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Item Name</th>
+          <th>Selling Price</th>
+          <th>Shopee Voucher</th>
+          <th>Seller Voucher</th>
+          <th>Shopee Rebate</th>
+          <th>Buyer Shipping</th>
+          <th>Seller Shipping</th>
+          <th>Product Cost</th>
+          <th class="c">Customer Paid</th>
+          <th class="c">Comm. Fee</th>
+          <th class="c">Service Fee</th>
+          <th class="c">Txn Fee</th>
+          <th class="c">Platf. Fee</th>
+          <th class="c">Total Fees</th>
+          <th class="c">Settlement</th>
+          <th class="c">Profit</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="shopee-body"></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="9" class="lbl">Totals</td>
+          <td class="c tc" id="s-tot-paid">—</td>
+          <td class="c tc" id="s-tot-comm">—</td>
+          <td class="c tc" id="s-tot-svc">—</td>
+          <td class="c tc" id="s-tot-txn">—</td>
+          <td class="c tc" id="s-tot-plat">—</td>
+          <td class="c tc" id="s-tot-fees">—</td>
+          <td class="c tc big" id="s-tot-sett">—</td>
+          <td class="c tc" id="s-tot-profit">—</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div><!-- /shopee -->
+
+<!-- ──────── TIKTOK PANEL ──────── -->
+<div id="panel-tiktok" class="platform-panel">
+
+  <div class="settings-card">
+    <div class="settings-head" onclick="toggleSettings('t-settings')">
+      <span class="settings-label">⚙ Fee Rates · TikTok Shop SG</span>
+      <span class="settings-arrow open" id="t-settings-arrow">▾</span>
+    </div>
+    <div class="settings-body" id="t-settings">
+      <div class="field">
+        <label>Commission Fee (%)</label>
+        <input type="number" id="t-rRef" value="5.45" step="0.01" min="0" oninput="recalcAll('tiktok')">
+        <div class="hint">5.45–8.175% by category · SG Apr 2026</div>
+      </div>
+      <div class="field">
+        <label>Transaction Fee (%)</label>
+        <input type="number" id="t-rTxn" value="2.00" step="0.01" min="0" oninput="recalcAll('tiktok')">
+        <div class="hint">verify in TikTok Seller Centre</div>
+      </div>
+      <div class="field">
+        <label>Affiliate Commission (%)</label>
+        <input type="number" id="t-rAff" value="0" step="0.01" min="0" oninput="recalcAll('tiktok')">
+        <div class="hint">set 0 if not using affiliates</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head">
+    <div class="sec-title">Products</div>
+    <button class="btn-add" onclick="addRow('tiktok')">+ Add Item</button>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Item Name</th>
+          <th>Selling Price</th>
+          <th>Platform Voucher</th>
+          <th>Seller Voucher</th>
+          <th>Buyer Shipping</th>
+          <th>Seller Shipping</th>
+          <th>Product Cost</th>
+          <th class="c">GMV</th>
+          <th class="c">Commission Fee</th>
+          <th class="c">Txn Fee</th>
+          <th class="c">Affiliate Fee</th>
+          <th class="c">Total Fees</th>
+          <th class="c">Settlement</th>
+          <th class="c">Profit</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tiktok-body"></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8" class="lbl">Totals</td>
+          <td class="c tc" id="t-tot-gmv">—</td>
+          <td class="c tc" id="t-tot-ref">—</td>
+          <td class="c tc" id="t-tot-txn">—</td>
+          <td class="c tc" id="t-tot-aff">—</td>
+          <td class="c tc" id="t-tot-fees">—</td>
+          <td class="c tc big" id="t-tot-sett">—</td>
+          <td class="c tc" id="t-tot-profit">—</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div><!-- /tiktok -->
+
+<!-- ──────── WEBSITE PANEL ──────── -->
+<div id="panel-website" class="platform-panel">
+
+  <div class="settings-card">
+    <div class="settings-head" onclick="toggleSettings('w-settings')">
+      <span class="settings-label">⚙ Fee Rates · Website / Direct Sales</span>
+      <span class="settings-arrow open" id="w-settings-arrow">▾</span>
+    </div>
+    <div class="settings-body" id="w-settings">
+      <div class="field">
+        <label>Shopify Payments Rate (%)</label>
+        <input type="number" id="w-rGw" value="3.10" step="0.01" min="0" oninput="recalcAll('website')">
+        <div class="hint">Shopify Payments · Grow plan · SG</div>
+      </div>
+      <div class="field">
+        <label>Gateway Fixed Fee (S$)</label>
+        <input type="number" id="w-fGw" value="0.50" step="0.01" min="0" oninput="recalcAll('website')">
+        <div class="hint">Shopify Payments · S$0.50/order</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec-head">
+    <div class="sec-title">Products</div>
+    <button class="btn-add" onclick="addRow('website')">+ Add Item</button>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Item Name</th>
+          <th>Selling Price</th>
+          <th>Discount / Voucher</th>
+          <th>Shipping Collected</th>
+          <th>Shipping Cost</th>
+          <th>Product Cost</th>
+          <th class="c">Net Sale</th>
+          <th class="c">Gateway Fee</th>
+          <th class="c">Total Fees</th>
+          <th class="c">Settlement</th>
+          <th class="c">Profit</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="website-body"></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="7" class="lbl">Totals</td>
+          <td class="c tc" id="w-tot-net">—</td>
+          <td class="c tc" id="w-tot-gw">—</td>
+          <td class="c tc" id="w-tot-fees">—</td>
+          <td class="c tc big" id="w-tot-sett">—</td>
+          <td class="c tc" id="w-tot-profit">—</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div><!-- /website -->
+
+<div class="privacy-bar">
+  🔒 <b>Your data never leaves your browser.</b> All calculations run locally — nothing is sent, stored, or shared with any server.
+</div>
+
+<div class="footer">
+  <b>Adelevate</b> · Marketplace Settlement Calculator · Singapore (S$)<br>
+  Rates shown are indicative — verify commission &amp; transaction rates against your seller account dashboard.
+</div>
+
+</div><!-- /main -->
+
+<script>
+const TOKENS = {
+  shopee:  { active:'#EE4D2D', head:'rgba(238,77,45,.07)',  cell:'rgba(238,77,45,.03)',  foot:'rgba(238,77,45,.10)' },
+  tiktok:  { active:'#111111', head:'rgba(0,0,0,.05)',       cell:'rgba(0,0,0,.02)',       foot:'rgba(0,0,0,.07)' },
+  website: { active:'#4F46E5', head:'rgba(79,70,229,.07)',  cell:'rgba(79,70,229,.03)',  foot:'rgba(79,70,229,.10)' },
+};
+
+function applyTokens(p) {
+  const t = TOKENS[p];
+  document.documentElement.style.setProperty('--active',     t.active);
+  document.documentElement.style.setProperty('--calc-head',  t.head);
+  document.documentElement.style.setProperty('--calc-cell',  t.cell);
+  document.documentElement.style.setProperty('--calc-foot',  t.foot);
+}
+
+function switchTab(p) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.platform-panel').forEach(el => el.classList.remove('active'));
+  document.querySelector(`[data-p="${p}"]`).classList.add('active');
+  document.getElementById(`panel-${p}`).classList.add('active');
+  applyTokens(p);
+}
+
+function toggleSettings(id) {
+  const body  = document.getElementById(id);
+  const arrow = document.getElementById(id + '-arrow');
+  const open  = !body.classList.contains('hidden');
+  body.classList.toggle('hidden', open);
+  if (arrow) { arrow.classList.toggle('open', !open); }
+}
+
+let RC = { shopee:0, tiktok:0, website:0 };
+const n  = id  => parseFloat(document.getElementById(id)?.value) || 0;
+const nv = el  => parseFloat(el?.value) || 0;
+const $  = id  => document.getElementById(id);
+const f  = num => isNaN(num) ? '—' : 'S$' + num.toFixed(2);
+
+function setText(id, val, cls) {
+  const el = $(id);
+  if (!el) return;
+  el.textContent = val;
+  if (cls !== undefined) el.className = cls;
+}
+
+function addRow(p) {
+  const tbody = $(`${p}-body`);
+  const idx   = ++RC[p];
+  const tr    = document.createElement('tr');
+  tr.id       = `${p}-r${idx}`;
+  tr.dataset.idx = idx;
+  tr.innerHTML = rowHTML[p](idx);
+  tbody.appendChild(tr);
+  renumber(p);
+  calcRow(p, idx);
+}
+
+function deleteRow(p, idx) {
+  const tr = $(`${p}-r${idx}`);
+  if (tr) tr.remove();
+  renumber(p);
+  updateTotals(p);
+}
+
+function renumber(p) {
+  document.querySelectorAll(`#${p}-body tr`).forEach((tr, i) => {
+    const el = tr.querySelector('.rn');
+    if (el) el.textContent = i + 1;
+  });
+}
+
+function numInput(p, name, idx, sm) {
+  const cls = sm ? 'ti sm' : 'ti';
+  return `<input class="${cls}" type="number" min="0" step="0.01" placeholder="0"
+    id="${p}-${name}-${idx}" oninput="calcRow('${p}',${idx})">`;
+}
+
+const rowHTML = {
+  shopee: (idx) => `
+    <td class="rn">${idx}</td>
+    <td><input class="ti nm" type="text" placeholder="Item name" id="shopee-nm-${idx}"></td>
+    <td>${numInput('shopee','B',idx)}</td>
+    <td>${numInput('shopee','C',idx,1)}</td>
+    <td>${numInput('shopee','D',idx,1)}</td>
+    <td>${numInput('shopee','E',idx,1)}</td>
+    <td>${numInput('shopee','F',idx,1)}</td>
+    <td>${numInput('shopee','G',idx,1)}</td>
+    <td>${numInput('shopee','R',idx,1)}</td>
+    <td class="c tc"  id="shopee-H-${idx}">—</td>
+    <td class="c tc"  id="shopee-L-${idx}">—</td>
+    <td class="c tc"  id="shopee-M-${idx}">—</td>
+    <td class="c tc"  id="shopee-N-${idx}">—</td>
+    <td class="c tc"  id="shopee-O-${idx}">—</td>
+    <td class="c tc"  id="shopee-P-${idx}">—</td>
+    <td class="c tc big" id="shopee-Q-${idx}">—</td>
+    <td class="c tc"  id="shopee-Pr-${idx}">—</td>
+    <td><button class="btn-del" onclick="deleteRow('shopee',${idx})">✕</button></td>
+  `,
+  tiktok: (idx) => `
+    <td class="rn">${idx}</td>
+    <td><input class="ti nm" type="text" placeholder="Item name" id="tiktok-nm-${idx}"></td>
+    <td>${numInput('tiktok','B',idx)}</td>
+    <td>${numInput('tiktok','pV',idx,1)}</td>
+    <td>${numInput('tiktok','sV',idx,1)}</td>
+    <td>${numInput('tiktok','F',idx,1)}</td>
+    <td>${numInput('tiktok','G',idx,1)}</td>
+    <td>${numInput('tiktok','R',idx,1)}</td>
+    <td class="c tc"  id="tiktok-GMV-${idx}">—</td>
+    <td class="c tc"  id="tiktok-Ref-${idx}">—</td>
+    <td class="c tc"  id="tiktok-Txn-${idx}">—</td>
+    <td class="c tc"  id="tiktok-Aff-${idx}">—</td>
+    <td class="c tc"  id="tiktok-P-${idx}">—</td>
+    <td class="c tc big" id="tiktok-Q-${idx}">—</td>
+    <td class="c tc"  id="tiktok-Pr-${idx}">—</td>
+    <td><button class="btn-del" onclick="deleteRow('tiktok',${idx})">✕</button></td>
+  `,
+  website: (idx) => `
+    <td class="rn">${idx}</td>
+    <td><input class="ti nm" type="text" placeholder="Item name" id="website-nm-${idx}"></td>
+    <td>${numInput('website','B',idx)}</td>
+    <td>${numInput('website','D',idx,1)}</td>
+    <td>${numInput('website','F',idx,1)}</td>
+    <td>${numInput('website','G',idx,1)}</td>
+    <td>${numInput('website','R',idx,1)}</td>
+    <td class="c tc"  id="website-Net-${idx}">—</td>
+    <td class="c tc"  id="website-GW-${idx}">—</td>
+    <td class="c tc"  id="website-P-${idx}">—</td>
+    <td class="c tc big" id="website-Q-${idx}">—</td>
+    <td class="c tc"  id="website-Pr-${idx}">—</td>
+    <td><button class="btn-del" onclick="deleteRow('website',${idx})">✕</button></td>
+  `,
+};
+
+function calcRow(p, idx) {
+  if (p === 'shopee')  calcShopee(idx);
+  if (p === 'tiktok')  calcTiktok(idx);
+  if (p === 'website') calcWebsite(idx);
+  updateTotals(p);
+}
+
+function recalcAll(p) {
+  document.querySelectorAll(`#${p}-body tr`).forEach(tr => {
+    if (tr.dataset.idx) calcRow(p, +tr.dataset.idx);
+  });
+}
+
+function calcShopee(idx) {
+  const B = nv($(`shopee-B-${idx}`));
+  const C = nv($(`shopee-C-${idx}`));
+  const D = nv($(`shopee-D-${idx}`));
+  const E = nv($(`shopee-E-${idx}`));
+  const F = nv($(`shopee-F-${idx}`));
+  const G = nv($(`shopee-G-${idx}`));
+  const R = nv($(`shopee-R-${idx}`));
+  const rI = n('s-rI') / 100;
+  const rJ = n('s-rJ') / 100;
+  const rK = n('s-rK') / 100;
+  const O  = n('s-O');
+  const H        = B - C - D + F;
+  const commBase = B - C - D + E;
+  const L        = commBase * rI;
+  const M        = commBase * rJ;
+  const Nfee     = (commBase + F) * rK;
+  const P        = L + M + Nfee + O;
+  const Q        = commBase - P - G;
+  const profit   = R > 0 ? Q - R : null;
+  setText(`shopee-H-${idx}`,  f(H));
+  setText(`shopee-L-${idx}`,  f(L));
+  setText(`shopee-M-${idx}`,  f(M));
+  setText(`shopee-N-${idx}`,  f(Nfee));
+  setText(`shopee-O-${idx}`,  f(O));
+  setText(`shopee-P-${idx}`,  f(P));
+  setText(`shopee-Q-${idx}`,  f(Q));
+  setProfitCell(`shopee-Pr-${idx}`, profit);
+  storeData(`shopee-r${idx}`, { H, L, M, Nfee, O, P, Q, profit });
+}
+
+function calcTiktok(idx) {
+  const B  = nv($(`tiktok-B-${idx}`));
+  const pV = nv($(`tiktok-pV-${idx}`));
+  const sV = nv($(`tiktok-sV-${idx}`));
+  const F  = nv($(`tiktok-F-${idx}`));
+  const G  = nv($(`tiktok-G-${idx}`));
+  const R  = nv($(`tiktok-R-${idx}`));
+  const rRef = n('t-rRef') / 100;
+  const rTxn = n('t-rTxn') / 100;
+  const rAff = n('t-rAff') / 100;
+  const GMV    = B - pV - sV;
+  const refFee = GMV * rRef;
+  const txnFee = GMV * rTxn;
+  const affFee = GMV * rAff;
+  const P      = refFee + txnFee + affFee;
+  const Q      = GMV - P - G;
+  const profit = R > 0 ? Q - R : null;
+  setText(`tiktok-GMV-${idx}`, f(GMV));
+  setText(`tiktok-Ref-${idx}`, f(refFee));
+  setText(`tiktok-Txn-${idx}`, f(txnFee));
+  setText(`tiktok-Aff-${idx}`, f(affFee));
+  setText(`tiktok-P-${idx}`,   f(P));
+  setText(`tiktok-Q-${idx}`,   f(Q));
+  setProfitCell(`tiktok-Pr-${idx}`, profit);
+  storeData(`tiktok-r${idx}`, { GMV, refFee, txnFee, affFee, P, Q, profit });
+}
+
+function calcWebsite(idx) {
+  const B = nv($(`website-B-${idx}`));
+  const D = nv($(`website-D-${idx}`));
+  const F = nv($(`website-F-${idx}`));
+  const G = nv($(`website-G-${idx}`));
+  const R = nv($(`website-R-${idx}`));
+  const rGw = n('w-rGw') / 100;
+  const fGw = n('w-fGw');
+  const net    = B - D + F;
+  const gwFee  = net > 0 ? net * rGw + fGw : 0;
+  const P      = gwFee;
+  const Q      = net - P - G;
+  const profit = R > 0 ? Q - R : null;
+  setText(`website-Net-${idx}`, f(net));
+  setText(`website-GW-${idx}`,  f(gwFee));
+  setText(`website-P-${idx}`,   f(P));
+  setText(`website-Q-${idx}`,   f(Q));
+  setProfitCell(`website-Pr-${idx}`, profit);
+  storeData(`website-r${idx}`, { net, gwFee, P, Q, profit });
+}
+
+function setProfitCell(id, profit) {
+  const el = $(id);
+  if (!el) return;
+  if (profit === null) {
+    el.textContent = '—';
+    el.className = 'c tc na';
+  } else {
+    el.textContent = f(profit);
+    el.className   = 'c tc ' + (profit >= 0 ? 'pos' : 'neg');
+  }
+}
+
+function storeData(rowId, data) {
+  const row = $(rowId);
+  if (!row) return;
+  Object.entries(data).forEach(([k, v]) => {
+    row.dataset[k] = v !== null ? v : '';
+  });
+  row.dataset.hasProfit = data.profit !== null ? '1' : '0';
+}
+
+function sum(rows, key) {
+  return rows.reduce((acc, r) => acc + (parseFloat(r.dataset[key]) || 0), 0);
+}
+
+function updateTotals(p) {
+  const rows = [...document.querySelectorAll(`#${p}-body tr`)];
+  const hasPr = rows.some(r => r.dataset.hasProfit === '1');
+  const totProfit = rows.filter(r => r.dataset.hasProfit === '1')
+                        .reduce((a, r) => a + (parseFloat(r.dataset.profit) || 0), 0);
+  if (p === 'shopee') {
+    setText('s-tot-paid',   f(sum(rows,'H')));
+    setText('s-tot-comm',   f(sum(rows,'L')));
+    setText('s-tot-svc',    f(sum(rows,'M')));
+    setText('s-tot-txn',    f(sum(rows,'Nfee')));
+    setText('s-tot-plat',   f(sum(rows,'O')));
+    setText('s-tot-fees',   f(sum(rows,'P')));
+    setText('s-tot-sett',   f(sum(rows,'Q')));
+    setProfitCell('s-tot-profit', hasPr ? totProfit : null);
+  }
+  if (p === 'tiktok') {
+    setText('t-tot-gmv',    f(sum(rows,'GMV')));
+    setText('t-tot-ref',    f(sum(rows,'refFee')));
+    setText('t-tot-txn',    f(sum(rows,'txnFee')));
+    setText('t-tot-aff',    f(sum(rows,'affFee')));
+    setText('t-tot-fees',   f(sum(rows,'P')));
+    setText('t-tot-sett',   f(sum(rows,'Q')));
+    setProfitCell('t-tot-profit', hasPr ? totProfit : null);
+  }
+  if (p === 'website') {
+    setText('w-tot-net',    f(sum(rows,'net')));
+    setText('w-tot-gw',     f(sum(rows,'gwFee')));
+    setText('w-tot-fees',   f(sum(rows,'P')));
+    setText('w-tot-sett',   f(sum(rows,'Q')));
+    setProfitCell('w-tot-profit', hasPr ? totProfit : null);
+  }
+}
+
+applyTokens('shopee');
+addRow('shopee');
+addRow('tiktok');
+addRow('website');
+</script>
+</body>
+</html>
