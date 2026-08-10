@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ARPLUS Messaging Campaign Performance</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; background:#eef1f5; margin:0; padding:24px; }
+  .wrap { max-width:1000px; margin:0 auto; background:#fff; border:1px solid #222; padding:24px; }
+  .header { display:flex; align-items:center; gap:0; margin-bottom:16px; }
+  .header .icon { background:#f6c815; width:56px; height:56px; display:flex; align-items:center; justify-content:center; font-size:22px; }
+  .header .label { background:#111; color:#fff; font-weight:bold; letter-spacing:1px; padding:16px 24px; font-size:18px; }
+  .meta { color:#555; font-size:13px; margin-bottom:20px; }
+  .cards { display:flex; gap:16px; margin-bottom:24px; }
+  .card { flex:1; border:1px solid #222; padding:14px 16px; position:relative; }
+  .card.kpi { background:#f6c815; }
+  .card .title { font-size:11px; font-weight:bold; letter-spacing:0.5px; color:#333; }
+  .card .value { font-size:26px; font-weight:bold; color:#111; margin-top:6px; }
+  .card .sub { font-size:11px; color:#555; margin-top:4px; }
+  .card .glyph { position:absolute; top:12px; right:14px; font-size:16px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; margin-bottom:8px; }
+  th { background:#111; color:#fff; text-align:left; padding:10px 12px; font-size:12px; letter-spacing:0.5px; }
+  td { padding:9px 12px; border-bottom:1px solid #e5e5e5; }
+  tr:nth-child(even) td { background:#f7f7f7; }
+  tr.highlight td { background:#f6c815; font-weight:bold; }
+  .metric-name { color:#c0392b; }
+  .footnote { font-size:11px; color:#777; margin-top:8px; font-style:italic; }
+
+  .section-title { display:flex; align-items:center; justify-content:space-between; margin:32px 0 12px; }
+  .section-title .left { font-size:14px; font-weight:bold; color:#222; display:flex; align-items:center; gap:8px; }
+  .section-title .left::before { content:"●"; color:#f6c815; font-size:10px; }
+  .section-title .right { font-size:11px; color:#888; }
+
+  .spotlight-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; }
+  .spot-card { border:1px solid #ddd; border-radius:10px; overflow:hidden; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,0.06); }
+  .spot-thumb { position:relative; width:100%; height:170px; background:#222; }
+  .spot-thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+  .rank-badge { position:absolute; top:8px; left:8px; background:#3a2f6e; color:#fff; font-size:11px; font-weight:bold; padding:3px 8px; border-radius:6px; }
+  .status-badge { position:absolute; top:8px; right:8px; font-size:10px; font-weight:bold; padding:3px 8px; border-radius:10px; color:#fff; display:flex; align-items:center; gap:4px; }
+  .status-badge.active { background:#1e8e3e; }
+  .status-badge.paused { background:#8a8f98; }
+  .status-badge::before { content:"●"; font-size:8px; }
+  .format-tag { position:absolute; bottom:8px; left:8px; background:rgba(0,0,0,0.65); color:#fff; font-size:10px; font-weight:bold; padding:3px 8px; border-radius:4px; letter-spacing:0.5px; }
+  .spot-body { padding:12px 14px 14px; }
+  .spot-name { font-size:13px; font-weight:bold; color:#222; margin-bottom:10px; min-height:34px; }
+  .spot-metrics { display:grid; grid-template-columns:1fr 1fr; gap:10px 12px; }
+  .spot-metrics .m-label { font-size:10px; color:#888; letter-spacing:0.5px; }
+  .spot-metrics .m-value { font-size:15px; font-weight:bold; color:#111; margin-top:2px; }
+  .na-note { grid-column:1 / -1; font-size:10px; color:#aaa; font-style:italic; border-top:1px dashed #eee; padding-top:8px; margin-top:2px; }
+  .full-link { grid-column:1 / -1; font-size:11px; margin-top:6px; }
+  .full-link a { color:#3a5bd1; text-decoration:none; font-weight:bold; }
+  .full-link a:hover { text-decoration:underline; }
+  .blur-note { background:#fff8e1; border:1px solid #f0d98c; border-radius:8px; padding:10px 14px; font-size:12px; color:#5a4a12; margin-bottom:16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="icon">📊</div>
+    <div class="label">PERFORMANCE</div>
+  </div>
+  <div class="meta">20 Jul&nbsp;&ndash;&nbsp;10 Aug 2026 (updated)&nbsp;&nbsp;|&nbsp;&nbsp;Adelevate | Grooming &ndash; October Intake | Sales | WhatsApp Messaging (Messaging Campaign)</div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="glyph">👛</div>
+      <div class="title">TOTAL SPEND</div>
+      <div class="value">MYR 580.28</div>
+      <div class="sub">20 Jul &ndash; 10 Aug</div>
+    </div>
+    <div class="card kpi">
+      <div class="glyph">💬</div>
+      <div class="title">MESSAGING CONVERSATIONS STARTED</div>
+      <div class="value">28</div>
+      <div class="sub">Primary KPI</div>
+    </div>
+    <div class="card kpi">
+      <div class="glyph">🏷️</div>
+      <div class="title">COST PER MESSAGING CONVERSATION</div>
+      <div class="value">MYR 20.72</div>
+      <div class="sub">per conversation started</div>
+    </div>
+  </div>
+
+  <table>
+    <tr><th>METRIC</th><th>VALUE</th></tr>
+    <tr><td class="metric-name">Total Spend</td><td>MYR 580.28</td></tr>
+    <tr><td class="metric-name">Reach</td><td>11,465</td></tr>
+    <tr><td class="metric-name">Impressions</td><td>56,699</td></tr>
+    <tr><td class="metric-name">Link Clicks</td><td>322</td></tr>
+    <tr><td class="metric-name">Cost Per Link Click</td><td>MYR 1.80</td></tr>
+    <tr><td class="metric-name">CTR</td><td>0.97%</td></tr>
+    <tr><td class="metric-name">CPM</td><td>MYR 10.23</td></tr>
+    <tr class="highlight"><td>Messaging Conversations Started ★</td><td>28</td></tr>
+    <tr class="highlight"><td>Cost Per Messaging Conversation Started ★</td><td>MYR 20.72</td></tr>
+  </table>
+  <div class="footnote">★ Primary KPI &nbsp;|&nbsp; Campaign launched 20 Jul 2026 &mdash; "maximum" date range = full campaign lifetime to date.</div>
+
+  <div class="section-title">
+    <div class="left">Creative spotlight &middot; Jul 2026</div>
+    <div class="right">Sorted by messaging conversations, highest first &middot; status reflects today</div>
+  </div>
+
+  <div class="spotlight-grid">
+
+    <div class="spot-card">
+      <div class="spot-thumb">
+        <img src="data:image/jpeg;base64,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" alt="Carousel V2 thumbnail">
+        <div class="rank-badge">#1</div>
+        <div class="status-badge active">ACTIVE</div>
+        <div class="format-tag">CAROUSEL</div>
+      </div>
+      <div class="spot-body">
+        <div class="spot-name">Carousel V2</div>
+        <div class="spot-metrics">
+          <div><div class="m-label">SPEND</div><div class="m-value">RM261.60</div></div>
+          <div><div class="m-label">LEADS</div><div class="m-value">15</div></div>
+          <div><div class="m-label">COST/LEAD</div><div class="m-value">RM17.44</div></div>
+          <div><div class="m-label">CTR</div><div class="m-value">1.07%</div></div>
+          <div class="na-note">Static carousel creative &mdash; no play-rate metrics (video-only)</div>
+          <div class="full-link"><a href="https://business.facebook.com/ads/api/preview_iframe.php?d=AQIy3huAIf8Aq2rzR5xC_J9HWihbT2V0hd1EzQYTAv3hUYPiDcgNaMAe3PzUGRwxn2zjAY8W-ZHiByy1NOHNKpLVITxw0WcMaP6cfRh8CL0GQG9qPiwmaVffroOSR7l56G7_Sg84J3pyKKZEpsIrbwZHvQsDeGwi1J6JUIdy_oh0UBmGnmlHEFnctTmLUUKPV6rW9LkvD5mkiq45AUR6duLzrVpcgSzmPL1O4JyV8xLeAg&t=AQKX76XDndQ7cva74Wk" target="_blank">View full-quality ad ↗</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spot-card">
+      <div class="spot-thumb">
+        <img src="data:image/jpeg;base64,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" alt="Carousel V1 thumbnail">
+        <div class="rank-badge">#2</div>
+        <div class="status-badge active">ACTIVE</div>
+        <div class="format-tag">CAROUSEL</div>
+      </div>
+      <div class="spot-body">
+        <div class="spot-name">Carousel V1</div>
+        <div class="spot-metrics">
+          <div><div class="m-label">SPEND</div><div class="m-value">RM224.03</div></div>
+          <div><div class="m-label">LEADS</div><div class="m-value">9</div></div>
+          <div><div class="m-label">COST/LEAD</div><div class="m-value">RM24.89</div></div>
+          <div><div class="m-label">CTR</div><div class="m-value">0.88%</div></div>
+          <div class="na-note">Static carousel creative &mdash; no play-rate metrics (video-only)</div>
+          <div class="full-link"><a href="https://business.facebook.com/ads/api/preview_iframe.php?d=AQIE_zxBUGHfYZnAXc7CifpAEclYgBiLqiSyx23vG3sCnQt8bXrnXOlB8qE1UYnubBEj3nX98HkiQMUGYZ_qLWXTu6h-zdnx3eXp0HSLgd5oxFrCY3a8ZdRCmolWRUJmKqX-4OUd1SPl0kDdwi0mfwtD7VG2p-kyp2wi5KlaRzjTewDSXJYxWLWWSJr7lh-vPE7iFe2D3i1417WfoPE2tyH3gi0d2IZ5AETMkRh7RqtIEg&t=AQJItQoMw-1zmqDcVxI" target="_blank">View full-quality ad ↗</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spot-card">
+      <div class="spot-thumb">
+        <img src="data:image/jpeg;base64,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" alt="Carousel V3 thumbnail">
+        <div class="rank-badge">#3</div>
+        <div class="status-badge paused">PAUSED</div>
+        <div class="format-tag">CAROUSEL</div>
+      </div>
+      <div class="spot-body">
+        <div class="spot-name">Carousel V3</div>
+        <div class="spot-metrics">
+          <div><div class="m-label">SPEND</div><div class="m-value">RM94.65</div></div>
+          <div><div class="m-label">LEADS</div><div class="m-value">4</div></div>
+          <div><div class="m-label">COST/LEAD</div><div class="m-value">RM23.66</div></div>
+          <div><div class="m-label">CTR</div><div class="m-value">0.92%</div></div>
+          <div class="na-note">Static carousel creative &mdash; no play-rate metrics (video-only)</div>
+          <div class="full-link"><a href="https://business.facebook.com/ads/api/preview_iframe.php?d=AQKHwNxlP8zFkORkQoXdLAWxeATNHFq8jew2NKG_jpOnOrr6AP_Msfy4kkhnDIsbU9q4Z-Ryq2ymhGouRf6tivce7Zaqi4Y487UtBk4mUSACi_72CVJfp0MNRbLF1YEtECMpxDwttkAIWJDaBrZpkElV7yr3dn1In_5377O5CxDYw3RyqOmLHAahfmLuH1zklLj_TmRyHOFq--lPt476XzeW71Ds_cH7HAFtK9UvjxkK7w&t=AQIkJ_00zx9cDwQ9OqQ" target="_blank">View full-quality ad ↗</a></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="footnote">"Leads" = messaging conversations started (this campaign's optimization goal). Per-ad spend sums to RM580.28, matching the campaign total exactly. "View full-quality ad" links open Meta's authenticated ad preview &mdash; you'll need to be logged into Meta Business in that browser tab to view them.</div>
+</div>
+</body>
+</html>
