@@ -591,9 +591,240 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
 .download-client-btn.preparing{cursor:default;opacity:.85}
 .download-client-btn.preparing svg{animation:llb-spin 1s linear infinite}
 .download-client-btn:disabled{cursor:default}
+
+/* ============================ GOOGLE SEM ZONE (September 2026 report) ============================ */
+/* Everything for the Google section lives under .gz. The brand variables are re-pointed to Google
+   blue inside it, so every reused component (cards, panels, tables, tabs, pills) recolours by itself
+   and nothing in the Meta part of the report is touched. GA4 gets its own orange (--ga). */
+.gz{
+  --violet:#4285F4;--violet-deep:#1F5BD1;--violet-ink:#17306B;--lav:#B7CFFA;
+  --violet-wash:#EAF1FD;--violet-wash-2:#DAE7FC;--line:#D9E4F6;--line-soft:#E7EEF9;
+  --shadow:0 1px 2px rgba(23,48,107,.05),0 8px 28px rgba(23,48,107,.07);
+  --shadow-sm:0 1px 2px rgba(23,48,107,.06),0 2px 8px rgba(23,48,107,.05);
+  --gz-tint:#F1F6FE;--ga:#E8710A;--ga-deep:#A04D00;--ga-soft:#FDEBDD;
+  position:relative;margin-top:18px;padding:0 0 48px;
+  background:var(--gz-tint);box-shadow:0 0 0 100vmax var(--gz-tint);clip-path:inset(0 -100vmax);
+}
+.gz::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;
+  background:#4285F4;box-shadow:0 0 0 100vmax #4285F4;clip-path:inset(0 -100vmax)}
+
+/* ---- Google tab header: title pill and window chip ---- */
+.platform-break{padding:40px 0 4px;text-align:center}
+.pb-row{display:flex;align-items:center;gap:20px}
+.pb-line{flex:1;min-width:12px;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,#4285F4)}
+.pb-line.r{background:linear-gradient(90deg,#4285F4,transparent)}
+.pb-badge{display:inline-flex;align-items:center;gap:11px;background:#17306B;color:#fff;border-radius:999px;
+  padding:13px 28px;font-family:'Plus Jakarta Sans';font-weight:800;font-size:16px;letter-spacing:.01em;
+  box-shadow:0 6px 20px rgba(23,48,107,.28);white-space:nowrap}
+.pb-badge svg{width:19px;height:19px;flex:none}
+.pb-chip-row{margin-top:16px}
+.pb-chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--lav);
+  color:var(--violet-deep);border-radius:999px;padding:6px 15px;font-family:'Plus Jakarta Sans';
+  font-weight:700;font-size:13px}
+.pb-chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--violet);flex:none}
+
+.gz .source-banner{background:#fff;margin-top:26px}
+.gz .pill.gads .d{background:#4285F4}
+.gz .pill.ga4 .d{background:var(--ga)}
+.gz .k-ico.o{background:var(--ga-soft);color:var(--ga-deep)}
+.gz .grid-2>.panel{min-width:0}
+.gz .tabs{flex-wrap:wrap;max-width:100%}
+
+/* ---- overview: delivery, impression share as a quiet secondary row, then lead conversions (Google Ads and GA4) ---- */
+.gz .conv-ribbon{background:linear-gradient(90deg,var(--violet-wash),#fff 50%,var(--violet-wash))}
+.gz .kpi.src-ads{border-top:3px solid var(--violet)}
+.gz .kpi.src-ga{border-top:3px solid var(--ga)}
+#g-row-c{grid-template-columns:repeat(4,1fr)}
+
+/* search impression share: three compact, muted cards so the eye stays on delivery and conversions */
+.g-sis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.g-share{display:flex;align-items:center;gap:10px;min-width:0;padding:9px 14px;
+  border:1px dashed var(--line);border-radius:12px;background:rgba(255,255,255,.55)}
+.g-share-ico{flex:none;display:grid;place-items:center;width:20px;height:20px;color:var(--faint)}
+.g-share-ico svg{width:14px;height:14px}
+.g-share-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.g-share-l{font-size:11.5px;font-weight:600;color:var(--muted);line-height:1.3}
+.g-share-f{font-size:10.5px;color:var(--faint);line-height:1.35}
+.g-share-v{flex:none;font-family:'Plus Jakarta Sans';font-weight:800;font-size:17px;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+
+/* ---- performance trend: the chart is daily, the table is by month (like the Meta trend table) ---- */
+.gz .metric-select .ms-dot{flex:none}
+.g-trend-wrap{margin-top:18px;padding-top:16px;border-top:1px solid var(--line-soft)}
+.g-trend{min-width:960px}
+.g-trend thead th{white-space:normal;line-height:1.25;vertical-align:bottom;padding:8px 10px}
+.g-trend tbody td{padding:11px 10px;white-space:nowrap}
+.g-trend tbody td:first-child{white-space:nowrap}
+.g-trend .m-name{display:block}
+.g-trend .m-sub{display:block;margin-top:2px;font-family:'Plus Jakarta Sans';font-weight:500;font-size:10.5px;color:var(--faint)}
+.g-trend .cell-main{display:block}
+.g-trend td .delta{display:flex;width:max-content;margin:4px 0 0 auto}
+.g-trend .g-sep{border-left:1px solid var(--line-soft)}
+.g-trend tbody tr.total-row td.g-sep{border-left-color:var(--line)}
+/* where the table has to scroll sideways, the Month column stays in view; separate borders keep every
+   line attached to its cell in all browsers (collapsed borders do not travel with a sticky cell) */
+@media (max-width:1080px){
+  .g-trend{border-collapse:separate;border-spacing:0}
+  .g-trend tbody tr:nth-last-child(2) td{border-bottom:none}
+  .g-trend thead th:first-child,.g-trend tbody td:first-child{position:sticky;left:0;z-index:2;background:var(--card);border-right:1px solid var(--line-soft)}
+  .g-trend tbody tr:hover td:first-child,.g-trend tbody tr.total-row td:first-child{background:var(--violet-wash)}
+}
+
+/* ---- sortable header cells (icon sits under the label in the wrapped two-row table) ---- */
+.g-table thead th.sortable .sort-ico{display:block;margin:3px 0 0;text-align:inherit}
+.g-table thead tr.g-sub th.sortable.active,.g-table thead th.g-name-h.sortable.active{color:var(--violet-deep)}
+
+/* ---- campaign table ---- */
+.g-table-wrap{overflow-x:auto;margin:2px -4px 0}
+.g-table{min-width:1060px;table-layout:auto}
+.g-table thead th{white-space:normal;line-height:1.25;vertical-align:bottom;font-size:10px;padding:9px 9px 10px}
+.g-table thead tr.g-sub th{text-align:right}
+.g-table thead tr.g-sub th:first-child{text-align:right}
+.g-table thead tr.g-grp th{text-align:center;letter-spacing:.06em;border-bottom:2px solid var(--line);padding-bottom:7px}
+.g-table thead tr.g-grp th.g-name-h{text-align:left;border-bottom:1.5px solid var(--line)}
+.g-table thead tr.g-grp th.ads{border-bottom-color:#4285F4;color:var(--violet-deep)}
+.g-table thead tr.g-grp th.ga{border-bottom-color:var(--ga);color:var(--ga-deep)}
+.g-table thead tr.g-grp th.sv{border-bottom-color:var(--line);color:var(--faint)}
+.g-table tbody td{padding:12px 9px}
+.g-table .g-sep{border-left:1px solid var(--line-soft)}
+.g-table tbody tr.total-row td.g-sep{border-left-color:var(--line)}
+.g-table td.g-sv{color:var(--muted)}
+.g-table .g-name-cell{min-width:215px}
+
+/* ---- keyword performance ---- */
+.gz .tab-btn .tab-n{margin-left:6px;font-size:11px;font-weight:700;color:var(--faint)}
+.gz .tab-btn.active .tab-n{color:var(--violet)}
+.g-kw-sum{display:flex;flex-wrap:wrap;gap:4px 18px;margin:14px 0 6px;font-size:12px;color:var(--muted)}
+.g-kw-sum b{font-family:'Plus Jakarta Sans';font-weight:800;color:var(--ink)}
+.g-kw{min-width:900px}
+.g-kw thead th{padding:9px 12px}
+.g-kw thead th.sortable .sort-ico{display:inline-block}
+.g-kw tbody td{padding:10px 12px}
+.g-kw td.kw-cell{min-width:250px;font-weight:600}
+.g-kw td.kw-camp{text-align:left}
+.g-kw .kw-low{display:inline-block;margin-left:8px;font-size:10px;font-weight:600;padding:1px 8px;border-radius:999px;
+  background:#EEF1F6;color:var(--muted);vertical-align:middle;white-space:nowrap}
+.g-kw tr.is-zero td{color:var(--faint)}
+.g-kw tr.is-zero td.kw-cell{color:var(--muted)}
+.g-kw tbody tr.total-row td{font-size:12.5px}
+.g-kw-more{display:flex;justify-content:center;margin-top:14px}
+
+/* ---- conversion breakdown ---- */
+.g-evt{min-width:0;font-size:12.5px}
+.g-evt thead th{padding:8px 7px;white-space:normal;line-height:1.25;vertical-align:bottom;font-size:10px}
+.g-evt tbody td{padding:11px 7px}
+.g-evt .perf-name-cell{min-width:168px}
+.g-evt .perf-name-cell .pnc-sub{white-space:nowrap;font-size:10.5px}
+.g-evt .g-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.g-dot.ads{background:#4285F4}
+.g-dot.ga{background:var(--ga)}
+.g-num-cell{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.g-bar{display:block;width:54px;height:5px;border-radius:3px;background:var(--line-soft);overflow:hidden}
+.g-bar i{display:block;height:100%;border-radius:3px}
+.g-bar.ads i{background:#4285F4}
+.g-bar.ga i{background:var(--ga)}
+.g-chip{display:inline-block;font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:999px;
+  background:var(--violet-wash-2);color:var(--violet-deep);white-space:nowrap}
+.g-chip.none{background:#EEF1F6;color:var(--muted)}
+.g-evt tr.is-zero td{color:var(--faint)}
+.g-evt tr.is-zero td:first-child strong{color:var(--muted)}
+
+
+/* ---- strategy note inside the Google zone ---- */
+.gz .strategy-editor:focus{border-color:var(--lav);box-shadow:0 0 0 3px rgba(66,133,244,.14)}
+
+/* ---- internal-only block (left out of the client download) ---- */
+.io-tag{display:inline-flex;align-items:center;font-size:10.5px;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;color:#9B6A1A;background:#FBEFD8;border:1px solid #F0DCB4;border-radius:999px;padding:3px 10px}
+.g-notes dl{display:grid;grid-template-columns:1fr 1fr;gap:18px 32px}
+.g-notes dt{font-family:'Plus Jakarta Sans';font-weight:800;font-size:12.5px;color:var(--violet-ink);margin-bottom:3px}
+.g-notes dd{font-size:12.5px;line-height:1.6;color:var(--muted)}
+.g-notes code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11.5px;
+  background:var(--violet-wash);border-radius:5px;padding:1px 5px;color:var(--violet-ink);white-space:nowrap}
+@media (max-width:1100px){.gz .grid-2{grid-template-columns:1fr}}
+@media (max-width:860px){.g-notes dl{grid-template-columns:1fr}}
+@media (max-width:640px){.pb-badge{padding:11px 18px;font-size:14px}.pb-row{gap:12px}}
+
+/* ---- overview rows at tablet and phone widths: no orphan cards, no clipped labels ---- */
+@media (min-width:681px) and (max-width:1080px){
+  #g-row-a{grid-template-columns:repeat(6,1fr)}
+  #g-row-a .kpi{grid-column:span 2}
+  #g-row-a .kpi:nth-child(n+4){grid-column:span 3}
+}
+@media (max-width:1080px){#g-row-c{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:860px){.g-sis{grid-template-columns:1fr}}
+@media (max-width:680px){
+  #g-row-a{grid-template-columns:repeat(2,1fr)}
+  #g-row-a .kpi:first-child{grid-column:1/-1}
+}
+@media (max-width:560px){
+  .gz .kpi{padding:14px}
+  .gz .kpi .k-top{min-height:30px}
+  .gz .kpi .k-label{white-space:normal;line-height:1.25}
+  .gz .conv-ribbon{padding:10px 14px}
+  .gz .conv-ribbon .cr-line{display:none}
+}
+
+/* ---- internal note: collapsed by default, opens on click ---- */
+.g-measure-details > summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;
+  gap:14px;padding:12px 18px;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);user-select:none;transition:border-color .15s}
+.g-measure-details > summary .section-title{flex:1 1 auto;min-width:0}
+.g-mt{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.g-measure-details > summary::-webkit-details-marker{display:none}
+.g-measure-details > summary::marker{content:""}
+.g-measure-details > summary:hover{border-color:var(--lav)}
+.g-measure-details > summary:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.g-measure-details[open] > summary{margin-bottom:14px}
+.g-mh{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--faint);flex:none}
+.g-mh svg{width:15px;height:15px;transition:transform .18s}
+.g-measure-details[open] .g-mh svg{transform:rotate(180deg)}
+.g-mh-open{display:none}
+.g-measure-details[open] .g-mh-open{display:inline}
+.g-measure-details[open] .g-mh-closed{display:none}
+
+/* ============================ HEADER TABS: Meta report first, Google SEM report on click ============================ */
+.view-tabs{display:inline-flex;gap:4px;padding:4px;background:var(--violet-wash);border:1.5px solid var(--line);
+  border-radius:999px;flex:none}
+.view-tab{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;background:transparent;
+  border-radius:999px;padding:8px 18px;font-family:'Plus Jakarta Sans';font-weight:700;font-size:13.5px;
+  color:var(--muted);cursor:pointer;white-space:nowrap;transition:background .15s,color .15s,box-shadow .15s}
+.view-tab:hover{color:var(--violet-ink)}
+.view-tab:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+.view-tab .vt-dot{width:8px;height:8px;border-radius:50%;flex:none}
+.view-tab[data-view="meta"] .vt-dot{background:var(--violet)}
+.view-tab[data-view="google"] .vt-dot{background:#4285F4}
+.view-tab.active{background:var(--card);color:var(--violet-ink);box-shadow:var(--shadow-sm)}
+.view-tab[data-view="google"].active{color:#17306B}
+
+/* one report per view: the Google zone is hidden on Meta, everything else in <main> is hidden on Google */
+body[data-view="meta"] #google-zone{display:none}
+body[data-view="google"] main > :not(#google-zone){display:none}
+/* header and toolbar bits that only make sense for one platform */
+.topbar .g-period-pill,.v-google{display:none}
+.g-period-pill .pp-dot{background:#4285F4}
+body[data-view="google"] .topbar .g-period-pill{display:inline-flex}
+body[data-view="google"] .topbar .period-pill:not(.g-period-pill),body[data-view="google"] .v-meta{display:none}
+body[data-view="google"] .v-google{display:inline}
+body[data-view="google"] .source-banner:not(#g-source-banner){display:none}
+body[data-view="google"] .live-load-btn,body[data-view="google"] .live-load-hint{display:none}
+@media (max-width:1100px){
+  .topbar-inner .view-tabs{order:3;flex:1 1 100%;display:flex}
+  .topbar-inner .view-tab{flex:1}
+}
+/* phones: the header stays one slim row (logo + tabs) so the sticky bar does not eat the screen;
+   the period is already stated in the page itself */
+@media (max-width:640px){
+  .topbar-inner{gap:8px 12px;padding:10px 16px}
+  .topbar-inner .brand{flex:none}
+  .topbar-inner .brand-sep,.topbar-inner .brand-meta{display:none}
+  body[data-view] .topbar .period-pill{display:none}
+  .topbar-inner .view-tabs{order:0;flex:1 1 auto;max-width:270px;margin-left:auto}
+  .view-tab{padding:8px 10px;font-size:13px;gap:7px}
+}
 </style>
 </head>
-<body>
+<body data-view="meta">
 
 <!-- ===================== TOP BAR ===================== -->
 <header class="topbar">
@@ -603,13 +834,22 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       <div class="brand-sep"></div>
       <div class="brand-meta">
         <span class="kicker">Monthly Performance Report</span>
-        <span class="sub">Meta Ads &amp; subscription outcomes · prepared by AdElevate</span>
+        <span class="sub"><span class="v-meta">Meta Ads &amp; subscription outcomes</span><span class="v-google">Google SEM &amp; lead conversions</span> · prepared by AdElevate</span>
       </div>
+    </div>
+    <div class="view-tabs" role="group" aria-label="Report platform">
+      <button type="button" class="view-tab active" data-view="meta" aria-pressed="true" onclick="gSwitchView('meta')"><span class="vt-dot"></span>Meta Ads</button>
+      <button type="button" class="view-tab" data-view="google" aria-pressed="false" onclick="gSwitchView('google')"><span class="vt-dot"></span>Google SEM</button>
     </div>
     <div class="period-pill">
       <span class="pp-dot"></span>
       <span id="period-label">September 2026</span>
       <span class="pp-vs">vs August 2026</span>
+    </div>
+    <div class="period-pill g-period-pill">
+      <span class="pp-dot"></span>
+      <span id="g-period-label">30 Sep to 13 Oct 2026</span>
+      <span class="pp-vs" id="g-period-days">14 days</span>
     </div>
   </div>
 </header>
@@ -1261,7 +1501,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
     </span>
     <span class="pd-line"></span>
   </div>
-  <p class="page-divider-sub fade d8">Everything below breaks May's results down by campaign, ad, creative, and video engagement.</p>
+  <p class="page-divider-sub fade d8">Everything below breaks September's results down by campaign, ad, creative, and video engagement.</p>
 
   <!-- ===================== CAMPAIGN / AD PERFORMANCE ===================== -->
   <section class="section fade d8">
@@ -1298,7 +1538,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
     <div class="panel">
       <div class="creative-grid" id="creative-grid"><div class="creative-card " data-i="0">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t15.5256-10/505488358_746151324610385_7637163085034988573_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=khixvenKJXUQ7kNvwE01hwQ&amp;_nc_oc=AdoJEKd2BsR6nFQVzs24R0165A1hVBXoxH__atBsP65Y_XXWpqGcjso2IDmXjrLvTgk&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQLt60EZPMEX9VEKNEstFLq1DviGIpgoCTFT3J4a7Dg5nDrnBM1GqhhFfVJs_rKEhX-lbng6pdbS&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQMkOZvY9viGc8nFSEyBnd4dLpbGGQW6hHtF9WZUC9M_9w&amp;oe=6AD4EBB6" alt="bookit-DemoVideo-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul15-1.fna.fbcdn.net/v/t15.5256-10/505488358_746151324610385_7637163085034988573_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=khixvenKJXUQ7kNvwHTwzRd&amp;_nc_oc=Adr_hh9rojYsphikoYXtaKDbWhq5Io1sVFB1dEcBEF2Ze57WrdSDnCE6l7PYe3ibk_1wJo0Yz7Jh3mdOvHJM5j4g&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul15-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQKlX5XK7lJ8-Nr-cCEwn5AfY1REF4gOKZrQO0aVGj4IHO51wv-9P4F4KNuzwCKNPQ1DwpWNTq0w&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQMnraeapSxZp_fVizMGPlyoqOcaWFBpRjsmLhokogjeQw&amp;oe=6AD523F6" alt="bookit-DemoVideo-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#1</span>
         <span class="creative-status is-active"><span class="cs-dot"></span>Active</span>
@@ -1318,7 +1558,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card " data-i="1">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t45.1600-4/757760400_28602221602712766_2442246015627399604_n.png?stp=dst-jpg_tt6&amp;_nc_cat=100&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_sid=ff4730&amp;_nc_ohc=pxUI0sxvtrQQ7kNvwFl9Vve&amp;_nc_oc=AdpiE8SoBIUGzbjBGp52dD9leeZk0Llj7r90mJcZC6kTOZXS0foWF4iE8buPmm3fp_I&amp;_nc_zt=1&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQJoVXDfiP7x2ZIqMLqXCOlNJ4FYUs5eiXm7hlc9K-IzQlOJ5EEieXQkbWiTDyb9qVJLVdnJF0KQ&amp;oh=00_AQO5VhVC0c9UWoWb7vA55YnPTozyMNN5bhgeY6qMMaqAjg&amp;oe=6AD4FFB7" alt="bookit-6months-meta-static-messaging-cn" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t45.1600-4/757760400_28602221602712766_2442246015627399604_n.png?stp=dst-jpg_tt6&amp;_nc_cat=100&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_sid=ff4730&amp;_nc_ohc=pxUI0sxvtrQQ7kNvwFeFj6Y&amp;_nc_oc=AdroYVu0jDddGJ_My5F8GuaylkBJn0gv_bT9AHcONReYzstNm9ZDEPMC-HDTQ6qsYI1PiK7i8D_adULi3gM_-d2X&amp;_nc_zt=1&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQJMNU5Qnp4Ieip0_D6TbUV3ylxp_yOdZZL3iP0q2umONjn-hRGJwq0jTpGYMvQ_Uyr1e9YKhNyB&amp;oh=00_AQPGen1UAaOUutsBXs-ipkULYqascd_8SCPJCp0Gmky7dA&amp;oe=6AD537F7" alt="bookit-6months-meta-static-messaging-cn" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="18" rx="2"></rect><circle cx="8" cy="10" r="2"></circle><path d="M2 17l5-5 4 4 5-6 6 7"></path></svg></span></div>
         <span class="creative-rank">#2</span>
         <span class="creative-status is-active"><span class="cs-dot"></span>Active</span>
@@ -1338,7 +1578,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card " data-i="2">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t51.82787-10/658556227_17964228825077594_8135272289645594858_n.jpg?_nc_cat=110&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=txt2NQzEg_wQ7kNvwGManv0&amp;_nc_oc=AdpkKY7t0Nok-W1G2AoQbAq2lUDukXbmNEJcK_rXiqSdHNF0LcnvDIw8nhwl3btfXx8&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQJ3zSZ2cQ-Dzxy1VE1eDk5P4sK32_7ZiY4Mf7YKtRv5CqWJe7Vj_41Ji67tIN161InTYIjs6F65&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQPWBD225XwYf9nEPUAKhllPh_Mm7FHQuCyITQaIAKTLiw&amp;oe=6AD4ECC6" alt="bookit-NewSeriesPost-5-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t51.82787-10/658556227_17964228825077594_8135272289645594858_n.jpg?_nc_cat=110&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=txt2NQzEg_wQ7kNvwG1aw6G&amp;_nc_oc=AdrBWb5E3tUJXdpBTDOUgardB0Y1uQz5l2gdq87BF9BmiBzsqAujkg0QihfeVcEQkVyVujhplGdJrFiA5diVf2Bp&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQIoWQRtobOnmMbM94JXyuDLIz-4284i9bYCsvyoGzRIA77gZC6np0zsDh29cx2_d9ZG8ikfD3sw&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQMqSoMMtJIfjl9LVOhkTvlxuNTyyR-uzFB1LBpYS4PYNQ&amp;oe=6AD52506" alt="bookit-NewSeriesPost-5-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#3</span>
         <span class="creative-status is-active"><span class="cs-dot"></span>Active</span>
@@ -1358,7 +1598,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card " data-i="3">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t45.1600-4/756066015_28601798646088395_8777700860886922509_n.png?stp=dst-jpg_tt6&amp;_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_sid=ff4730&amp;_nc_ohc=dm3jnvE4QRMQ7kNvwFP4kUV&amp;_nc_oc=AdqwqQzD8WoP8nkY6RQIV0Intf1LqRWHO4gvbpW95GSDfeWbXOPWPFh7ksVQo-noQPo&amp;_nc_zt=1&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQJqlLJah6jeSKu8T2flOxyjfUjTPOJAnJTMixwF5J1PuPZju_5MDg7yxOnv8eaN0kwppnEEcR_2&amp;oh=00_AQMHI2gkGgwG38fAQ-nqkKC2YrtfJ0ecoQrQKxA26558xA&amp;oe=6AD511AC" alt="bookit-youareready-meta-static-messaging-cn" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul15-1.fna.fbcdn.net/v/t45.1600-4/756066015_28601798646088395_8777700860886922509_n.png?stp=dst-jpg_tt6&amp;_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_sid=ff4730&amp;_nc_ohc=dm3jnvE4QRMQ7kNvwGqkbDg&amp;_nc_oc=AdrEa-lrcfP_LNmZTZ20tWGU1Gh_KYowir1WDuzA7n4DPABNd9UsarB2XhbTUz24dxwAD2h9UUR6UuX7USAwvM9m&amp;_nc_zt=1&amp;_nc_ht=scontent.fkul15-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQLSPam1_FkM2zNWyhKRlhz7DSjfuk4F2riV1w0xQFySEewgswXSNsjmCpde4YMsOFyl7fn85pUk&amp;oh=00_AQM8pgSWY4lzfSYHa6uHN-mbKD4QwCh1V_oGtEC_uOSBmQ&amp;oe=6AD511AC" alt="bookit-youareready-meta-static-messaging-cn" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="18" rx="2"></rect><circle cx="8" cy="10" r="2"></circle><path d="M2 17l5-5 4 4 5-6 6 7"></path></svg></span></div>
         <span class="creative-rank">#4</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1378,7 +1618,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card " data-i="4">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t15.5256-10/677939949_1631914964712508_7648415283268481052_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=Hu09CYXjCiQQ7kNvwGGn1f_&amp;_nc_oc=AdqLS4LM8bSio0ojSwMOPTAVqSxrljggYh1LMJ6w02iI_g7IHIF_FzIbdklSrdrGpsM&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQKCHPGIplV61w_Y4s6yi6HtSG3Xpqu57MeaRXBI9hqnYf4dk7WaZP6zIId5z-xKkEqkcGxNUUaJ&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQO4c3wnjyCO5APtaxswHRY3--6kvx-m5ZbFKcNgbCfekw&amp;oe=6AD4FF0C" alt="bookit-TrustAd-2000Reviews-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/677939949_1631914964712508_7648415283268481052_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=Hu09CYXjCiQQ7kNvwFzpryS&amp;_nc_oc=Adq5LiLGKJtdjyAchg3FYtRyCe4sU7nwAr6jOsJjp8xTECcpk4NuxjFaIADZQaVi8XN9eC4TPa3HGCYdG39wqyox&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQIWAF4M_ALQuhiIZ5qOrI8BsEvJJdJmkCOVyqaFTHnuhOKi_uaa8Bg6fTRgQee2jgWHki-xh-O1&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQNM20mudCBAhgH58nUyc0DgcNaOjtFSWdryKuZPWZDNtw&amp;oe=6AD5374C" alt="bookit-TrustAd-2000Reviews-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#5</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1398,7 +1638,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card " data-i="5">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t15.5256-10/679115532_1575925803511227_3067691467778369356_n.jpg?_nc_cat=109&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=xEO8D6u3jp8Q7kNvwG0wZCn&amp;_nc_oc=AdqP7OQBgYEqJNTGNNlMu9j6PGZ2EffOS7GOAYUP_rchfq-JEUp2zZvMXWN5e6L8MBs&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQLXArUyolF_VCDa33IgFHKsp14Di_vYS8qfSVAs7renxHSRiKa4s8HSIGaufKYMrmjTVeC0U-HB&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQOXnz9_GbWa6vr_JvH5h9y7O056UvLHBu4ANlPZRrzW-w&amp;oe=6AD5109E" alt="bookit-General-RM48Trial-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/679115532_1575925803511227_3067691467778369356_n.jpg?_nc_cat=109&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=xEO8D6u3jp8Q7kNvwHF9wKB&amp;_nc_oc=AdoJElKofz1MbJgkWtFe3hpIkA5WUAssJwZFHvjZheKeM2_7ix_2g3hLFbMoleObir4dNqneQ7G5fEnNa0vC4oHN&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQKGp-33Ynb0gMXfPf5sNNaG_sSdrwTuABfMGbPeAmxne8NLllHCX8QY5ms4Ms0Z8V6DV9Jhmd_c&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQPNkSbN1A4HlfUnC1UFIMTWD5yBuf-HbpqY0jKO_XUoSg&amp;oe=6AD548DE" alt="bookit-General-RM48Trial-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#6</span>
         <span class="creative-status is-active"><span class="cs-dot"></span>Active</span>
@@ -1418,7 +1658,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card " data-i="6">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t15.5256-10/724402788_1490628205705494_1639573014992368921_n.jpg?_nc_cat=111&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=VYrU_Thi08MQ7kNvwEoH4w6&amp;_nc_oc=Adp6zN2vQAGmZV3sro0hE7IE5nV9mZ18R3uCbZMIdb5g4Jl7Dxn6H47mUQ2l8otO-VE&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQIOLbzFmGMyTHpzatdHp0mS4WB8Jns2oLm3uDCOMSkmcXpEGeLvlvt7rxSRVwwwZJuFMLHGVU_y&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQPd0xMsfSuoKBWn-ebvsWbikC4yxnSigwOJjRlZTWBc3A&amp;oe=6AD4EA72" alt="bookit-BookitNotJustBooking-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul15-1.fna.fbcdn.net/v/t15.5256-10/724402788_1490628205705494_1639573014992368921_n.jpg?_nc_cat=111&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=VYrU_Thi08MQ7kNvwEM81a1&amp;_nc_oc=Adomrq0B8i3IclU86dnlh0gSajsUs9jhq6q9ernD89qli57R5-JOlyDrSTqxmn9okFKCmA9CpCFcZG9PEGa9mV2p&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul15-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQKNoL5g7ZKXNQDqt75q8RcntuKWExOsiCFoV1RskxTp_ac6CSowxU_KvAp8wsiYoiS4SQwhGNf3&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQOuVQileXE5cOkZ_uKHv66OBgeEgoCVEC-NfT4uX9mtpQ&amp;oe=6AD522B2" alt="bookit-BookitNotJustBooking-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#7</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1438,7 +1678,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card " data-i="7">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t15.5256-10/724045417_2055864621804152_6517142952261927033_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=CswhI_-gpBIQ7kNvwGlsX2c&amp;_nc_oc=AdrIS0NIl_s_e-5ORVuFXTBkcVTzGKilx55flDQ2zgrgfC7Xg2vrDgSayVq1jdF23Ks&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQLHDPd9I2mioLkyQ3dgk4li9NOEaOdIi5RnkYx9EVh0PP3qTeIkn2Vs6U7CbteOhGTDU_JJF03I&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQPuX2byxjB_OpYlsaRlW8EQ7n7PlqdKIiB_FyvARQKNxA&amp;oe=6AD51C36" alt="bookit-SmallStudio-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/724045417_2055864621804152_6517142952261927033_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=CswhI_-gpBIQ7kNvwHNas4L&amp;_nc_oc=Ado_Xl6bjIsowMlh8TfG9x0vsjtGqKqKPaz0HzNlVC_Df-AkXzdzav6A6F2p1YJP9DZI_ZWDayuL3sazgDUN2afr&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQJEs0GLiee-tKukVZh4nUYYNTm3b9GukPorZ5v2arUSSnn7WL8YU3gmfLArJn9LlFeiEOSGDrge&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQNIXoLMyVCLQlVWI78gQRQBDFLO2fmxj7hc4T1-bJpXxg&amp;oe=6AD51C36" alt="bookit-SmallStudio-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#8</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1458,7 +1698,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card " data-i="8">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t15.5256-10/706752744_1582641833872637_2099990404442564937_n.jpg?_nc_cat=105&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=yq6mZWvzOJAQ7kNvwFvX0Ed&amp;_nc_oc=Adqm3vIdq-fWkSPBfh43uFu31llv2NohKXMxleDKGQJ6B1xIsVnwfrcG-NsL-6qj8IQ&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQLwRrkrTKiXuB09QHj2RCRQOXYRiAsRfMD5joErax3ssEa7NjrupjB5QvLIx9VB6yZNgHviLjcO&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQO0rSyVdafn1xkeUrx8UQAUCU7D_rciW6D_YUrYd6s0Ng&amp;oe=6AD4EA8C" alt="bookit-TheRightTools-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul15-1.fna.fbcdn.net/v/t15.5256-10/706752744_1582641833872637_2099990404442564937_n.jpg?_nc_cat=105&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=yq6mZWvzOJAQ7kNvwE0lFtf&amp;_nc_oc=Adp-lqw8ZOneqzKZBnCuGG11UXFYJk5Y7vlSaReh7tCF9GPEmlb8OcioAxnuh-sGfgoARfRG_qcVQacuysvkc1GA&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul15-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQKZIhKC9VK04nsXqywDoEO_SNiBlA7fMeywCNqDzjCPLRxtc9NODWtvvCGjDMD1bjFOefDbHMkm&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQPM_ejjeqBaQzX_W1fRqthOUWs5n-hZix-naRDya_AmSw&amp;oe=6AD522CC" alt="bookit-TheRightTools-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#9</span>
         <span class="creative-status is-active"><span class="cs-dot"></span>Active</span>
@@ -1478,7 +1718,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card " data-i="9">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t15.5256-10/724402739_1316683156735679_5968704994876294412_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=EYvSCPtOhQ8Q7kNvwENeSaC&amp;_nc_oc=Adp2eWrFn02aUbOa2m6oqMUinNGWSpNPhi_6lQw8NN8abhRdDglKdVbUh6woorNW5cU&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQIzmTVyu4v3C9MP8xfvDOiTg_KmocCkNi3k-p-PVhD8nuY6EHDhO6OQuB5QYVn_WKgE8-R_saHa&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQMZFfsSjCvxwKQeArhZ7Dk600oTb0jeUFPiGg9IsIHWXw&amp;oe=6AD503BF" alt="bookit-smallstudioxsystem-messaging-v2" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul15-1.fna.fbcdn.net/v/t15.5256-10/724402739_1316683156735679_5968704994876294412_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=EYvSCPtOhQ8Q7kNvwHxe3nI&amp;_nc_oc=AdpR_gCf8bAWqSnj2jEro2HjLL_bEinavCeN6Yznpyx-yKX_tW7G96RoCos9O7ScB7JgFlXwHjuzNEuL8KxMJsSV&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul15-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQKg_TPoxX0K9oQ71OuTpTeqYNf9nnzGLsumv-zv7YewdhHCG1Rz_Sj34HgPQY_LeEb-rM-r5LGY&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQNSoe28wXAItnjQD-0PWxnbOUZsOjNsitqO0T4_m23iaw&amp;oe=6AD53BFF" alt="bookit-smallstudioxsystem-messaging-v2" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#10</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1498,7 +1738,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="10">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t15.5256-10/646933533_1587457602459601_3726158723572737739_n.jpg?_nc_cat=102&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=poNSRUEehosQ7kNvwGX8AvU&amp;_nc_oc=AdrF0-kg4FCNocdEIofOg6N6XJK9nl62oEvkwB2Aw4pGMbGZiWNnjYtx9fi8NecVzlc&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQKdyTAX_LVRsjuu0WnC_f58fO1hUFjxwEO0u5uOMqopHVNj9aay9G6mn08iue45aBgsSkAMGNKA&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQPvXfX9QIRnjqeF1N7SsmWDxE6Xsjz3OMP98XPFqA9mcQ&amp;oe=6AD4EC66" alt="bookit-NewSeriesPost-1-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/646933533_1587457602459601_3726158723572737739_n.jpg?_nc_cat=102&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=poNSRUEehosQ7kNvwGCF7M5&amp;_nc_oc=AdpJy31jkL-xgCEEOpxLNni_D9Bh4RSQAP3OGqfqvIQbGAm3N_ombuGFFN7kQHvsryA8xVTzqMM9RlHB1HfurG1s&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQLrnzl11eKgqVUEaZi6p9vyQsGK8wugQAAYqEftpgW4_nlbvQr6lmGfaBYyOq1Xtx0z5ytDRY1Y&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQM6CsAjbFL07piy0pQSwnOn8k9XTm1vXsm1ACQIJE0R9g&amp;oe=6AD524A6" alt="bookit-NewSeriesPost-1-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#11</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1518,7 +1758,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="11">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t45.1600-4/803267688_29250856187849301_334440079950015460_n.png?stp=dst-jpg_tt6&amp;_nc_cat=111&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_sid=ff4730&amp;_nc_ohc=fZAodzRdEv4Q7kNvwGt-36R&amp;_nc_oc=Adozt1MbbZIqk9lbJbBY1b2jzZapz0t1j7vfh_qx2svW7HMcPzohasuDOcutvHJTT24&amp;_nc_zt=1&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQIB1EZ9v43IbLMHdV1pDVKj-JUTOSKKhY1XXYEtxTCuiIZe2nj3thpoxmtYxRJZmR1nsdydhm2g&amp;oh=00_AQPVVKtCBOk95oEfEZak-kMRDcQuL2-xu3EXC_ulWv5jLA&amp;oe=6AD5045A" alt="bookit-static-Shift&amp;Attendance-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t45.1600-4/803267688_29250856187849301_334440079950015460_n.png?stp=dst-jpg_tt6&amp;_nc_cat=111&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_sid=ff4730&amp;_nc_ohc=fZAodzRdEv4Q7kNvwF9Mq64&amp;_nc_oc=AdoaGV-GFsy66woyCyUCDCyUUGW9hnMGbmE24Rl1HL28d6iPuwzem9mQhYMWexaKrwV7xHoNDX_xPvn-IzUyh0Oa&amp;_nc_zt=1&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQIOM0ZoR_qJdjYRkgFd2RmmljlwVeEcEQhuh4av9DI9gBnMl5G37zKilXyuwG564vR1WfHYlQZF&amp;oh=00_AQNkjVdV5sfulVAbYeVu-1fLyrJPMpV4v3SwcawfBCcaVA&amp;oe=6AD53C9A" alt="bookit-static-Shift&amp;Attendance-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="18" rx="2"></rect><circle cx="8" cy="10" r="2"></circle><path d="M2 17l5-5 4 4 5-6 6 7"></path></svg></span></div>
         <span class="creative-rank">#12</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1538,7 +1778,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="12">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t15.5256-10/811340121_1039715528871660_5420367652730241203_n.jpg?_nc_cat=111&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=gbfyC8nMtqAQ7kNvwFrNdRT&amp;_nc_oc=Adr64_ctrhheL2FCapLdRniK0pZ_NDSeuJSBUpBNHSI_XnCkD9FiDt8mFziEP99u1f8&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQKPfUgAAKCgvNfInBnH5UJYTaLqFw6APrmBbXnudy3B7aZ-KsWf8_qEkASAtprEQfe9R-yChCNa&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQMm6PuBvX7IiTRFiuu6VjchlbLDOTBbhuJa8bJHOz-JHA&amp;oe=6AD4F414" alt="bookit-reels-Shift&amp;Attendance-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul15-1.fna.fbcdn.net/v/t15.5256-10/811340121_1039715528871660_5420367652730241203_n.jpg?_nc_cat=111&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=gbfyC8nMtqAQ7kNvwEv9no9&amp;_nc_oc=AdoSgtEwmZPMwJHwG0jaZsrPbQz9esKVByMsYNsfVvbZduaO-VOvRbHKFUKf3vo-JjMbX-WeZxtqrQ6wcvcFqtW6&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul15-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQIqsgijx1tO6SmdY2ljjJkUlWYiAgtdileLB0pz45KX9CzGVlZaAPO-gXcFF7bDo26eKWrTIUaj&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQPQN2o5uKAz2zCCzDqdWQ8EJkXN9BwgXrnk5tsTQpzvOA&amp;oe=6AD52C54" alt="bookit-reels-Shift&amp;Attendance-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#13</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1558,7 +1798,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="13">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t45.1600-4/806002117_29250915547843365_1813961674886947280_n.png?stp=dst-jpg_tt6&amp;_nc_cat=107&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_sid=ff4730&amp;_nc_ohc=5unfqubjfh8Q7kNvwGs-rK5&amp;_nc_oc=Adqyj7lA_L2XV546WTCLDhaywThNFVz6jUFmgCpdT8E3EeC9rtHeO-__Bz0-AQ0zzoI&amp;_nc_zt=1&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQLjfw4IG5lI3Zi7fc6bgpOC4wfHZHSbVwc7992V-4sMY3BL8cKpJvQ98bxnkmMdv6jDM4j0PJCc&amp;oh=00_AQOVIRv2vykJbHPpVSArtB6_qSXEBW6hn_ZOlGS7hIbCtg&amp;oe=6AD51C6B" alt="bookit-static-Shift&amp;Attendance-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t45.1600-4/806002117_29250915547843365_1813961674886947280_n.png?stp=dst-jpg_tt6&amp;_nc_cat=107&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_sid=ff4730&amp;_nc_ohc=5unfqubjfh8Q7kNvwGCwBpK&amp;_nc_oc=AdpMZJoR9CShUoJq8IGHU2li1HGBUPEBmbR290-Iw0UaTkkfy5BRqKAVrMJ-jtdHVyDfcxYZOX8WAATg8bekz6Qe&amp;_nc_zt=1&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQLtbGxy8wkr5DOH8TpSUmwyRZltvTPUAwiQgBTT2YMU6FA1ko-pks6bMnCzNyBd34kzXOLmCthL&amp;oh=00_AQOxUOjtFekhWvYcO-HL5CIXRfOnippXYtMVbTAv1Mi2HA&amp;oe=6AD51C6B" alt="bookit-static-Shift&amp;Attendance-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="18" rx="2"></rect><circle cx="8" cy="10" r="2"></circle><path d="M2 17l5-5 4 4 5-6 6 7"></path></svg></span></div>
         <span class="creative-rank">#14</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1578,7 +1818,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="14">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t15.5256-10/801963034_2191984375082662_5411012360285837866_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=6J1zj-aLxaoQ7kNvwGPoceI&amp;_nc_oc=AdrsBfs8mXY7hmeE96dY6gUC2zuMsKlHvmSm62LSirFfQy5qyzBxZWXZ4m3uDc2_JUQ&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQLwGl9DK1FChqH3L9J3-QicpYAC7ixoE5Ee8mjfHcec4HlUSGW6p8f-I-v9JixBFxVZLos3Qipw&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQP9zRUuMXfQtIb9fJGsnfPnT65Li4NcfdZi_cYstym2Hw&amp;oe=6AD4E7CE" alt="bookit-smallstudioxsystem-wc-v2" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul15-1.fna.fbcdn.net/v/t15.5256-10/801963034_2191984375082662_5411012360285837866_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=6J1zj-aLxaoQ7kNvwGr-10m&amp;_nc_oc=AdpAeaVfa045HWxCOMfMZSqtpjrYUqM0J6JTM5TptKeX9omY4HKWYQy8ERw-X9ib26d-FphJ1kqysfXEbr0YiCGZ&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul15-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQJmidh8F1d7z-4Nil-Ygxaw6jLKhxFNsOhQghey5oV5ZzvI1QBS4-wJ1VIg1kxY6kdISwkhX5Ie&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQPL6jbaRNrFgDtPzQTPofeV37MerNk8t5ZV3T7gXblkWw&amp;oe=6AD5200E" alt="bookit-smallstudioxsystem-wc-v2" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#15</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1598,7 +1838,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="15">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t15.5256-10/724453737_1035054942815563_423594031570641909_n.jpg?_nc_cat=105&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=EvYnQMB8FVgQ7kNvwFnzMRG&amp;_nc_oc=Adro2eGXzxu0fGqL_tny5b1HyGMN6Vh9FZV8_2Ki6N9IEYhgbR8TbCgoY0HBTW8e5Xo&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQKvykSJsCseJH7zBIzCDpzDMUViSmMgUMQDt3vUFZwq_7GNa_9XBGBKYRn2ilsSrtyX5ZnEnyRV&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQOjD9LTWqdF1rAPa645EEIvUwCGss3GG2EF2mzP_DR-Sg&amp;oe=6AD509C6" alt="bookit-BillingSkit-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul15-1.fna.fbcdn.net/v/t15.5256-10/724453737_1035054942815563_423594031570641909_n.jpg?_nc_cat=105&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=EvYnQMB8FVgQ7kNvwHPm-vq&amp;_nc_oc=AdpHcfVqJWyVzDMhwlwkG1pZMr6wgvuPZ4b4ReKdk74DgWEUCum3TlI4NEUmHUc8cc06_xj1A91rWIxfXpFwJfkI&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul15-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQJzs8N8G3yQLkeGWxjHUVnLDbcYY99R3z4QMmZSVD93HufSL7JP-xxlzQnpm-VIqMehOwaYpp7b&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQOcOGGmuQYxTD5TRPeFVEpiHwGnMa44GsdudZ4nEiD70g&amp;oe=6AD54206" alt="bookit-BillingSkit-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#16</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1618,7 +1858,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="16">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t15.5256-10/811056356_1057571143928694_8319031188710823342_n.jpg?_nc_cat=111&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=QaEk_vQF_PAQ7kNvwG4fqZn&amp;_nc_oc=Adqv48pXPliug3A2-p0iyB5h1819vyDe0TS4bFwvVmswjc-H0MT8jEG44gTq6Bnk-eo&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQJ_IZpfQbtqrvhxAjxxlQcsbODK3Ce1UswSydMDANmUYHv359GEcsIfr-t3RqFGBYn1t8lCIIsp&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQOl5HyQJeas4lp0RerXNCMUL6fNDQxWlXIPSZ8_EA4GkQ&amp;oe=6AD4FA25" alt="bookit-reels-Shift&amp;Attendance-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/811056356_1057571143928694_8319031188710823342_n.jpg?_nc_cat=111&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=QaEk_vQF_PAQ7kNvwH7-sRj&amp;_nc_oc=AdpQUvRkb2uWWhbmm4nj-ZnHa-_QcssmD9M9j1EGfMAk1h7rnFloCNtFPKQddYts32Z05-R2yMa9UDQj2D98vvXH&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQIORSnAHIFNbyI3hp-gSmpAvdr-jZk_bKXFJNTrZMzFKE0RamWH8bAuO0TjbPC1_NfMQDI4tUdm&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQPNbnOl1BuJRO7Cwr6X4W-UyVUYJyquphFIbLQjaJEPeQ&amp;oe=6AD53265" alt="bookit-reels-Shift&amp;Attendance-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#17</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1638,7 +1878,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="17">
       <div class="creative-thumb">
-        <img src="https://external.fpen1-2.fna.fbcdn.net/emg1/v/t13/1763573746852524936?_nc_oc=Adr3RkK4lNGjEqK77nG-cEf747id4vX1Vw7ldi-moGaxU4Spj1e--RHpImDTAnfy1J4&amp;url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKTSBFZTiLIoS4WGsMW-QOwUFmASpkpYJco8r4lhG2y7E79tI6TnSeZX7iG-SSrBDl5UP2VTOivdNVr2-eicfqvzEfKUViiminD-MXZmxtEDcxQKVbnARSHbxEwMYzNWFORCm5hEvwR4kOEC3kPnZGU&amp;fb_obo=1&amp;utld=facebook.com&amp;_nc_sid=58080a&amp;_nc_ht=external.fpen1-2.fna.fbcdn.net&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ccb=18-1&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;edm=AAT1rw8EAAAA&amp;_nc_map=urlgen_bucketless&amp;_nc_zt=3&amp;_nc_tpa=Q5bMBQJuC04_57LroNJTe-SPj2e8aoiNoUaXPwmLYXTckX81rGhKwED-ZaozvXCE-n3soiLdQyb19spp&amp;oh=06_Q3_EAfJ1gTAWKA0F5RJPrH-GmBaC0PXpiM_jwp4Zc-ZWofAU&amp;oe=6AD119C6" alt="bookit-carousel-Shift&amp;Attendance-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://external.fkul15-1.fna.fbcdn.net/emg1/v/t13/1763573746852524936?_nc_oc=AdrbYTt7XbD4Ug5BFs2vmrZyaiPrmYHhP4pF4p_hslDLu6rrNJAr-ouqltA-SV3QWcBUYIzOr7as1efKMxGmnO99&amp;url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKTSBFZTiLIoS4WGsMW-QOwUFmASpkpYJco8r4lhG2y7E79tI6TnSeZX7iG-SSrBDl5UP2VTOivdNVr2-eicfqvzEfKUViiminD-MXZmxtEDcxQKVbnARSHbxEwMYzNWFORCm5hEvwR4kOEC3kPnZGU&amp;fb_obo=1&amp;utld=facebook.com&amp;_nc_sid=58080a&amp;_nc_ht=external.fkul15-1.fna.fbcdn.net&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ccb=18-1&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;edm=AAT1rw8EAAAA&amp;_nc_map=urlgen_bucketless&amp;_nc_zt=3&amp;_nc_tpa=Q5bMBQII73NbAHkZ16YjHXaLdh2EA79wgHyBk-bvvg5yLsWROcgRyc4B3DBsz65TY3eAnW3Wxq3F8KGU&amp;oh=06_Q3_EAbjvZA5358tg0pRKPjisD4BvyC8Pdhhq0YRgYBLiJf7r&amp;oe=6AD15206" alt="bookit-carousel-Shift&amp;Attendance-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="18" rx="2"></rect><circle cx="8" cy="10" r="2"></circle><path d="M2 17l5-5 4 4 5-6 6 7"></path></svg></span></div>
         <span class="creative-rank">#18</span>
         <span class="creative-status is-active"><span class="cs-dot"></span>Active</span>
@@ -1658,7 +1898,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="18">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t15.5256-10/724045417_2055864621804152_6517142952261927033_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=CswhI_-gpBIQ7kNvwGlsX2c&amp;_nc_oc=AdrIS0NIl_s_e-5ORVuFXTBkcVTzGKilx55flDQ2zgrgfC7Xg2vrDgSayVq1jdF23Ks&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQJi4lWNpYnoSwlKj95TOjizp2GkEs7ML3eAp3z1wlTxF0ZOMtEbEW8NNoNqLM3ixXLau7KXBypJ&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQN_1a9jVDJ_RULntOH3HNjpp_9YTtdXh7C-0UQyATPkSA&amp;oe=6AD51C36" alt="bookit-SmallStudio-CN-BP-WC" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/724045417_2055864621804152_6517142952261927033_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=CswhI_-gpBIQ7kNvwHNas4L&amp;_nc_oc=Ado_Xl6bjIsowMlh8TfG9x0vsjtGqKqKPaz0HzNlVC_Df-AkXzdzav6A6F2p1YJP9DZI_ZWDayuL3sazgDUN2afr&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQKa6DPAoj3H1qzFd97MvQZDyTGnc7EPKOF6ZjAoctTK6ohARhRd8XlaC0gyZZImoBFSOfNeJgWZ&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQMlA6jCu52Yc1Hl6utMzrE6kCtKBS6dElDSFxL3mPE_Xg&amp;oe=6AD51C36" alt="bookit-SmallStudio-CN-BP-WC" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#19</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1678,7 +1918,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="19">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t15.5256-10/794725091_1333769418664950_4222706640071943888_n.jpg?_nc_cat=100&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=Thktnf5uBrQQ7kNvwHSClEM&amp;_nc_oc=AdpQ0exiciVkW2flWV7E9UqJINiKonO9RkimioNjivLQDrofwEfIfL27H7n8gUCMW6c&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQJrtMn0-l2bCOz5Rg0R7rpGF16cd3oMCcGpV3U9AZ1EtEat0tkHcxIpfU0jT6NOUihITmfJuiJW&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQOzJ7T5jzs4P6lGADIWvK4qMJ5Ozb_3tXewZM-6uVGvyQ&amp;oe=6AD4FAAE" alt="bookit-reels-MiniProgramPro-v1-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/794725091_1333769418664950_4222706640071943888_n.jpg?_nc_cat=100&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=Thktnf5uBrQQ7kNvwF5jNB8&amp;_nc_oc=AdpwdgnJntaZ6fupRP7_fzEZ0bLxGd1epWan5Rj5aHjdTGmuB5B5v9xWYwlPj4YByOlFgH0hriqwfGtQEUzX0E2Y&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQJYu0Q8M8CN_AMANDm1vOiey12doc4nPqlNLebX8fdAx_z56h8F2ozMg-0x8RnHX4q-Vizsm5A9&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQPT8PUAfj9wnfCZSpWjVGUy5lbQYOIIy28qLp5QRKtBdw&amp;oe=6AD532EE" alt="bookit-reels-MiniProgramPro-v1-CN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#20</span>
         <span class="creative-status is-active"><span class="cs-dot"></span>Active</span>
@@ -1698,7 +1938,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="20">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t45.1600-4/756302900_28601776596090600_5749174134370633916_n.png?stp=dst-jpg_tt6&amp;_nc_cat=111&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_sid=ff4730&amp;_nc_ohc=E_I16pn_SKAQ7kNvwFFRwvR&amp;_nc_oc=AdoOrxNkoMpIrElrR_L72ivkRlup9CNDt8tPsPcXGhSmOCTLLA2ma9__Er24QgNjiKg&amp;_nc_zt=1&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQI2S08kpVh-cO517_XeqBSh24o8hvtBuYzplsqI-NQqQ65PV0txlnUzI3ldSyyxAxwB3rhJho2r&amp;oh=00_AQM52WZFsmeG7wUc3FpNM5j4LvdhuyFXAFpLWonNDvjJmQ&amp;oe=6AD5006C" alt="bookit-youareready-meta-static-messaging-en" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul15-1.fna.fbcdn.net/v/t45.1600-4/756302900_28601776596090600_5749174134370633916_n.png?stp=dst-jpg_tt6&amp;_nc_cat=111&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_sid=ff4730&amp;_nc_ohc=E_I16pn_SKAQ7kNvwE_FIlS&amp;_nc_oc=Adoi9hwQqzD2xxoKYrnmyr0alUM-pvXkuMgDKn1KVhWNSLsTTpc758H7Tkg1GHRXHk-97hhZSV6KhDb5GcZEElVg&amp;_nc_zt=1&amp;_nc_ht=scontent.fkul15-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQL8oL7s67nQ5oBin-U5uLr7MdSDTAExUZGcw3D_w6EeRu3rKCwKxY329Iu3H2WWBt3FwjSgzjje&amp;oh=00_AQOrOOxA1fR0sCHP5Es0XzOLT5k4ucHFP0EnEUFr0lex8Q&amp;oe=6AD538AC" alt="bookit-youareready-meta-static-messaging-en" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="18" rx="2"></rect><circle cx="8" cy="10" r="2"></circle><path d="M2 17l5-5 4 4 5-6 6 7"></path></svg></span></div>
         <span class="creative-rank">#21</span>
         <span class="creative-status is-active"><span class="cs-dot"></span>Active</span>
@@ -1718,7 +1958,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="21">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t15.5256-10/748194167_1761759771503220_4450756785624424648_n.jpg?_nc_cat=111&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=wDQdNdZUim0Q7kNvwEtejbS&amp;_nc_oc=Ado13juNTC3dwFvVK3xO51okBc8o2FLwoOx9t1cN5SHWFz--PIYjRau1DSQggAp1gjE&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQJWw_KYQz8_8TkPx9QEBguLf5vEp3m_iAfKJS6VMjS8_wUOjBNE1KVEokAMP4grt1bWUVLcbyuO&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQPyw1R1mrVx3b84Mna2Lnd1wH76mtj1sMoU3qxVuZBc3w&amp;oe=6AD51368" alt="bookit-CSpainpoints-meta-reels-messaging-v1" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/748194167_1761759771503220_4450756785624424648_n.jpg?_nc_cat=111&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=wDQdNdZUim0Q7kNvwGOoawS&amp;_nc_oc=AdrR6EPF0vG8Mwrbv2MUBENBje7wyGvOECz2Beh39SI4y2cZLd7laJm0rfy6fJFyLomg6axl2yW6Rsb2fOJwL8wT&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQKOz22rIIM6qmJpvlorlI2q1un-9Z7JuEnyR0URUFniERs7RYUnjxc6IzQM8Ujz8dQXPom_UCud&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQOLjZhj_WHD43ZCiNNvQgOUhBqk0QYz2HA-JvKLdQD8ZQ&amp;oe=6AD51368" alt="bookit-CSpainpoints-meta-reels-messaging-v1" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#22</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1738,7 +1978,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="22">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t15.5256-10/747587052_1746615586764322_6380938322281449040_n.jpg?_nc_cat=105&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=1nyCHIpUXE8Q7kNvwFbpWpd&amp;_nc_oc=Adq7EgcNCpN9ZgkiYUtU-PAeMFy0WQMQfBDjbpR-_xQ3fb63c1nVPa_6lQ3HzpVex6o&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQJepFxaagwwV1HLmgecFMaRs_WhN-ZtOrQgXaCSCRSTlBCdljbRZbgmgJjHiHuukYwptzZ0HTfT&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_AQOymRN1ogB01AcI518k9SCH4tROIDzldY68SyIXXrubGQ&amp;oe=6AD50D29" alt="bookit-NewSeriesPost-1-BP-WC" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/747587052_1746615586764322_6380938322281449040_n.jpg?_nc_cat=105&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=1nyCHIpUXE8Q7kNvwH4wExJ&amp;_nc_oc=AdpZYc9jQYOpB6fsxCgPMqvHYPf3JYPIQEObL7j2r1KupCf8r1mg5o7rgXfHu-2uCgwMgjCYaRKNaTD7Xlts_7Ni&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQLjSDxUQUzae4saF-1N90z70wFQDbqBkxKihsxETu4kcKOR3wHuroKXIXIx-82RXH4hmEt-HUhA&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=d2b52d&amp;_nc_sid=58080a&amp;oh=00_AQPHuT2iZwYqLAPI7zyBVoQOWE2tbcPxGt3rTEo6XlI02Q&amp;oe=6AD54569" alt="bookit-NewSeriesPost-1-BP-WC" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#23</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1758,7 +1998,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="23">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t15.5256-10/827947310_1381814080788067_8334064397986432688_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=c2xxw-aqxd0Q7kNvwEQEuzv&amp;_nc_oc=AdrDGWM28XcBLkRnq-MC9LNuPO28yRDnYFlGtjr4RWZTXqW57IXrqYtd0ae9aWLd1N8&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQJ4R1cbP7Sbo-N7IQR06hdxH6N5DbaX7ROPmXdesxhenQ2q9LT7VK9LtOhBVWYb46eA2hkdu0Ze&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQPKuDc9kXWvwhX-N7khGMVwV1d45fduZhjxjIwtdC8vtw&amp;oe=6AD509CC" alt="bookit-reels-MiniProgramPro-v2-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul15-1.fna.fbcdn.net/v/t15.5256-10/827947310_1381814080788067_8334064397986432688_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=c2xxw-aqxd0Q7kNvwHLXof9&amp;_nc_oc=AdpegtA5K0AaGQkz7Tto8BQjRvC4BqK2Hq_CLFaBhWf4f9IeVZlZF8M4G0wSL5WO2L1jEYCDAqsSBCwocLYfAgat&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul15-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQLi2l1GoeEr6_TEwur5AvAWs-UCU9aDl-4mJ_H7kfvOjI6C_V5Dqov4_fYO2azkVLrMVpojF76I&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQP0HP4w7urYwH3r7jb3JdCbLAgq_NLqK_40COrqay23qg&amp;oe=6AD5420C" alt="bookit-reels-MiniProgramPro-v2-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#24</span>
         <span class="creative-status is-active"><span class="cs-dot"></span>Active</span>
@@ -1778,7 +2018,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="24">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t15.5256-10/830351802_1066659786365726_8506169118562794814_n.jpg?_nc_cat=110&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=_tpSo3zyfaoQ7kNvwHlBb2d&amp;_nc_oc=Adq00wLNLWU28RjOcqdYtZWH0aAud8--Pa_z_skjGtMMbQyulWo_b864o72P0kjh_xc&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQJ9EP2UWleeNVjgE2UwKNkaxSR3NjmaX_VwH7UG9zO53SjUCHjqw3hO6Wr78MakUTZaGQt24BOi&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQPvZu01KLg95H02VeFuvcI5eIGbq39C4isEv621wcUtGg&amp;oe=6AD5131C" alt="bookit-reels-MiniProgramPro-v3-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/830351802_1066659786365726_8506169118562794814_n.jpg?_nc_cat=110&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=_tpSo3zyfaoQ7kNvwGOLgLP&amp;_nc_oc=AdrpAPnBA0AJUaVZtXRvDGeoD_RKuAo3cm_lSf1szwS1T0pYXaifTgYMOM6xbPI8qOlHS5Bw6erl2JEyiNyeZTKX&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQJe9GY8VNIPpLY1Q2-Dw9QSJiX9zinktc5N8X7k08Rbio4Z6Y_twoHkEwpPk15OtE51B5x-1zAf&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQO0Fkw-MVCvbwp82mHWybc9HruRjOLNwBWDLriulJ9_rQ&amp;oe=6AD5131C" alt="bookit-reels-MiniProgramPro-v3-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#25</span>
         <span class="creative-status is-active"><span class="cs-dot"></span>Active</span>
@@ -1798,7 +2038,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="25">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t15.5256-10/802307729_1691994648561173_719476310482590417_n.jpg?_nc_cat=109&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=47azqm58eQsQ7kNvwEBQq7H&amp;_nc_oc=Ado4JGDpWk_-ZhdDMLxUw_sa_VAzMHveXRUBbwlV9Or2RAiDvjrEpXjyuHw7YTJl1GM&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQL-oqP569Z7zXvscgfwerM5gjZE50ibv2iQDfgOyVUagH5mCXehku9v0squfxHv67oyscrXytMt&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQP6Mj78s1SlYCtDBtO32ay87KP3niXRtSbZ9TiP5wCYFA&amp;oe=6AD4F72B" alt="bookit-justabookitapp-meta-reels-wc-v1" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/802307729_1691994648561173_719476310482590417_n.jpg?_nc_cat=109&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=47azqm58eQsQ7kNvwGHDgTz&amp;_nc_oc=AdqQ6mqBPVPfzljc_M9tGqJq2azrw5Hka9q3s5_n1dCo83pl8moxf2IzQdD2kY6C27rk6ohHMxP1ateW73FWADBv&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQKQs1Vmkp9qpQ1wNXG-KmHW9y2zeQ6tefEwnmMsdKUIau0PUrnJtwkIm-oAq8_rEz-Dy-ZmY8uF&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQMmO_2bzTle3Ry67anQ-KdfC1K6tfQBVy5TbyOMAXD9Lg&amp;oe=6AD52F6B" alt="bookit-justabookitapp-meta-reels-wc-v1" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#26</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1818,7 +2058,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="26">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t15.5256-10/802242935_1086854547045370_552503037495867695_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=qoCRepD6byUQ7kNvwGWSIZZ&amp;_nc_oc=AdquQp2-VBM27JuMcHkftN9L0NdPchphq6EtHuRl0trCQmLQZH0hPg-I0YvJLrLdoZw&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQJjD4Tyzr8OUusaTOiG97PmC5vJbLNCbqRVPdYRWoqxhkCHEbgrx_QQL-rkQ8_tg0l5fU1UAD-w&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQMPTNe_AXMv7EC8kqBQDZyuu_-H0ck-t0Z3cdsyp2ZFXw&amp;oe=6AD51045" alt="bookit-BillingSkit-CN-wc" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul15-1.fna.fbcdn.net/v/t15.5256-10/802242935_1086854547045370_552503037495867695_n.jpg?_nc_cat=106&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=uVYAdb-SkiYQ7kNvwFUTYRF&amp;_nc_oc=AdozLP7OdZtmIu8r86_6KQvZrqgyvSvDXFEniMqifhaEkJv-4otoqnWdJ75aqtLu5IvzYNe9PxAFeAufkfWVWsL2&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul15-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQI4PTIAEb0rhqPZcj3fTt8POtRd5DhgdaTlm_w1q03kin7z35zIbPmhI873Eom124Q1cvWjzkHD&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQMzY-JTflzW-5RE1Bp--ogj-cKzF2Al5PXBgsijRIuUug&amp;oe=6AD54885" alt="bookit-BillingSkit-CN-wc" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#27</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -1838,7 +2078,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="27">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-1.fna.fbcdn.net/v/t15.5256-10/828496924_1425707009667825_6842058937134076916_n.jpg?_nc_cat=107&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=l4WVJy3diycQ7kNvwFXTouy&amp;_nc_oc=AdoJzPUalFboBV_fyD7wtqXR6uW1LI2WIi2faxNM2MvGj3czARy7iJADezkOs2w2tZ4&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-1.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQIoO3MLup8r8UzNv3b25e1AqkZMD8JNPeuImTsdaacdG20UKJ-ff82JYQWjnq8tzzdiRcF6yxQt&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQPHp29r7B5pzZzmp9TamULdHpesMrL3UHRxlEEv1iLM6A&amp;oe=6AD4EA11" alt="bookit-reels-MiniProgramPro-v1-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/828496924_1425707009667825_6842058937134076916_n.jpg?_nc_cat=107&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=l4WVJy3diycQ7kNvwHqJ8lE&amp;_nc_oc=AdoZ5kNdtoOMjjH00FdM5d_m3CV8iKZI6KrX_N2JTsqG5ZEIAN1NK4DbTfNx2JzT6F8gzx67laAIeJZO7GFei5wL&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQIItBy_L6n4hewa1k54dJKyRGszgjlVwrbkzNX8-0rNb0JL_4K3QSq23hZ8FlwurYmql9ZuBYDI&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=5fad0e&amp;_nc_sid=58080a&amp;oh=00_AQOXYYRnA-6HvQWatUImzrDsWGWmkuAzl9GbRNlVlGIwFQ&amp;oe=6AD52251" alt="bookit-reels-MiniProgramPro-v1-EN-Messaging" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#28</span>
         <span class="creative-status is-active"><span class="cs-dot"></span>Active</span>
@@ -1858,7 +2098,7 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
       </div>
     </div><div class="creative-card is-hidden" data-i="28">
       <div class="creative-thumb">
-        <img src="https://scontent.fpen1-2.fna.fbcdn.net/v/t15.5256-10/802307563_3478705288978035_2921647522453217820_n.jpg?_nc_cat=107&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=_ZYhV9JW51cQ7kNvwE333DF&amp;_nc_oc=AdpwQVnmFIAQ4sFcRfaFwSbiRBDom4DnTUC19EZnIBqFyq7aTNGMHhjgHe3k-VBGfQo&amp;_nc_zt=23&amp;_nc_ht=scontent.fpen1-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=CqpRR93TLuPZiOsQame-sw&amp;_nc_tpa=Q5bMBQKkdoUUEeKqlcFz2GUvyl_u8_uT5agg34i5n8YZ_UwrI8vzy2965R0If15jfPrDecqyFk5CqGKz&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQPvT0OCe9cc6Fq5zFvUNifjrO8txYvcoOG9WdkpNzrI-A&amp;oe=6AD4EF76" alt="bookit-CSpainpoints-meta-reels-wc-v1" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
+        <img src="https://scontent.fkul10-2.fna.fbcdn.net/v/t15.5256-10/802307563_3478705288978035_2921647522453217820_n.jpg?_nc_cat=107&amp;_nc_map=urlgen_bucketless&amp;ccb=1-7&amp;_nc_ohc=_ZYhV9JW51cQ7kNvwG_MvlZ&amp;_nc_oc=AdpgjZ-aPyAnXwpO3_53R3HehX4Huh6pZrbKoS6AiVBpDn1Tp5BicG7-caZ6lcsrSEqZETsvKbRLARepU2t_5YMd&amp;_nc_zt=23&amp;_nc_ht=scontent.fkul10-2.fna&amp;edm=AAT1rw8EAAAA&amp;_nc_gid=ZvQOCWghP861d54ToEB8pQ&amp;_nc_tpa=Q5bMBQJq4wgzGHGcqj2zXrv9Wl8GpGIjaqWhI3ewOZvmF7mynudSjxyNkPeexPZDiwzdMrUfvfM1fP9_&amp;stp=c0.5000x0.5000f_dst-emg0_p1080x1080_q75_tt6&amp;ur=a7ce7f&amp;_nc_sid=58080a&amp;oh=00_AQNAlYBCbwRh-GI1DFgMmy3d1GgYb3tluUK69aBoRz6fAQ&amp;oe=6AD527B6" alt="bookit-CSpainpoints-meta-reels-wc-v1" loading="lazy" onerror="this.remove(); this.parentElement.querySelector('.ct-icon-wrap').style.display='flex';">
          <div class="ct-icon-wrap" style="display:none"><span class="ct-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"></rect><path d="M16 10l6-3v10l-6-3"></path></svg></span></div>
         <span class="creative-rank">#29</span>
         <span class="creative-status is-paused"><span class="cs-dot"></span>Paused</span>
@@ -2041,26 +2281,554 @@ footer .f-tag em{color:var(--violet);font-style:normal;font-weight:600}
   <!-- ===================== STRATEGY NOTE ===================== -->
   <section class="section fade d11">
     <div class="section-head">
-      <span class="section-title label-dot">Strategy note</span>
-      <span class="section-note">Your own thoughts, saved when you download for client</span>
+      <span class="section-title label-dot">Strategy note · Meta Ads</span>
     </div>
     <div class="panel">
       
-      <div class="strategy-editor" id="strategy-editor" contenteditable="false"><b>Strategy Note -October 2026</b><div><font color="#352c6b"><b><br></b></font><div><b>1. Meta Conversion Campaign&nbsp;</b></div></div><div><b>-</b>&nbsp;currently paused due to rising cost, pending CRM data to decide whether or not to continue&nbsp;</div><div><br></div><div><b>2. Content Funneling dashboard revamp&nbsp;</b></div><div><b><br></b></div><div><b style="color: rgb(53, 44, 107);">3.&nbsp; New 7 Days Free Trial Content Timeline - as CPL is rising due to fatigue &amp; mechanics changed.</b></div><div><b style="color: rgb(53, 44, 107);"><br></b></div><div><font color="#352c6b"><b>4. Whatsapp fixed template for all buttons - Follow up</b></font></div><div><font color="#352c6b"><b><br></b></font></div><div><font color="#352c6b"><b>5. New column for Website whatsapp lead tracking</b></font></div></div>
-      <div class="strategy-hint">Prepared by AdElevate.</div>
+      <div class="strategy-editor" id="strategy-editor" contenteditable="false"><b style="color: rgb(53, 44, 107);">Strategy Note -October 2026</b><div><font color="#352c6b"><b style="color: rgb(53, 44, 107);"><br></b></font><div><b style="color: rgb(53, 44, 107);">1. Meta Conversion Campaign&nbsp;</b></div></div><div><b style="color: rgb(53, 44, 107);">-</b> currently paused due to rising cost, pending CRM data to decide whether or not to continue&nbsp;<br><br></div><div><b style="color: rgb(53, 44, 107);">2. Content Funneling dashboard revamp&nbsp;</b></div><div><b style="color: rgb(53, 44, 107);"><br></b></div><div><b style="color: rgb(53, 44, 107);">3.&nbsp; New 7 Days Free Trial Content Timeline - as CPL is rising due to fatigue &amp; mechanics changed.</b></div></div><div class="strategy-hint">Prepared by AdElevate.</div>
+      
     </div>
   </section>
+
+  <!-- ===================== GOOGLE SEM ZONE (September 2026 report only) ===================== -->
+  <div class="gz" id="google-zone">
+
+    <!-- platform breaker: Meta ends above, Google starts here -->
+    <div class="platform-break">
+      <div class="pb-row">
+        <span class="pb-line"></span>
+        <span class="pb-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+          Google SEM Performance
+        </span>
+        <span class="pb-line r"></span>
+      </div>
+      <div class="pb-chip-row"><span class="pb-chip" id="g-window-chip">30 Sep to 13 Oct 2026 · 14 days</span></div>
+    </div>
+
+    <div class="source-banner" id="g-source-banner">
+    <span class="pill gads"><span class="d"></span>Google Ads · Launchit Sdn Bhd (bookit.)</span>
+    <span class="pill ga4"><span class="d"></span>GA4 · Bookit property</span>
+    <span>Currency <strong>MYR</strong></span>
+    <span class="as-of">Google Ads and GA4 data as of 14 October 2026</span></div>
+
+    <!-- 1. performance overview: delivery, impression share as a quiet secondary row, then lead conversions (Google Ads and GA4) -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-title label-dot"><span>Performance overview · <span class="g-win">30 Sep to 13 Oct 2026</span></span></span>
+        <span class="section-note">Delivery, search visibility and lead conversions</span>
+      </div>
+      <div class="headline-grid" id="g-row-a"><div class="kpi ">
+    <div class="k-top"><span class="k-label"><span class="k-ico v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"></path></svg></span>Spend</span></div>
+    <div class="k-val"><span class="cur">RM</span>739.77</div>
+    <div class="k-foot">RM52.84/day · budget RM50/day</div>
+  </div><div class="kpi ">
+    <div class="k-top"><span class="k-label"><span class="k-ico v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>Impressions</span></div>
+    <div class="k-val">8,031</div>
+    <div class="k-foot">Generic 7,016 · Brand 1,015</div>
+  </div><div class="kpi ">
+    <div class="k-top"><span class="k-label"><span class="k-ico v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 8-6 2-2 6z"></path></svg></span>Clicks</span></div>
+    <div class="k-val">335</div>
+    <div class="k-foot">Generic 215 · Brand 120</div>
+  </div><div class="kpi ">
+    <div class="k-top"><span class="k-label"><span class="k-ico v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"></path></svg></span>Avg. CPC</span></div>
+    <div class="k-val"><span class="cur">RM</span>2.21</div>
+    <div class="k-foot">Generic RM2.80 · Brand RM1.14</div>
+  </div><div class="kpi ">
+    <div class="k-top"><span class="k-label"><span class="k-ico v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><circle cx="12" cy="12" r="1"></circle></svg></span>CTR</span></div>
+    <div class="k-val">4.17%</div>
+    <div class="k-foot">Generic 3.06% · Brand 11.82%</div>
+  </div></div>
+      <div class="g-sis" id="g-sis"><div class="g-share">
+    <span class="g-share-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg></span>
+    <span class="g-share-txt"><span class="g-share-l">Search impression share</span><span class="g-share-f">Generic 11.14% · Brand &lt; 10%</span></span>
+    <b class="g-share-v">10.43%</b>
+  </div><div class="g-share">
+    <span class="g-share-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 18l-9.5-9.5-5 5L1 6"></path><path d="M17 18h6v-6"></path></svg></span>
+    <span class="g-share-txt"><span class="g-share-l">Search IS lost to rank</span><span class="g-share-f">Generic 62.02% · Brand 67.38%</span></span>
+    <b class="g-share-v">62.99%</b>
+  </div><div class="g-share">
+    <span class="g-share-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.2 15.9A10 10 0 1 1 8 2.8"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg></span>
+    <span class="g-share-txt"><span class="g-share-l">Search IS lost to budget</span><span class="g-share-f">Generic 26.84% · Brand 25.40%</span></span>
+    <b class="g-share-v">26.58%</b>
+  </div></div>
+      <div class="conv-ribbon">
+        <span class="cr-line"></span>
+        <span class="cr-label">Lead conversions</span>
+        <span class="cr-line r"></span>
+      </div>
+      <div class="headline-grid" id="g-row-c"><div class="kpi src-ads">
+    <div class="k-top"><span class="k-label"><span class="k-ico v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="M22 4L12 14.01l-3-3"></path></svg></span>Google Ads conversions</span></div>
+    <div class="k-val">6.00</div>
+    <div class="k-foot">Primary actions · conv. rate 1.79%</div>
+  </div><div class="kpi src-ads">
+    <div class="k-top"><span class="k-label"><span class="k-ico v"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"></path></svg></span>Cost / conversion (Google Ads)</span></div>
+    <div class="k-val"><span class="cur">RM</span>123.30</div>
+    <div class="k-foot">Generic RM258.36 · Brand RM37.34</div>
+  </div><div class="kpi src-ga">
+    <div class="k-top"><span class="k-label"><span class="k-ico o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"></path></svg></span>GA4 conversions</span></div>
+    <div class="k-val">11</div>
+    <div class="k-foot">Unique users who fired a lead event</div>
+  </div><div class="kpi src-ga">
+    <div class="k-top"><span class="k-label"><span class="k-ico o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"></path></svg></span>Cost / conversion (GA4)</span></div>
+    <div class="k-val"><span class="cur">RM</span>67.25</div>
+    <div class="k-foot">RM739.77 over 11 conversions</div>
+  </div></div>
+    </section>
+
+    <!-- 2. performance trend: daily chart, table by month with a variance button -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-title label-dot"><span>Performance trend · <span class="g-win">30 Sep to 13 Oct 2026</span></span></span>
+        <span class="section-note">Pick any two metrics to compare day by day</span>
+      </div>
+      <div class="panel">
+        <div class="daily-controls">
+          <div class="metric-select">
+            <span class="ms-dot" id="g-ms-dot-a" style="background:var(--violet)"></span>
+            <select id="g-metric-a" aria-label="First metric"><option value="spend">Spend</option><option value="impr">Impressions</option><option value="clicks">Clicks</option><option value="cpc">Avg. CPC</option><option value="ctr">CTR</option><option value="adsConv">Google Ads conv.</option><option value="ga4Conv">GA4 conversions</option></select>
+          </div>
+          <span class="ms-vs">vs</span>
+          <div class="metric-select">
+            <span class="ms-dot" id="g-ms-dot-b" style="background:var(--ga)"></span>
+            <select id="g-metric-b" aria-label="Second metric"><option value="spend">Spend</option><option value="impr">Impressions</option><option value="clicks">Clicks</option><option value="cpc">Avg. CPC</option><option value="ctr">CTR</option><option value="adsConv">Google Ads conv.</option><option value="ga4Conv">GA4 conversions</option><option value="none">None</option></select>
+          </div>
+        </div>
+        <div class="chart" id="g-daily-chart" style="margin-top:10px"><svg viewBox="0 0 1080 300" role="img" aria-label="Spend versus Avg. CPC, daily"><line class="grid-line" x1="50" y1="266" x2="1034" y2="266"></line><text class="axis-label" x="42" y="269" text-anchor="end">0</text><text class="axis-label" x="1042" y="269" text-anchor="start">0</text><line class="grid-line" x1="50" y1="204" x2="1034" y2="204"></line><text class="axis-label" x="42" y="207" text-anchor="end">25</text><text class="axis-label" x="1042" y="207" text-anchor="start">2</text><line class="grid-line" x1="50" y1="142" x2="1034" y2="142"></line><text class="axis-label" x="42" y="145" text-anchor="end">50</text><text class="axis-label" x="1042" y="145" text-anchor="start">4</text><line class="grid-line" x1="50" y1="80" x2="1034" y2="80"></line><text class="axis-label" x="42" y="83" text-anchor="end">75</text><text class="axis-label" x="1042" y="83" text-anchor="start">6</text><line class="grid-line" x1="50" y1="18" x2="1034" y2="18"></line><text class="axis-label" x="42" y="21" text-anchor="end">100</text><text class="axis-label" x="1042" y="21" text-anchor="start">8</text><text class="axis-label" x="85.14285714285714" y="288" text-anchor="middle">30 Sep</text><text class="axis-label" x="155.42857142857144" y="288" text-anchor="middle">1 Oct</text><text class="axis-label" x="225.71428571428572" y="288" text-anchor="middle">2</text><text class="axis-label" x="296.00000000000006" y="288" text-anchor="middle">3</text><text class="axis-label" x="366.28571428571433" y="288" text-anchor="middle">4</text><text class="axis-label" x="436.5714285714286" y="288" text-anchor="middle">5</text><text class="axis-label" x="506.85714285714295" y="288" text-anchor="middle">6</text><text class="axis-label" x="577.1428571428571" y="288" text-anchor="middle">7</text><text class="axis-label" x="647.4285714285714" y="288" text-anchor="middle">8</text><text class="axis-label" x="717.7142857142858" y="288" text-anchor="middle">9</text><text class="axis-label" x="788" y="288" text-anchor="middle">10</text><text class="axis-label" x="858.2857142857143" y="288" text-anchor="middle">11</text><text class="axis-label" x="928.5714285714287" y="288" text-anchor="middle">12</text><text class="axis-label" x="998.8571428571429" y="288" text-anchor="middle">13</text><g class="col-hit" data-i="0">
+      <rect class="col-bg" x="49.99999999999999" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="68.14285714285714" y="41.31200000000001" width="34" height="224.688" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="1">
+      <rect class="col-bg" x="120.2857142857143" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="138.42857142857144" y="142.9672" width="34" height="123.03280000000001" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="2">
+      <rect class="col-bg" x="190.57142857142858" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="208.71428571428572" y="136.56879999999998" width="34" height="129.43120000000002" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="3">
+      <rect class="col-bg" x="260.8571428571429" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="279.00000000000006" y="141.05759999999998" width="34" height="124.94240000000002" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="4">
+      <rect class="col-bg" x="331.14285714285717" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="349.28571428571433" y="128.35999999999999" width="34" height="137.64000000000001" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="5">
+      <rect class="col-bg" x="401.42857142857144" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="419.5714285714286" y="137.18880000000001" width="34" height="128.81119999999999" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="6">
+      <rect class="col-bg" x="471.7142857142858" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="489.85714285714295" y="139.14800000000002" width="34" height="126.85199999999998" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="7">
+      <rect class="col-bg" x="542" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="560.1428571428571" y="135.82479999999998" width="34" height="130.17520000000002" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="8">
+      <rect class="col-bg" x="612.2857142857143" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="630.4285714285714" y="174.5128" width="34" height="91.4872" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="9">
+      <rect class="col-bg" x="682.5714285714287" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="700.7142857142858" y="149.2664" width="34" height="116.7336" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="10">
+      <rect class="col-bg" x="752.8571428571429" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="771" y="124.76400000000001" width="34" height="141.236" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="11">
+      <rect class="col-bg" x="823.1428571428572" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="841.2857142857143" y="156.012" width="34" height="109.988" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="12">
+      <rect class="col-bg" x="893.4285714285716" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="911.5714285714287" y="123.22640000000001" width="34" height="142.7736" rx="4" fill="var(--lav)"></rect>
+    </g><g class="col-hit" data-i="13">
+      <rect class="col-bg" x="963.7142857142858" y="18" width="70.28571428571429" height="248" fill="transparent"></rect>
+      <rect class="bar-rect" x="981.8571428571429" y="159.16160000000002" width="34" height="106.83839999999998" rx="4" fill="var(--lav)"></rect>
+    </g><polyline points="85.14285714285714,90.4625 155.42857142857144,180.56055555555554 225.71428571428572,208.21821428571428 296.00000000000006,195.01 366.28571428571433,191.19565217391306 436.5714285714286,198.91083333333333 506.85714285714295,205.01346153846154 577.1428571428571,200.9124 647.4285714285714,216.2786956521739 717.7142857142858,213.8867857142857 788,210.8296875 858.2857142857143,197.2575 928.5714285714287,199.9011111111111 998.8571428571429,207.93565217391304" fill="none" stroke="var(--ga)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"></polyline><circle class="dot-pt" cx="85.14285714285714" cy="90.4625" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="155.42857142857144" cy="180.56055555555554" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="225.71428571428572" cy="208.21821428571428" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="296.00000000000006" cy="195.01" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="366.28571428571433" cy="191.19565217391306" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="436.5714285714286" cy="198.91083333333333" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="506.85714285714295" cy="205.01346153846154" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="577.1428571428571" cy="200.9124" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="647.4285714285714" cy="216.2786956521739" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="717.7142857142858" cy="213.8867857142857" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="788" cy="210.8296875" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="858.2857142857143" cy="197.2575" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="928.5714285714287" cy="199.9011111111111" r="3" fill="var(--ga)" pointer-events="none"></circle><circle class="dot-pt" cx="998.8571428571429" cy="207.93565217391304" r="3" fill="var(--ga)" pointer-events="none"></circle></svg></div>
+        <div class="g-trend-wrap">
+          <div class="trend-table-head-row">
+            <span class="section-note">Month totals · variance compares per-day figures</span>
+            <button type="button" class="variance-toggle-btn" id="g-variance-toggle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <span id="g-variance-label">Show variance</span>
+            </button>
+          </div>
+          <div class="table-wrap" id="g-trend-host"><table class="trend-table g-trend variance-hidden" id="g-trend-table">
+    <thead><tr><th>Month</th><th>Spend (RM)</th><th>Impr.</th><th>Clicks</th><th>Avg. CPC (RM)</th><th>CTR</th><th class="g-sep">Google Ads conv.</th><th>Cost / Ads conv. (RM)</th><th class="g-sep">GA4 conversions</th><th>Cost / GA4 conv. (RM)</th></tr></thead>
+    <tbody><tr>
+      <td><span class="m-name">Sep 2026</span><span class="m-sub">30 Sep · 1 day</span></td>
+      <td><span class="cell-main">90.60</span></td><td><span class="cell-main">236</span></td><td><span class="cell-main">16</span></td><td><span class="cell-main">5.66</span></td><td><span class="cell-main">6.78%</span></td><td class="g-sep"><span class="cell-main">2.00</span></td><td><span class="cell-main">45.30</span></td><td class="g-sep"><span class="cell-main">1</span></td><td><span class="cell-main">90.60</span></td>
+    </tr><tr>
+      <td><span class="m-name">Oct 2026</span><span class="m-sub">1 to 13 Oct · 13 days</span></td>
+      <td><span class="cell-main">649.17</span><span class="delta down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M19 12l-7 7-7-7"></path></svg>-44.9%</span></td><td><span class="cell-main">7,795</span><span class="delta up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>+154.1%</span></td><td><span class="cell-main">319</span><span class="delta up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>+53.4%</span></td><td><span class="cell-main">2.04</span><span class="delta up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M19 12l-7 7-7-7"></path></svg>-64.1%</span></td><td><span class="cell-main">4.09%</span><span class="delta down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M19 12l-7 7-7-7"></path></svg>-2.7pt</span></td><td class="g-sep"><span class="cell-main">4.00</span><span class="delta down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M19 12l-7 7-7-7"></path></svg>-84.6%</span></td><td><span class="cell-main">162.29</span><span class="delta down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 19V5M5 12l7-7 7 7"></path></svg>+258.3%</span></td><td class="g-sep"><span class="cell-main">10</span><span class="delta down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M19 12l-7 7-7-7"></path></svg>-23.1%</span></td><td><span class="cell-main">64.92</span><span class="delta up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M19 12l-7 7-7-7"></path></svg>-28.3%</span></td>
+    </tr><tr class="total-row"><td>Total · 14 days</td><td>739.77</td><td>8,031</td><td>335</td><td>2.21</td><td>4.17%</td><td class="g-sep">6.00</td><td>123.30</td><td class="g-sep">11</td><td>67.25</td></tr></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. campaign breakdown -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-title label-dot"><span>Campaign breakdown · <span class="g-win">30 Sep to 13 Oct 2026</span></span></span>
+        <span class="section-note">Click a column to sort</span>
+      </div>
+      <div class="panel">
+        <div class="table-wrap g-table-wrap" id="g-camp-host"><table class="g-table"><thead>
+    <tr class="g-grp">
+      <th rowspan="2" class="sortable g-name-h" data-key="name" data-first="asc" tabindex="0" aria-sort="none" style="text-align:left">Campaign<span class="sort-ico">▲▼</span></th>
+      <th colspan="5">Delivery</th>
+      <th colspan="2" class="g-sep ads">Google Ads conversions</th>
+      <th colspan="2" class="g-sep ga">GA4 conversions</th>
+      <th colspan="3" class="g-sep sv">Search visibility</th>
+    </tr>
+    <tr class="g-sub"><th class="sortable active" data-key="spend" data-first="desc" tabindex="0" aria-sort="descending">Spend (RM)<span class="sort-ico">▼</span></th><th class="sortable" data-key="impr" data-first="desc" tabindex="0" aria-sort="none">Impr.<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="clicks" data-first="desc" tabindex="0" aria-sort="none">Clicks<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="cpc" data-first="desc" tabindex="0" aria-sort="none">Avg. CPC (RM)<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="ctr" data-first="desc" tabindex="0" aria-sort="none">CTR<span class="sort-ico">▲▼</span></th><th class="sortable g-sep" data-key="adsConv" data-first="desc" tabindex="0" aria-sort="none">Conv.<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="adsCpa" data-first="desc" tabindex="0" aria-sort="none">Cost / conv. (RM)<span class="sort-ico">▲▼</span></th><th class="sortable g-sep" data-key="ga4Users" data-first="desc" tabindex="0" aria-sort="none">Conv. (users)<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="ga4Cpa" data-first="desc" tabindex="0" aria-sort="none">Cost / conv. (RM)<span class="sort-ico">▲▼</span></th><th class="sortable g-sep" data-key="is" data-first="desc" tabindex="0" aria-sort="none">Impr. share<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="lostRank" data-first="desc" tabindex="0" aria-sort="none">Lost to rank<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="lostBudget" data-first="desc" tabindex="0" aria-sort="none">Lost to budget<span class="sort-ico">▲▼</span></th></tr>
+  </thead><tbody><tr>
+      <td class="perf-name-cell g-name-cell"><strong>Generic SEM</strong><span class="pnc-sub">ADEV | Generic SEM | Maximize Conversion | 300926 | RM1200/mo</span><span class="pnc-sub">Budget RM40/day · Eligible, limited by budget</span></td>
+      <td>602.84</td><td>7,016</td><td>215</td><td>2.80</td><td>3.06%</td><td class="g-sep">2.33</td><td>258.36</td><td class="g-sep">10</td><td>60.28</td><td class="g-sep g-sv">11.14%</td><td class="g-sv">62.02%</td><td class="g-sv">26.84%</td>
+    </tr><tr>
+      <td class="perf-name-cell g-name-cell"><strong>Brand SEM</strong><span class="pnc-sub">ADEV | Brand SEM | Maximize Conversion | 300926 | RM300/mo</span><span class="pnc-sub">Budget RM10/day · Eligible</span></td>
+      <td>136.93</td><td>1,015</td><td>120</td><td>1.14</td><td>11.82%</td><td class="g-sep">3.67</td><td>37.34</td><td class="g-sep">1</td><td>136.93</td><td class="g-sep g-sv">&lt; 10%</td><td class="g-sv">67.38%</td><td class="g-sv">25.40%</td>
+    </tr><tr class="total-row"><td>Total · account</td><td>739.77</td><td>8,031</td><td>335</td><td>2.21</td><td>4.17%</td><td class="g-sep">6.00</td><td>123.30</td><td class="g-sep">11</td><td>67.25</td><td class="g-sep g-sv">10.43%</td><td class="g-sv">62.99%</td><td class="g-sv">26.58%</td></tr></tbody></table></div>
+      </div>
+    </section>
+
+    <!-- 4. keyword performance -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-title label-dot"><span>Keyword performance · <span class="g-win">30 Sep to 13 Oct 2026</span></span></span>
+        <span class="section-note">Click a column to sort · ranked by cost, highest first</span>
+      </div>
+      <div class="panel">
+        <div class="tabs" id="g-kw-tabs"><button type="button" class="tab-btn active" data-tab="all">Overview<span class="tab-n">100</span></button><button type="button" class="tab-btn" data-tab="generic">Generic SEM<span class="tab-n">65</span></button><button type="button" class="tab-btn" data-tab="brand">Brand SEM<span class="tab-n">35</span></button></div>
+        <div class="g-kw-sum" id="g-kw-sum"><span><b>100</b> keywords</span>
+    <span><b>26</b> with clicks</span>
+    <span><b>26</b> with impressions, no clicks</span>
+    <span><b>48</b> with no impressions (<b>27</b> flagged low search volume)</span></div>
+        <div class="table-wrap" id="g-kw-host"><table class="g-kw">
+    <thead><tr><th class="sortable" data-key="kw" data-first="asc" tabindex="0" aria-sort="none" style="text-align:left">Keyword<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="camp" data-first="asc" tabindex="0" aria-sort="none" style="text-align:left">Campaign<span class="sort-ico">▲▼</span></th><th class="sortable active" data-key="cost" data-first="desc" tabindex="0" aria-sort="descending">Cost (RM)<span class="sort-ico">▼</span></th><th class="sortable" data-key="impr" data-first="desc" tabindex="0" aria-sort="none">Impr.<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="clicks" data-first="desc" tabindex="0" aria-sort="none">Clicks<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="ctr" data-first="desc" tabindex="0" aria-sort="none">CTR<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="cpc" data-first="desc" tabindex="0" aria-sort="none">Avg. CPC (RM)<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="conv" data-first="desc" tabindex="0" aria-sort="none">Conv.<span class="sort-ico">▲▼</span></th><th class="sortable" data-key="cpa" data-first="desc" tabindex="0" aria-sort="none">Cost / conv. (RM)<span class="sort-ico">▲▼</span></th></tr></thead>
+    <tbody><tr class="">
+      <td class="kw-cell">salon booking software</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>138.48</td>
+      <td>1,700</td>
+      <td>55</td>
+      <td>3.24%</td>
+      <td>2.52</td>
+      <td>1.33</td>
+      <td>103.86</td>
+    </tr><tr class="">
+      <td class="kw-cell">pos system for beauty salon in malaysia</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>106.00</td>
+      <td>1,253</td>
+      <td>39</td>
+      <td>3.11%</td>
+      <td>2.72</td>
+      <td>0.00</td>
+      <td>-</td>
+    </tr><tr class="">
+      <td class="kw-cell">bookit</td>
+      <td class="kw-camp"><span class="g-chip">Brand SEM</span></td>
+      <td>102.36</td>
+      <td>534</td>
+      <td>92</td>
+      <td>17.23%</td>
+      <td>1.11</td>
+      <td>3.67</td>
+      <td>27.92</td>
+    </tr><tr class="">
+      <td class="kw-cell">fresha alternative</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>79.02</td>
+      <td>1,031</td>
+      <td>30</td>
+      <td>2.91%</td>
+      <td>2.63</td>
+      <td>0.00</td>
+      <td>-</td>
+    </tr><tr class="">
+      <td class="kw-cell">booking systems for salons</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>77.95</td>
+      <td>1,301</td>
+      <td>29</td>
+      <td>2.23%</td>
+      <td>2.69</td>
+      <td>1.00</td>
+      <td>77.95</td>
+    </tr><tr class="">
+      <td class="kw-cell">beauty booking system</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>53.45</td>
+      <td>285</td>
+      <td>18</td>
+      <td>6.32%</td>
+      <td>2.97</td>
+      <td>0.00</td>
+      <td>-</td>
+    </tr><tr class="">
+      <td class="kw-cell">salon appointment software</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>28.64</td>
+      <td>275</td>
+      <td>10</td>
+      <td>3.64%</td>
+      <td>2.86</td>
+      <td>0.00</td>
+      <td>-</td>
+    </tr><tr class="">
+      <td class="kw-cell">salon pos system malaysia</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>28.36</td>
+      <td>568</td>
+      <td>12</td>
+      <td>2.11%</td>
+      <td>2.36</td>
+      <td>0.00</td>
+      <td>-</td>
+    </tr><tr class="">
+      <td class="kw-cell">beauty salon scheduling software</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>25.99</td>
+      <td>30</td>
+      <td>1</td>
+      <td>3.33%</td>
+      <td>25.99</td>
+      <td>0.00</td>
+      <td>-</td>
+    </tr><tr class="">
+      <td class="kw-cell">bookit booking system</td>
+      <td class="kw-camp"><span class="g-chip">Brand SEM</span></td>
+      <td>21.91</td>
+      <td>256</td>
+      <td>16</td>
+      <td>6.25%</td>
+      <td>1.37</td>
+      <td>0.00</td>
+      <td>-</td>
+    </tr><tr class="">
+      <td class="kw-cell">hair salon booking systems</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>18.15</td>
+      <td>56</td>
+      <td>3</td>
+      <td>5.36%</td>
+      <td>6.05</td>
+      <td>0.00</td>
+      <td>-</td>
+    </tr><tr class="">
+      <td class="kw-cell">tunai alternative</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>14.78</td>
+      <td>94</td>
+      <td>6</td>
+      <td>6.38%</td>
+      <td>2.46</td>
+      <td>0.00</td>
+      <td>-</td>
+    </tr><tr class="">
+      <td class="kw-cell">beauty scheduling app</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>7.09</td>
+      <td>29</td>
+      <td>2</td>
+      <td>6.90%</td>
+      <td>3.55</td>
+      <td>0.00</td>
+      <td>-</td>
+    </tr><tr class="">
+      <td class="kw-cell">best salon appointment software</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>6.25</td>
+      <td>52</td>
+      <td>2</td>
+      <td>3.85%</td>
+      <td>3.13</td>
+      <td>0.00</td>
+      <td>-</td>
+    </tr><tr class="">
+      <td class="kw-cell">beauty salon software</td>
+      <td class="kw-camp"><span class="g-chip">Generic SEM</span></td>
+      <td>5.57</td>
+      <td>39</td>
+      <td>1</td>
+      <td>2.56%</td>
+      <td>5.57</td>
+      <td>0.00</td>
+      <td>-</td>
+    </tr><tr class="total-row">
+      <td>Total · 100 keywords</td><td></td>
+      <td>739.77</td><td>8,031</td><td>335</td>
+      <td>4.17%</td><td>2.21</td><td>6.00</td><td>123.30</td>
+    </tr></tbody></table></div>
+        <div class="g-kw-more" id="g-kw-more"><button type="button" class="variance-toggle-btn" id="g-kw-toggle">Show all 100 keywords</button></div>
+      </div>
+    </section>
+
+    <!-- 5. conversion breakdown -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-title label-dot"><span>Conversion breakdown · <span class="g-win">30 Sep to 13 Oct 2026</span></span></span>
+        <span class="section-note">Every tracked event, Google Ads against GA4</span>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-head"><div><h3>Lead conversions</h3><p>The five events that count as a lead</p></div></div>
+          <div class="table-wrap" id="g-lead-host"><table class="g-evt"><thead><tr>
+    <th>Event</th>
+    <th><i class="g-dot ads"></i>Google Ads conv.</th>
+    <th><i class="g-dot ga"></i>GA4 conversions</th>
+  </tr></thead><tbody><tr class="">
+      <td class="perf-name-cell"><strong>Confirm email click</strong><span class="pnc-sub">confirm_email_click</span></td>
+      <td><div class="g-num-cell"><span>4.00</span><span class="g-bar ads"><i style="width:57.1%"></i></span></div></td>
+      <td><div class="g-num-cell"><span>7</span><span class="g-bar ga"><i style="width:100.0%"></i></span></div></td>
+    </tr><tr class="">
+      <td class="perf-name-cell"><strong>Contact us WhatsApp click</strong><span class="pnc-sub">contactus_whatsapp_button_click</span></td>
+      <td><div class="g-num-cell"><span>2.00</span><span class="g-bar ads"><i style="width:28.6%"></i></span></div></td>
+      <td><div class="g-num-cell"><span>2</span><span class="g-bar ga"><i style="width:28.6%"></i></span></div></td>
+    </tr><tr class="">
+      <td class="perf-name-cell"><strong>Demo booking completed</strong><span class="pnc-sub">demo_booking_completed</span></td>
+      <td><div class="g-num-cell"><span>0.00</span><span class="g-bar ads"><i style="width:0.0%"></i></span></div></td>
+      <td><div class="g-num-cell"><span>1</span><span class="g-bar ga"><i style="width:14.3%"></i></span></div></td>
+    </tr><tr class="">
+      <td class="perf-name-cell"><strong>Brochure WhatsApp click</strong><span class="pnc-sub">brochure_whatsapp_click</span></td>
+      <td><div class="g-num-cell"><span>0.00</span><span class="g-bar ads"><i style="width:0.0%"></i></span></div></td>
+      <td><div class="g-num-cell"><span>1</span><span class="g-bar ga"><i style="width:14.3%"></i></span></div></td>
+    </tr><tr class="is-zero">
+      <td class="perf-name-cell"><strong>Footer WhatsApp click</strong><span class="pnc-sub">footer_whatsapp_click</span></td>
+      <td><div class="g-num-cell"><span>0.00</span><span class="g-bar ads"><i style="width:0.0%"></i></span></div></td>
+      <td><div class="g-num-cell"><span>0</span><span class="g-bar ga"><i style="width:0.0%"></i></span></div></td>
+    </tr><tr class="total-row"><td>Total lead conversions</td><td>6.00</td><td>11</td></tr></tbody></table></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><div><h3>Supporting engagement events</h3><p>Tracked for context, not counted as leads</p></div></div>
+          <div class="table-wrap" id="g-eng-host"><table class="g-evt"><thead><tr>
+    <th>Event</th>
+    <th><i class="g-dot ads"></i>Google Ads all conv.</th>
+    <th><i class="g-dot ga"></i>GA4 users</th>
+  </tr></thead><tbody><tr class="">
+      <td class="perf-name-cell"><strong>Brochure page view</strong><span class="pnc-sub">brochure_pageview</span></td>
+      <td><div class="g-num-cell"><span>21.00</span></div></td>
+      <td><div class="g-num-cell"><span>31</span></div></td>
+    </tr><tr class="">
+      <td class="perf-name-cell"><strong>Home page view</strong><span class="pnc-sub">home_pageview</span></td>
+      <td><div class="g-num-cell"><span>397.00</span></div></td>
+      <td><div class="g-num-cell"><span>288</span></div></td>
+    </tr><tr class="">
+      <td class="perf-name-cell"><strong>Book demo page view</strong><span class="pnc-sub">bookdemo_pageview</span></td>
+      <td><div class="g-num-cell"><span>0.00</span></div></td>
+      <td><div class="g-num-cell"><span>2</span></div></td>
+    </tr><tr class="">
+      <td class="perf-name-cell"><strong>Contact us page view</strong><span class="pnc-sub">contactus_pageview</span></td>
+      <td><div class="g-num-cell"><span>9.00</span></div></td>
+      <td><div class="g-num-cell"><span>12</span></div></td>
+    </tr><tr class="">
+      <td class="perf-name-cell"><strong>Brochure video click</strong><span class="pnc-sub">brochure_video_click</span></td>
+      <td><div class="g-num-cell"><span>3.00</span></div></td>
+      <td><div class="g-num-cell"><span>6</span></div></td>
+    </tr></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. insights and recommendations -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-title label-dot">Insights &amp; recommendations · Google Ads</span>
+        <span class="section-note" id="g-ins-note">Based on the first 14 days of data</span>
+      </div>
+      <div class="insight-grid">
+        <div>
+          <div class="insight-col-label insights">
+            <span class="icl-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg></span>
+            <span>Insights</span>
+          </div>
+          <div id="g-insights-host">
+    <div class="insight-card is-insight">
+      <div class="insight-num">1</div>
+      <div class="insight-body">
+        <div class="insight-topic">Spend and traffic</div>
+        <div class="insight-text"><strong>RM739.77</strong> bought <strong>335</strong> clicks over 14 days, at an average CPC of RM2.21 and a 4.17% CTR.</div>
+      </div>
+    </div>
+    <div class="insight-card is-insight">
+      <div class="insight-num">2</div>
+      <div class="insight-body">
+        <div class="insight-topic">Conversions</div>
+        <div class="insight-text">GA4 recorded <strong>11</strong> conversions at RM67.25 each, against <strong>6.00</strong> Google Ads conversions at RM123.30 each.</div>
+      </div>
+    </div>
+    <div class="insight-card is-insight">
+      <div class="insight-num">3</div>
+      <div class="insight-body">
+        <div class="insight-topic">Brand vs Generic</div>
+        <div class="insight-text">Brand SEM delivered <strong>61%</strong> of Google Ads conversions on 19% of spend, at RM37.34 per conversion against RM258.36 for Generic SEM.</div>
+      </div>
+    </div>
+    <div class="insight-card is-insight">
+      <div class="insight-num">4</div>
+      <div class="insight-body">
+        <div class="insight-topic">Keywords</div>
+        <div class="insight-text"><strong>Three</strong> keywords produced all 6.00 Google Ads conversions, led by <strong>bookit</strong> (3.67) and <strong>salon booking software</strong> (1.33), while the five highest-cost keywords took 68% of spend.</div>
+      </div>
+    </div></div>
+        </div>
+        <div>
+          <div class="insight-col-label recs">
+            <span class="icl-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18h6M10 22h4M15 2a6 6 0 0 0-4 10.472V16h4v-3.528A6 6 0 0 0 15 2z"></path></svg></span>
+            <span>Recommendations</span>
+          </div>
+          <div id="g-recs-host">
+    <div class="insight-card is-rec">
+      <div class="insight-num">1</div>
+      <div class="insight-body">
+        <div class="insight-topic">Keyword spend</div>
+        <div class="insight-text">We'd recommend reviewing the keywords that spent without a Google Ads conversion, starting with <strong>pos system for beauty salon in malaysia</strong> (RM106.00) and <strong>fresha alternative</strong> (RM79.02), which together took 25% of spend.</div>
+      </div>
+    </div>
+    <div class="insight-card is-rec">
+      <div class="insight-num">2</div>
+      <div class="insight-body">
+        <div class="insight-topic">Low search volume</div>
+        <div class="insight-text">We'd recommend replacing the <strong>27</strong> keywords Google Ads flags as low search volume with higher-volume terms, as they cannot serve ads at their current volume.</div>
+      </div>
+    </div>
+    <div class="insight-card is-rec">
+      <div class="insight-num">3</div>
+      <div class="insight-body">
+        <div class="insight-topic">Ad rank</div>
+        <div class="insight-text">We'd recommend improving ad rank on <strong>Generic SEM</strong> before raising its budget, as 62.02% of its impressions were lost to rank against 26.84% to budget, a gap of 35.2 points.</div>
+      </div>
+    </div>
+    <div class="insight-card is-rec">
+      <div class="insight-num">4</div>
+      <div class="insight-body">
+        <div class="insight-topic">Early data</div>
+        <div class="insight-text">We'd recommend holding campaign comparisons for a few more weeks, as single-digit conversions and a 14-day sample can both swing the result.</div>
+      </div>
+    </div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. strategy note for the Google results -->
+    <section class="section" id="strategy-google">
+      <div class="section-head">
+        <span class="section-title label-dot">Strategy note · Google Ads</span>
+      </div>
+      <div class="panel">
+        
+        <div class="strategy-editor" id="strategy-editor-g" contenteditable="false"><div><font color="#352c6b"><b style="color: rgb(53, 44, 107);">4. WhatsApp fixed greeting templates for all website WhatsApp buttons - Follow up</b></font></div><div><font color="#352c6b"><b style="color: rgb(53, 44, 107);"><br></b></font></div><div><font color="#352c6b"><b style="color: rgb(53, 44, 107);">5. New column for Website WhatsApp lead tracking.<br><br>6. CRM access troubleshooting.</b></font></div></div><div class="strategy-hint">Prepared by AdElevate.</div>
+        
+      </div>
+    </section>
+
+    <!-- 8. internal only: how this section is measured (collapsed by default; removed from the client download) -->
+    
+
+  </div>
 
 </main>
 
 <footer class="wrap">
   <div class="f-brand">bookit<span class="b-dot"></span></div>
-  <div class="f-tag">Prepared by <em>AdElevate</em> for LaunchIt · data through 30 September 2026</div>
+  <div class="f-tag">Prepared by <em>AdElevate</em> for LaunchIt · Meta data through 30 September 2026 · Google Ads and GA4 data through 13 October 2026</div>
 </footer>
 
-<div class="tip" id="tip" style="opacity: 0; left: 1150px; top: 677px;"><div class="t-mth">Apr 2026</div>
-        <div class="t-row"><span class="t-k"><i style="background:var(--lav)"></i>Total leads</span><span class="t-v">198</span></div>
-        <div class="t-row"><span class="t-k"><i style="background:var(--violet)"></i>Subscribers</span><span class="t-v">46</span></div></div>
+<div class="tip" id="tip" style="opacity: 0; left: 1280px; top: 1135px;"><div class="t-mth">Sun, 11 Oct 2026</div>
+        <div class="t-row"><span class="t-k"><i style="background:#4285F4"></i>Spend</span><span class="t-v">RM44.35</span></div><div class="t-row"><span class="t-k"><i style="background:#E8710A"></i>Avg. CPC</span><span class="t-v">RM2.22</span></div></div>
 
 <script>
 /* =========================================================================
@@ -5676,25 +6444,34 @@ function renderRecommendations(){
 }
 
 /* =========================================================================
-   STRATEGY NOTE  (contenteditable rich text: bold, bullets, numbering)
+   STRATEGY NOTES  (contenteditable rich text: bold, bullets, numbering)
+   One note under the Meta results (default) and one under the Google results ('g').
    ========================================================================= */
-function strategyExec(cmd){
-  document.getElementById('strategy-editor').focus();
-  document.execCommand(cmd, false, null);
-  updateStrategyToolbarState();
+function strategyIds(which){
+  return which === 'g'
+    ? { ed: 'strategy-editor-g', b: 'stg-bold', ul: 'stg-ul', ol: 'stg-ol' }
+    : { ed: 'strategy-editor',   b: 'st-bold',  ul: 'st-ul',  ol: 'st-ol' };
 }
-function updateStrategyToolbarState(){
+function strategyExec(cmd, which){
+  document.getElementById(strategyIds(which).ed).focus();
+  document.execCommand(cmd, false, null);
+  updateStrategyToolbarState(which);
+}
+function updateStrategyToolbarState(which){
+  const ids = strategyIds(which);
   try {
-    $('#st-bold').classList.toggle('active', document.queryCommandState('bold'));
-    $('#st-ul').classList.toggle('active', document.queryCommandState('insertUnorderedList'));
-    $('#st-ol').classList.toggle('active', document.queryCommandState('insertOrderedList'));
+    $('#' + ids.b).classList.toggle('active', document.queryCommandState('bold'));
+    $('#' + ids.ul).classList.toggle('active', document.queryCommandState('insertUnorderedList'));
+    $('#' + ids.ol).classList.toggle('active', document.queryCommandState('insertOrderedList'));
   } catch(e){}
 }
 function wireStrategyEditor(){
-  const ed = $('#strategy-editor');
-  if (!ed) return;
-  ed.addEventListener('keyup', updateStrategyToolbarState);
-  ed.addEventListener('mouseup', updateStrategyToolbarState);
+  [[undefined, 'strategy-editor'], ['g', 'strategy-editor-g']].forEach(([which, id]) => {
+    const ed = document.getElementById(id);
+    if (!ed) return;
+    ed.addEventListener('keyup', () => updateStrategyToolbarState(which));
+    ed.addEventListener('mouseup', () => updateStrategyToolbarState(which));
+  });
 }
 
 /* =========================================================================
@@ -5734,19 +6511,39 @@ async function downloadForClient(){
       }
     }));
 
-    // Clone the live document so structural edits (toolbar removal, locking the note)
-    // use real DOM APIs and work correctly no matter what the note contains.
+    // Clone the live document so structural edits (locking the notes, dropping internal-only
+    // blocks, removing toolbars) use real DOM APIs and work correctly no matter what a note contains.
     const clone = document.documentElement.cloneNode(true);
 
-    const cloneEditor = clone.querySelector('#strategy-editor');
-    if (cloneEditor){
-      cloneEditor.setAttribute('contenteditable', 'false');
-      cloneEditor.removeAttribute('data-placeholder');
-    }
-    const cloneToolbar = clone.querySelector('.strategy-toolbar');
-    if (cloneToolbar) cloneToolbar.remove();
-    const cloneHint = clone.querySelector('.strategy-hint');
-    if (cloneHint) cloneHint.textContent = 'Prepared by AdElevate.';
+    // The client copy always opens on the Meta tab, whichever tab is showing here.
+    gApplyView('meta', clone);
+
+    // Internal-only blocks stay in the working file and never reach the client copy.
+    clone.querySelectorAll('.internal-only').forEach(el => el.remove());
+
+    // Two strategy notes (Meta, Google): lock the ones with content and drop the empty ones, so the
+    // client never sees a blank box. Each note kept (one per tab) carries the "Prepared by" line.
+    const keptNotes = [];
+    ['strategy-editor', 'strategy-editor-g'].forEach(id => {
+      const ed = clone.querySelector('#' + id);
+      if (!ed) return;
+      const hasContent = ed.textContent.trim().length > 0 || !!ed.querySelector('img');
+      if (hasContent){
+        ed.setAttribute('contenteditable', 'false');
+        ed.removeAttribute('data-placeholder');
+        keptNotes.push(ed);
+      } else {
+        const sec = ed.closest('section');
+        if (sec) sec.remove();
+      }
+    });
+    clone.querySelectorAll('.strategy-toolbar, .strategy-hint').forEach(el => el.remove());
+    keptNotes.forEach(ed => {
+      const prepared = document.createElement('div');
+      prepared.className = 'strategy-hint';
+      prepared.textContent = 'Prepared by AdElevate.';
+      ed.insertAdjacentElement('afterend', prepared);
+    });
     const cloneBar = clone.querySelector('.live-load-bar');
     if (cloneBar) cloneBar.remove();
 
@@ -5937,6 +6734,727 @@ async function loadLiveData(){
 }
 
 /* =========================================================================
+   GOOGLE SEM  (September 2026 report only)
+   Google Ads + GA4 for the search campaigns that went live on 30 Sep 2026.
+   Kept apart from the Meta data on purpose: different platform and a
+   different window (30 Sep to 13 Oct 2026, read on 14 Oct 2026).
+   Delivery, share, keyword and daily figures are copied from Google Ads as
+   it displays them. GA4 conversions are the distinct users who fired a lead
+   event, read from the GA4 property for the same window. Only ratios (cost per GA4
+   conversion, per-month, per-day and per-keyword CTR, CPC and cost per
+   conversion) and the shares quoted in the insights are calculated below.
+   ========================================================================= */
+const GOOGLE = {
+  window: { label: '30 Sep to 13 Oct 2026', days: 14, launch: '30 September', asOf: '14 October 2026' },
+  accounts: { ads: 'Launchit Sdn Bhd (bookit.)', ga4: 'Bookit' },
+  currency: 'MYR',
+  /* account totals as Google Ads displays them, plus the GA4 conversions (distinct users who fired a lead event) */
+  total: {
+    spend: 739.77, impr: 8031, clicks: 335, cpc: 2.21, ctr: 4.17,
+    is: 10.43, lostRank: 62.99, lostBudget: 26.58,
+    adsConv: 6.00, adsConvRate: 1.79, adsCpa: 123.30,
+    dailyBudget: 50, ga4Users: 11
+  },
+  /* GA4 conversions by campaign: Brand SEM 1; Generic SEM 10 (2 carry its campaign name, 8 carry none and are
+     counted under Generic SEM), so the campaigns add up to the account total of 11 */
+  campaigns: [
+    { key: 'generic', short: 'Generic SEM',
+      full: 'ADEV | Generic SEM | Maximize Conversion | 300926 | RM1200/mo',
+      budgetDay: 40, state: 'Eligible, limited by budget',
+      spend: 602.84, impr: 7016, clicks: 215, cpc: 2.80, ctr: 3.06,
+      is: 11.14, isText: null, lostRank: 62.02, lostBudget: 26.84,
+      adsConv: 2.33, adsConvRate: 1.09, adsCpa: 258.36, ga4Users: 10 },
+    { key: 'brand', short: 'Brand SEM',
+      full: 'ADEV | Brand SEM | Maximize Conversion | 300926 | RM300/mo',
+      budgetDay: 10, state: 'Eligible',
+      spend: 136.93, impr: 1015, clicks: 120, cpc: 1.14, ctr: 11.82,
+      is: null, isText: '< 10%', lostRank: 67.38, lostBudget: 25.40,
+      adsConv: 3.67, adsConvRate: 3.06, adsCpa: 37.34, ga4Users: 1 }
+  ],
+  /* ads = Google Ads "All conv." for the window; users = GA4 distinct users who fired the event */
+  events: [
+    { code: 'confirm_email_click',             name: 'Confirm email click',       lead: true,  ads: 4.00,   users: 7 },
+    { code: 'contactus_whatsapp_button_click', name: 'Contact us WhatsApp click', lead: true,  ads: 2.00,   users: 2 },
+    { code: 'demo_booking_completed',          name: 'Demo booking completed',    lead: true,  ads: 0,      users: 1 },
+    { code: 'brochure_whatsapp_click',         name: 'Brochure WhatsApp click',   lead: true,  ads: 0,      users: 1 },
+    { code: 'footer_whatsapp_click',           name: 'Footer WhatsApp click',     lead: true,  ads: 0,      users: 0 },
+    { code: 'brochure_pageview',               name: 'Brochure page view',        lead: false, ads: 21.00,  users: 31 },
+    { code: 'home_pageview',                   name: 'Home page view',            lead: false, ads: 397.00, users: 288 },
+    { code: 'bookdemo_pageview',               name: 'Book demo page view',       lead: false, ads: 0,      users: 2 },
+    { code: 'contactus_pageview',              name: 'Contact us page view',      lead: false, ads: 9.00,   users: 12 },
+    { code: 'brochure_video_click',            name: 'Brochure video click',      lead: false, ads: 3.00,   users: 6 }
+  ],
+  /* one row per day: Google Ads [cost, impressions, clicks, conversions] per campaign, then GA4 conversions (distinct users) */
+  days: [
+    { date: '2026-09-30', gen: [81.95, 188, 11, 0], bra: [8.65, 48, 5, 2], ga4Users: 1 },
+    { date: '2026-10-01', gen: [39.64, 379, 12, 0], bra: [9.97, 22, 6, 0], ga4Users: 1 },
+    { date: '2026-10-02', gen: [41.58, 378, 18, 1], bra: [10.61, 93, 10, 0], ga4Users: 1 },
+    { date: '2026-10-03', gen: [41.89, 440, 16, 0], bra: [8.49, 123, 6, 0], ga4Users: 1 },
+    { date: '2026-10-04', gen: [43, 667, 15, 0], bra: [12.5, 101, 8, 0], ga4Users: 0 },
+    { date: '2026-10-05', gen: [41.23, 446, 16, 0], bra: [10.71, 79, 8, 0], ga4Users: 2 },
+    { date: '2026-10-06', gen: [40.36, 518, 14, 0], bra: [10.79, 64, 12, 0], ga4Users: 0 },
+    { date: '2026-10-07', gen: [41.87, 605, 14, 0], bra: [10.62, 68, 11, 0], ga4Users: 0 },
+    { date: '2026-10-08', gen: [27.16, 689, 13, 0], bra: [9.73, 45, 10, 0], ga4Users: 0 },
+    { date: '2026-10-09', gen: [39.49, 415, 20, 1], bra: [7.58, 79, 8, 0], ga4Users: 2 },
+    { date: '2026-10-10', gen: [45.13, 643, 21, 0.3333], bra: [11.82, 59, 11, 0.6667], ga4Users: 1 },
+    { date: '2026-10-11', gen: [37, 489, 14, 0], bra: [7.35, 72, 6, 0], ga4Users: 2 },
+    { date: '2026-10-12', gen: [47.6, 611, 18, 0], bra: [9.97, 113, 9, 0], ga4Users: 0 },
+    { date: '2026-10-13', gen: [34.94, 548, 13, 0], bra: [8.14, 49, 10, 1], ga4Users: 0 }
+  ],
+  /* Google Ads keywords for the window: [keyword, campaign, impressions, clicks, cost, conversions, low search volume] */
+  keywords: [
+    ["bookit", 'brand', 534, 92, 102.36, 3.6667, 0],
+    ["bookit booking system", 'brand', 256, 16, 21.91, 0, 0],
+    ["bookit software", 'brand', 79, 5, 5.05, 0, 0],
+    ["Bookit malaysia", 'brand', 15, 3, 3.62, 0, 0],
+    ["launchit", 'brand', 50, 1, 0.73, 0, 0],
+    ["bookit system", 'brand', 31, 1, 0.32, 0, 0],
+    ["launchit Bookit", 'brand', 4, 1, 2, 0, 0],
+    ["Bookit app", 'brand', 10, 1, 0.94, 0, 0],
+    ["bookit reviews", 'brand', 0, 0, 0, 0, 0],
+    ["bookit com reviews", 'brand', 0, 0, 0, 0, 0],
+    ["Bookit", 'brand', 0, 0, 0, 0, 0],
+    ["bookit online", 'brand', 6, 0, 0, 0, 0],
+    ["b ookit", 'brand', 0, 0, 0, 0, 1],
+    ["bookit website", 'brand', 0, 0, 0, 0, 0],
+    ["bookit sign up", 'brand', 0, 0, 0, 0, 0],
+    ["Bookit pricing", 'brand', 11, 0, 0, 0, 0],
+    ["Bookit software", 'brand', 2, 0, 0, 0, 0],
+    ["Bookit reviews", 'brand', 0, 0, 0, 0, 0],
+    ["Bookit login", 'brand', 0, 0, 0, 0, 0],
+    ["Bookit salon software", 'brand', 0, 0, 0, 0, 1],
+    ["Bookit sign in", 'brand', 7, 0, 0, 0, 0],
+    ["Bookit sign up", 'brand', 0, 0, 0, 0, 0],
+    ["Bookit free trial", 'brand', 2, 0, 0, 0, 0],
+    ["Bookit price", 'brand', 2, 0, 0, 0, 0],
+    ["Bookit trial", 'brand', 0, 0, 0, 0, 1],
+    ["launchit malaysia", 'brand', 0, 0, 0, 0, 1],
+    ["Bookit spa", 'brand', 0, 0, 0, 0, 1],
+    ["Bookit nail salon", 'brand', 0, 0, 0, 0, 1],
+    ["Bookit demo", 'brand', 2, 0, 0, 0, 0],
+    ["Bookit salon", 'brand', 1, 0, 0, 0, 0],
+    ["Bookit customer service", 'brand', 2, 0, 0, 0, 0],
+    ["Bookit whatsapp", 'brand', 0, 0, 0, 0, 1],
+    ["Bookit contact", 'brand', 1, 0, 0, 0, 0],
+    ["Bookit app download", 'brand', 0, 0, 0, 0, 0],
+    ["Bookit download", 'brand', 0, 0, 0, 0, 0],
+    ["salon booking software", 'generic', 1700, 55, 138.48, 1.3333, 0],
+    ["pos system for beauty salon in malaysia", 'generic', 1253, 39, 106, 0, 0],
+    ["fresha alternative", 'generic', 1031, 30, 79.02, 0, 0],
+    ["booking systems for salons", 'generic', 1301, 29, 77.95, 1, 0],
+    ["beauty booking system", 'generic', 285, 18, 53.45, 0, 0],
+    ["salon pos system malaysia", 'generic', 568, 12, 28.36, 0, 0],
+    ["salon appointment software", 'generic', 275, 10, 28.64, 0, 0],
+    ["tunai alternative", 'generic', 94, 6, 14.78, 0, 0],
+    ["hair salon booking systems", 'generic', 56, 3, 18.15, 0, 0],
+    ["best salon appointment software", 'generic', 52, 2, 6.25, 0, 0],
+    ["schedul salon software", 'generic', 55, 2, 4.4, 0, 0],
+    ["spa appointment booking software", 'generic', 12, 2, 1.84, 0, 0],
+    ["beauty scheduling app", 'generic', 29, 2, 7.09, 0, 0],
+    ["beauty salon software", 'generic', 39, 1, 5.57, 0, 0],
+    ["spa appointment software", 'generic', 17, 1, 0.63, 0, 0],
+    ["online booking system for beauty salon", 'generic', 15, 1, 0.75, 0, 0],
+    ["beauty parlour management software", 'generic', 3, 1, 5.49, 0, 0],
+    ["beauty salon scheduling software", 'generic', 30, 1, 25.99, 0, 0],
+    ["salon appointment scheduling software", 'generic', 11, 0, 0, 0, 0],
+    ["salon online booking software", 'generic', 0, 0, 0, 0, 0],
+    ["online beauty booking system", 'generic', 0, 0, 0, 0, 0],
+    ["beauty salon booking software", 'generic', 1, 0, 0, 0, 0],
+    ["beauty salon management software", 'generic', 6, 0, 0, 0, 0],
+    ["software beauty salon", 'generic', 4, 0, 0, 0, 0],
+    ["hair salon appointment software", 'generic', 0, 0, 0, 0, 0],
+    ["beauty salon appointment software", 'generic', 3, 0, 0, 0, 0],
+    ["salon appointment booking software", 'generic', 4, 0, 0, 0, 0],
+    ["salon software malaysia", 'generic', 3, 0, 0, 0, 0],
+    ["nail salon appointment software", 'generic', 2, 0, 0, 0, 0],
+    ["online booking system for salon", 'generic', 64, 0, 0, 0, 0],
+    ["salon booking platform", 'generic', 0, 0, 0, 0, 0],
+    ["appointment booking app malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["beauty salon appointment scheduling software", 'generic', 0, 0, 0, 0, 0],
+    ["beauty salon scheduling app", 'generic', 5, 0, 0, 0, 0],
+    ["online appointment booking system malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["salon booking software malaysia", 'generic', 2, 0, 0, 0, 0],
+    ["salon management software malaysia", 'generic', 3, 0, 0, 0, 0],
+    ["beauty booking software", 'generic', 44, 0, 0, 0, 0],
+    ["booking system for beauty salon", 'generic', 0, 0, 0, 0, 0],
+    ["salon booking app malaysia", 'generic', 0, 0, 0, 0, 0],
+    ["beauty salon software malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["best salon appointment booking software", 'generic', 11, 0, 0, 0, 0],
+    ["best online booking system for beauty salon", 'generic', 33, 0, 0, 0, 0],
+    ["hair salon pos system malaysia", 'generic', 0, 0, 0, 0, 0],
+    ["lash tech booking software", 'generic', 5, 0, 0, 0, 0],
+    ["nail salon software malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["salon crm software malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["no show reduction software salon", 'generic', 0, 0, 0, 0, 1],
+    ["salon scheduling software malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["best salon software malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["whatsapp booking reminder software", 'generic', 0, 0, 0, 0, 1],
+    ["massage therapy booking software malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["hair salon booking software malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["spa booking software malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["pet grooming Booking software malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["salon appointment app malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["nail salon booking system malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["spa management software malaysia", 'generic', 0, 0, 0, 0, 0],
+    ["salon software with pos and booking", 'generic', 0, 0, 0, 0, 0],
+    ["pet grooming software malaysia", 'generic', 0, 0, 0, 0, 0],
+    ["barbershop software malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["barbershop booking system malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["facial therapist Booking app", 'generic', 0, 0, 0, 0, 1],
+    ["lash studio booking app malaysia", 'generic', 0, 0, 0, 0, 1],
+    ["salon pos software with payment", 'generic', 0, 0, 0, 0, 1]
+  ]
+};
+
+const GICONS = Object.assign({}, ICONS, {
+  down:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 18l-9.5-9.5-5 5L1 6"/><path d="M17 18h6v-6"/></svg>`,
+  pie:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.2 15.9A10 10 0 1 1 8 2.8"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>`,
+  search: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>`,
+  click:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3l14 8-6 2-2 6z"/></svg>`,
+  check:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>`,
+  chart:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>`
+});
+
+/* ---------- small helpers ---------- */
+function gSet(id, html){ const el = document.getElementById(id); if (el) el.innerHTML = html; }
+function gEsc(s){ return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function gRM(n){ return n == null ? '-' : 'RM' + fmtMoney2(n); }
+function gCur(n){ return n == null ? '-' : '<span class="cur">RM</span>' + fmtMoney2(n); }
+function gPct(n){ return n == null ? '-' : n.toFixed(2) + '%'; }
+function gConv(n){ return n == null ? '-' : n.toFixed(2); }
+function gCamp(key){ return GOOGLE.campaigns.find(c => c.key === key); }
+function gWord(n){ return ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'][n] || String(n); }
+function gKpi(c){
+  return `<div class="kpi ${c.src || ''}">
+    <div class="k-top"><span class="k-label"><span class="k-ico ${c.cls}">${GICONS[c.icon]}</span>${c.label}</span></div>
+    <div class="k-val">${c.val}</div>
+    <div class="k-foot">${c.foot}</div>
+  </div>`;
+}
+/* compact card for the secondary figures (search impression share) */
+function gShare(c){
+  return `<div class="g-share">
+    <span class="g-share-ico">${GICONS[c.icon]}</span>
+    <span class="g-share-txt"><span class="g-share-l">${c.label}</span><span class="g-share-f">${c.foot}</span></span>
+    <b class="g-share-v">${c.val}</b>
+  </div>`;
+}
+
+/* ---------- sorting helpers shared by every sortable Google table ---------- */
+function gCmp(a, b, dir){
+  const an = a == null || (typeof a === 'number' && isNaN(a));
+  const bn = b == null || (typeof b === 'number' && isNaN(b));
+  if (an && bn) return 0;
+  if (an) return 1;               // empty values always sink to the bottom
+  if (bn) return -1;
+  const r = typeof a === 'string' ? a.localeCompare(b, undefined, { sensitivity: 'base' }) : a - b;
+  return dir === 'asc' ? r : -r;
+}
+function gSortTh(c, st, cls, attrs){
+  const active = c.key === st.key;
+  const arrow = active ? (st.dir === 'asc' ? '▲' : '▼') : '▲▼';
+  const aria = active ? (st.dir === 'asc' ? 'ascending' : 'descending') : 'none';
+  const style = c.align ? ` style="text-align:${c.align}"` : '';
+  return `<th${attrs ? ' ' + attrs : ''} class="sortable${active ? ' active' : ''}${cls || ''}" data-key="${c.key}" data-first="${c.first || 'desc'}" tabindex="0" aria-sort="${aria}"${style}>${c.h}<span class="sort-ico">${arrow}</span></th>`;
+}
+function gWireSort(host, st, redraw){
+  if (!host) return;
+  host.querySelectorAll('th.sortable').forEach(th => {
+    const go = viaKey => {
+      const k = th.dataset.key;
+      if (st.key === k) st.dir = st.dir === 'asc' ? 'desc' : 'asc';
+      else { st.key = k; st.dir = th.dataset.first === 'asc' ? 'asc' : 'desc'; }
+      redraw();
+      if (viaKey){ const again = host.querySelector('th[data-key="' + k + '"]'); if (again) again.focus(); }
+    };
+    th.onclick = () => go(false);
+    th.onkeydown = e => { if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(true); } };
+  });
+}
+
+/* ---------- derived values (idempotent: safe to run on every render) ---------- */
+const G_MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const G_DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+function gPrep(){
+  const G = GOOGLE, T = G.total;
+  const leads = G.events.filter(e => e.lead);
+  G.leadAds = leads.reduce((s, e) => s + e.ads, 0);
+  /* cost per GA4 conversion = Google Ads spend over distinct users (account and campaign level) */
+  T.ga4Cpa = T.ga4Users ? T.spend / T.ga4Users : null;
+  G.campaigns.forEach(c => { c.ga4Cpa = c.ga4Users ? c.spend / c.ga4Users : null; });
+  G.kw = G.keywords.map(a => ({ kw: a[0], camp: a[1], impr: a[2], clicks: a[3], cost: a[4], conv: a[5], low: !!a[6] }));
+  G.daily = G.days.map(r => {
+    const dt = new Date(r.date + 'T00:00:00Z');
+    const spend = Math.round((r.gen[0] + r.bra[0]) * 100) / 100;
+    const impr = r.gen[1] + r.bra[1], clicks = r.gen[2] + r.bra[2];
+    return {
+      date: r.date, dow: G_DOW[dt.getUTCDay()], day: dt.getUTCDate(), mon: G_MON[dt.getUTCMonth()], year: dt.getUTCFullYear(),
+      spend: spend, impr: impr, clicks: clicks,
+      cpc: clicks ? spend / clicks : 0,
+      ctr: impr ? clicks / impr * 100 : 0,
+      adsConv: Math.round((r.gen[3] + r.bra[3]) * 10000) / 10000,
+      ga4Users: r.ga4Users
+    };
+  });
+  /* month rows for the Performance trend table: sums of the days, ratios recalculated from those sums.
+     No user appears on two days (the daily users add up to the 11 distinct users), so summing them is exact. */
+  G.months = [];
+  G.daily.forEach(r => {
+    const key = r.year + '-' + String(G_MON.indexOf(r.mon) + 1).padStart(2, '0');
+    let m = G.months.find(x => x.key === key);
+    if (!m){
+      m = { key: key, label: r.mon + ' ' + r.year, mon: r.mon, first: r.day, last: r.day, days: 0, spend: 0, impr: 0, clicks: 0, adsConv: 0, ga4Users: 0 };
+      G.months.push(m);
+    }
+    m.days++; m.last = r.day;
+    m.spend += r.spend; m.impr += r.impr; m.clicks += r.clicks; m.adsConv += r.adsConv; m.ga4Users += r.ga4Users;
+  });
+  G.months.forEach(m => {
+    m.spend = Math.round(m.spend * 100) / 100;
+    m.adsConv = Math.round(m.adsConv * 10000) / 10000;
+    m.cpc = m.clicks ? m.spend / m.clicks : 0;
+    m.ctr = m.impr ? m.clicks / m.impr * 100 : 0;
+    m.adsCpa = m.adsConv ? m.spend / m.adsConv : null;
+    m.ga4Cpa = m.ga4Users ? m.spend / m.ga4Users : null;
+    m.range = m.first === m.last ? `${m.first} ${m.mon}` : `${m.first} to ${m.last} ${m.mon}`;
+  });
+}
+
+/* ---------- breaker, source banner ---------- */
+function gRenderBreaker(){
+  const G = GOOGLE, W = G.window;
+  document.querySelectorAll('#google-zone .g-win').forEach(el => { el.textContent = W.label; });
+  gSet('g-window-chip', `${W.label} · ${W.days} days`);
+  gSet('g-period-label', W.label);
+  gSet('g-period-days', `${W.days} days`);
+  gSet('g-source-banner', `
+    <span class="pill gads"><span class="d"></span>Google Ads · ${G.accounts.ads}</span>
+    <span class="pill ga4"><span class="d"></span>GA4 · ${G.accounts.ga4} property</span>
+    <span>Currency <strong>${G.currency}</strong></span>
+    <span class="as-of">Google Ads and GA4 data as of ${W.asOf}</span>`);
+  gSet('g-ins-note', `Based on the first ${W.days} days of data`);
+}
+
+/* ---------- performance overview: delivery, impression share as a quiet secondary row, then lead conversions (Google Ads and GA4) ---------- */
+function gRenderOverview(){
+  const G = GOOGLE, T = G.total, W = G.window, gen = gCamp('generic'), bra = gCamp('brand');
+  const both = f => `Generic ${f(gen)} · Brand ${f(bra)}`;
+  const isTxt = c => c.isText ? gEsc(c.isText) : gPct(c.is);
+  const delivery = [
+    { icon: 'coin',   cls: 'v', label: 'Spend',       val: gCur(T.spend),    foot: `${gRM(T.spend / W.days)}/day · budget RM${T.dailyBudget}/day` },
+    { icon: 'eye',    cls: 'v', label: 'Impressions', val: fmtInt(T.impr),   foot: both(c => fmtInt(c.impr)) },
+    { icon: 'click',  cls: 'v', label: 'Clicks',      val: fmtInt(T.clicks), foot: both(c => fmtInt(c.clicks)) },
+    { icon: 'coin',   cls: 'v', label: 'Avg. CPC',    val: gCur(T.cpc),      foot: both(c => gRM(c.cpc)) },
+    { icon: 'target', cls: 'v', label: 'CTR',         val: gPct(T.ctr),      foot: both(c => gPct(c.ctr)) }
+  ];
+  const share = [
+    { icon: 'search', label: 'Search impression share',  val: gPct(T.is),         foot: `Generic ${isTxt(gen)} · Brand ${isTxt(bra)}` },
+    { icon: 'down',   label: 'Search IS lost to rank',   val: gPct(T.lostRank),   foot: both(c => gPct(c.lostRank)) },
+    { icon: 'pie',    label: 'Search IS lost to budget', val: gPct(T.lostBudget), foot: both(c => gPct(c.lostBudget)) }
+  ];
+  const conv = [
+    { icon: 'check',  cls: 'v', src: 'src-ads', label: 'Google Ads conversions',         val: gConv(T.adsConv),   foot: `Primary actions · conv. rate ${gPct(T.adsConvRate)}` },
+    { icon: 'coin',   cls: 'v', src: 'src-ads', label: 'Cost / conversion (Google Ads)', val: gCur(T.adsCpa),     foot: both(c => gRM(c.adsCpa)) },
+    { icon: 'chart',  cls: 'o', src: 'src-ga',  label: 'GA4 conversions',                val: fmtInt(T.ga4Users), foot: 'Unique users who fired a lead event' },
+    { icon: 'coin',   cls: 'o', src: 'src-ga',  label: 'Cost / conversion (GA4)',        val: gCur(T.ga4Cpa),     foot: `${gRM(T.spend)} over ${fmtInt(T.ga4Users)} conversions` }
+  ];
+  gSet('g-row-a', delivery.map(gKpi).join(''));
+  gSet('g-sis', share.map(gShare).join(''));
+  gSet('g-row-c', conv.map(gKpi).join(''));
+}
+
+/* ---------- performance trend: a daily chart (any metric against any metric) above a table by month, like the Meta report ---------- */
+const G_METRICS = {
+  spend:    { label: 'Spend',            fmt: 'money', get: d => d.spend },
+  impr:     { label: 'Impressions',      fmt: 'int',   get: d => d.impr },
+  clicks:   { label: 'Clicks',           fmt: 'int',   get: d => d.clicks },
+  cpc:      { label: 'Avg. CPC',         fmt: 'money', get: d => d.cpc },
+  ctr:      { label: 'CTR',              fmt: 'pct',   get: d => d.ctr },
+  adsConv:  { label: 'Google Ads conv.', fmt: 'dec2',  get: d => d.adsConv },
+  ga4Conv:  { label: 'GA4 conversions',  fmt: 'int',   get: d => d.ga4Users }
+};
+const G_DCW = 1080, G_DCH = 300, G_PAD_FULL = { t: 18, r: 46, b: 34, l: 50 }, G_PAD_SOLO = { t: 18, r: 24, b: 34, l: 50 };
+const G_BLUE = '#4285F4', G_ORANGE = '#E8710A';
+
+/* top of the axis: four equal steps, whole numbers for counts */
+function gAxisMax(v, isInt){
+  if (!(v > 0)) return isInt ? 4 : 1;
+  for (let k = -3; k <= 7; k++){
+    for (const m of [1, 2, 2.5, 5]){
+      const s = m * Math.pow(10, k);
+      if (isInt && (s < 1 || Math.abs(s - Math.round(s)) > 1e-9)) continue;
+      if (4 * s >= v - 1e-9) return 4 * s;
+    }
+  }
+  return v;
+}
+function gAxisLabel(v, fmt){
+  const big = v >= 1000;
+  const n = parseFloat((big ? v / 1000 : v).toFixed(2));
+  return String(n) + (big ? 'k' : '') + (fmt === 'pct' ? '%' : '');
+}
+
+function gDrawDaily(){
+  const selA = document.getElementById('g-metric-a'), selB = document.getElementById('g-metric-b');
+  const host = document.getElementById('g-daily-chart');
+  if (!selA || !selB || !host) return;
+  const keyA = selA.value, keyB = selB.value, hasB = keyB !== 'none' && !!G_METRICS[keyB];
+  const A = G_METRICS[keyA] || G_METRICS.spend, B = hasB ? G_METRICS[keyB] : null;
+  const d = GOOGLE.daily, P = hasB ? G_PAD_FULL : G_PAD_SOLO;
+  const iw = G_DCW - P.l - P.r, ih = G_DCH - P.t - P.b;
+  const maxA = gAxisMax(Math.max(...d.map(A.get)), A.fmt === 'int');
+  const maxB = hasB ? gAxisMax(Math.max(...d.map(B.get)), B.fmt === 'int') : 0;
+  const n = d.length, slot = iw / n, bw = Math.min(34, slot * 0.5);
+  const x = i => P.l + slot * i + slot / 2;
+  const yA = v => P.t + ih - (v / maxA) * ih;
+  const yB = v => P.t + ih - (v / maxB) * ih;
+
+  let g = '';
+  for (let t = 0; t <= 4; t++){
+    const yy = P.t + ih - (ih * t / 4);
+    g += `<line class="grid-line" x1="${P.l}" y1="${yy}" x2="${G_DCW - P.r}" y2="${yy}"/>`;
+    g += `<text class="axis-label" x="${P.l - 8}" y="${yy + 3}" text-anchor="end">${gAxisLabel(maxA * t / 4, A.fmt)}</text>`;
+    if (hasB) g += `<text class="axis-label" x="${G_DCW - P.r + 8}" y="${yy + 3}" text-anchor="start">${gAxisLabel(maxB * t / 4, B.fmt)}</text>`;
+  }
+  d.forEach((r, i) => {
+    const lbl = (i === 0 || r.day === 1) ? `${r.day} ${r.mon}` : String(r.day);
+    g += `<text class="axis-label" x="${x(i)}" y="${G_DCH - 12}" text-anchor="middle">${lbl}</text>`;
+  });
+  d.forEach((r, i) => {
+    const top = yA(A.get(r));
+    g += `<g class="col-hit" data-i="${i}">
+      <rect class="col-bg" x="${x(i) - slot / 2}" y="${P.t}" width="${slot}" height="${ih}" fill="transparent"/>
+      <rect class="bar-rect" x="${x(i) - bw / 2}" y="${top}" width="${bw}" height="${P.t + ih - top}" rx="4" fill="var(--lav)"/>
+    </g>`;
+  });
+  if (hasB){
+    const pts = d.map((r, i) => `${x(i)},${yB(B.get(r))}`).join(' ');
+    g += `<polyline points="${pts}" fill="none" stroke="var(--ga)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" pointer-events="none"/>`;
+    d.forEach((r, i) => { g += `<circle class="dot-pt" cx="${x(i)}" cy="${yB(B.get(r))}" r="3" fill="var(--ga)" pointer-events="none"/>`; });
+  }
+  const aria = hasB ? `${A.label} versus ${B.label}, daily` : `${A.label}, daily`;
+  host.innerHTML = `<svg viewBox="0 0 ${G_DCW} ${G_DCH}" role="img" aria-label="${aria}">${g}</svg>`;
+  host.querySelectorAll('.col-hit').forEach(el => {
+    el.onmousemove = e => {
+      const r = d[+el.dataset.i];
+      let html = `<div class="t-mth">${r.dow}, ${r.day} ${r.mon} ${r.year}</div>
+        <div class="t-row"><span class="t-k"><i style="background:${G_BLUE}"></i>${A.label}</span><span class="t-v">${fmtByType(A.get(r), A.fmt)}</span></div>`;
+      if (hasB) html += `<div class="t-row"><span class="t-k"><i style="background:${G_ORANGE}"></i>${B.label}</span><span class="t-v">${fmtByType(B.get(r), B.fmt)}</span></div>`;
+      showTip(html, e);
+    };
+    el.onmouseleave = hideTip;
+  });
+  const dotB = document.getElementById('g-ms-dot-b');
+  if (dotB) dotB.style.background = hasB ? 'var(--ga)' : 'var(--faint)';
+}
+
+/* The table is by month, like the Meta report. Each row shows the month's totals; the variance chips compare a month
+   with the one before on a per-day basis, because both months here are part months (30 Sep, then 1 to 13 Oct) and raw
+   totals would not compare. Ratios (CPC, CTR, cost per conversion) are compared as they are. */
+const G_TREND_COLS = [
+  { key: 'spend',    h: 'Spend (RM)',            f: fmtMoney2, perDay: true },
+  { key: 'impr',     h: 'Impr.',                 f: fmtInt,    perDay: true },
+  { key: 'clicks',   h: 'Clicks',                f: fmtInt,    perDay: true },
+  { key: 'cpc',      h: 'Avg. CPC (RM)',         f: fmtMoney2, lowerIsBetter: true },
+  { key: 'ctr',      h: 'CTR',                   f: gPct,      points: true },
+  { key: 'adsConv',  h: 'Google Ads conv.',      f: gConv,     perDay: true, sep: true },
+  { key: 'adsCpa',   h: 'Cost / Ads conv. (RM)', f: fmtMoney2, lowerIsBetter: true },
+  { key: 'ga4Users', h: 'GA4 conversions',       f: fmtInt,    perDay: true, sep: true },
+  { key: 'ga4Cpa',   h: 'Cost / GA4 conv. (RM)', f: fmtMoney2, lowerIsBetter: true }
+];
+function gRenderTrendTable(){
+  const G = GOOGLE, T = G.total, rows = G.months;
+  const val = (m, c) => c.perDay ? m[c.key] / m.days : m[c.key];
+  const chip = (m, p, c) => (!p || m[c.key] == null || p[c.key] == null) ? ''
+    : deltaChip(val(m, c), val(p, c), { lowerIsBetter: !!c.lowerIsBetter, points: !!c.points });
+  const sep = c => c.sep ? ' class="g-sep"' : '';
+  const body = rows.map((m, i) => {
+    const p = i > 0 ? rows[i - 1] : null;
+    return `<tr>
+      <td><span class="m-name">${m.label}</span><span class="m-sub">${m.range} · ${m.days} ${m.days === 1 ? 'day' : 'days'}</span></td>
+      ${G_TREND_COLS.map(c => `<td${sep(c)}><span class="cell-main">${m[c.key] == null ? '-' : c.f(m[c.key])}</span>${chip(m, p, c)}</td>`).join('')}
+    </tr>`;
+  }).join('');
+  const total = `<tr class="total-row"><td>Total · ${G.window.days} days</td>${G_TREND_COLS.map(c => `<td${sep(c)}>${c.f(T[c.key])}</td>`).join('')}</tr>`;
+  gSet('g-trend-host', `<table class="trend-table g-trend variance-hidden" id="g-trend-table">
+    <thead><tr><th>Month</th>${G_TREND_COLS.map(c => `<th${sep(c)}>${c.h}</th>`).join('')}</tr></thead>
+    <tbody>${body}${total}</tbody></table>`);
+
+  /* variance button, same behaviour as the Meta trend table; the table is rebuilt hidden, so reset the button with it */
+  const btn = document.getElementById('g-variance-toggle'), tbl = document.getElementById('g-trend-table'), lbl = document.getElementById('g-variance-label');
+  if (btn && tbl){
+    btn.classList.remove('active');
+    if (lbl) lbl.textContent = 'Show variance';
+    btn.onclick = () => {
+      const showing = tbl.classList.toggle('variance-hidden') === false;
+      btn.classList.toggle('active', showing);
+      if (lbl) lbl.textContent = showing ? 'Hide variance' : 'Show variance';
+    };
+  }
+}
+
+function gRenderTrend(){
+  const selA = document.getElementById('g-metric-a'), selB = document.getElementById('g-metric-b');
+  if (selA && selB){
+    const opts = Object.keys(G_METRICS).map(k => `<option value="${k}">${G_METRICS[k].label}</option>`).join('');
+    selA.innerHTML = opts;
+    selB.innerHTML = opts + '<option value="none">None</option>';
+    selA.value = 'spend';
+    selB.value = 'ga4Conv';
+    selA.onchange = gDrawDaily;
+    selB.onchange = gDrawDaily;
+  }
+  gDrawDaily();
+  gRenderTrendTable();
+}
+
+/* ---------- campaign breakdown (sortable; the total row stays pinned at the bottom) ---------- */
+let gCampSort = { key: 'spend', dir: 'desc' };
+const G_CAMP_COLS = [
+  { key: 'spend',      h: 'Spend (RM)',        f: fmtMoney2 },
+  { key: 'impr',       h: 'Impr.',             f: fmtInt },
+  { key: 'clicks',     h: 'Clicks',            f: fmtInt },
+  { key: 'cpc',        h: 'Avg. CPC (RM)',     f: fmtMoney2 },
+  { key: 'ctr',        h: 'CTR',               f: gPct },
+  { key: 'adsConv',    h: 'Conv.',             f: gConv,     sep: true },
+  { key: 'adsCpa',     h: 'Cost / conv. (RM)', f: fmtMoney2 },
+  { key: 'ga4Users',   h: 'Conv. (users)',     f: fmtInt,    sep: true },
+  { key: 'ga4Cpa',     h: 'Cost / conv. (RM)', f: fmtMoney2 },
+  { key: 'is',         h: 'Impr. share',       f: gPct,      sep: true, sv: true },
+  { key: 'lostRank',   h: 'Lost to rank',      f: gPct,      sv: true },
+  { key: 'lostBudget', h: 'Lost to budget',    f: gPct,      sv: true }
+];
+function gCampCell(c, x){
+  let txt;
+  if (c.key === 'is') txt = x.isText ? gEsc(x.isText) : (x.is == null ? '-' : gPct(x.is));
+  else txt = x[c.key] == null ? '-' : c.f(x[c.key]);
+  const cls = [c.sep ? 'g-sep' : '', c.sv ? 'g-sv' : ''].filter(Boolean).join(' ');
+  return `<td${cls ? ` class="${cls}"` : ''}>${txt}</td>`;
+}
+function gRenderCampaigns(){
+  const G = GOOGLE, T = G.total, st = gCampSort;
+  const val = (c, k) => k === 'name' ? c.short : (k === 'is' ? (c.is == null ? 0 : c.is) : c[k]);
+  const rows = G.campaigns.slice().sort((a, b) => gCmp(val(a, st.key), val(b, st.key), st.dir) || (b.spend - a.spend));
+  const head = `<thead>
+    <tr class="g-grp">
+      ${gSortTh({ key: 'name', h: 'Campaign', first: 'asc', align: 'left' }, st, ' g-name-h', 'rowspan="2"')}
+      <th colspan="5">Delivery</th>
+      <th colspan="2" class="g-sep ads">Google Ads conversions</th>
+      <th colspan="2" class="g-sep ga">GA4 conversions</th>
+      <th colspan="3" class="g-sep sv">Search visibility</th>
+    </tr>
+    <tr class="g-sub">${G_CAMP_COLS.map(c => gSortTh(c, st, c.sep ? ' g-sep' : '')).join('')}</tr>
+  </thead>`;
+  const body = rows.map(c => `<tr>
+      <td class="perf-name-cell g-name-cell"><strong>${c.short}</strong><span class="pnc-sub">${c.full}</span><span class="pnc-sub">Budget RM${c.budgetDay}/day · ${c.state}</span></td>
+      ${G_CAMP_COLS.map(k => gCampCell(k, c)).join('')}
+    </tr>`).join('');
+  const total = `<tr class="total-row"><td>Total · account</td>${G_CAMP_COLS.map(k => gCampCell(k, T)).join('')}</tr>`;
+  gSet('g-camp-host', `<table class="g-table">${head}<tbody>${body}${total}</tbody></table>`);
+  gWireSort(document.getElementById('g-camp-host'), st, gRenderCampaigns);
+}
+
+/* ---------- keyword performance: Overview plus one tab per campaign, sortable, ranked by cost by default ---------- */
+let gKw = { tab: 'all', key: 'cost', dir: 'desc', expanded: false };
+const G_KW_LIMIT = 15;
+const G_KW_COLS = [
+  { key: 'kw',     h: 'Keyword',           first: 'asc', align: 'left' },
+  { key: 'camp',   h: 'Campaign',          first: 'asc', align: 'left', onlyAll: true },
+  { key: 'cost',   h: 'Cost (RM)' },
+  { key: 'impr',   h: 'Impr.' },
+  { key: 'clicks', h: 'Clicks' },
+  { key: 'ctr',    h: 'CTR' },
+  { key: 'cpc',    h: 'Avg. CPC (RM)' },
+  { key: 'conv',   h: 'Conv.' },
+  { key: 'cpa',    h: 'Cost / conv. (RM)' }
+];
+function gKwVal(r, k){
+  if (k === 'kw') return r.kw;
+  if (k === 'camp') return gCamp(r.camp).short;
+  if (k === 'ctr') return r.impr ? r.clicks / r.impr * 100 : null;
+  if (k === 'cpc') return r.clicks ? r.cost / r.clicks : null;
+  if (k === 'cpa') return r.conv ? r.cost / r.conv : null;
+  return r[k];
+}
+function gKwDefault(a, b){ return (b.cost - a.cost) || (b.impr - a.impr) || a.kw.toLowerCase().localeCompare(b.kw.toLowerCase()); }
+
+function gRenderKeywords(){
+  const G = GOOGLE, st = gKw, all = G.kw;
+  const tabs = [{ key: 'all', label: 'Overview', n: all.length }]
+    .concat(G.campaigns.map(c => ({ key: c.key, label: c.short, n: all.filter(k => k.camp === c.key).length })));
+  gSet('g-kw-tabs', tabs.map(t => `<button type="button" class="tab-btn${t.key === st.tab ? ' active' : ''}" data-tab="${t.key}">${t.label}<span class="tab-n">${t.n}</span></button>`).join(''));
+  const tabsHost = document.getElementById('g-kw-tabs');
+  if (tabsHost) tabsHost.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.onclick = () => { st.tab = btn.dataset.tab; st.key = 'cost'; st.dir = 'desc'; st.expanded = false; gRenderKeywords(); };
+  });
+
+  const inTab = all.filter(k => st.tab === 'all' || k.camp === st.tab);
+  const withClicks = inTab.filter(k => k.clicks > 0).length;
+  const imprOnly = inTab.filter(k => k.clicks === 0 && k.impr > 0).length;
+  const noImpr = inTab.filter(k => k.impr === 0).length;
+  const low = inTab.filter(k => k.low).length;
+  gSet('g-kw-sum', `<span><b>${inTab.length}</b> keywords</span>
+    <span><b>${withClicks}</b> with clicks</span>
+    <span><b>${imprOnly}</b> with impressions, no clicks</span>
+    <span><b>${noImpr}</b> with no impressions${low ? ` (<b>${low}</b> flagged low search volume)` : ''}</span>`);
+
+  const showCamp = st.tab === 'all';
+  const cols = G_KW_COLS.filter(c => showCamp || !c.onlyAll);
+  const sorted = inTab.slice().sort((a, b) => gCmp(gKwVal(a, st.key), gKwVal(b, st.key), st.dir) || gKwDefault(a, b));
+  const shown = st.expanded ? sorted : sorted.slice(0, G_KW_LIMIT);
+  const body = shown.map(r => `<tr class="${r.impr === 0 ? 'is-zero' : ''}">
+      <td class="kw-cell">${gEsc(r.kw)}${r.low ? '<span class="kw-low">Low search volume</span>' : ''}</td>
+      ${showCamp ? `<td class="kw-camp"><span class="g-chip">${gCamp(r.camp).short}</span></td>` : ''}
+      <td>${fmtMoney2(r.cost)}</td>
+      <td>${fmtInt(r.impr)}</td>
+      <td>${fmtInt(r.clicks)}</td>
+      <td>${r.impr ? gPct(r.clicks / r.impr * 100) : '-'}</td>
+      <td>${r.clicks ? fmtMoney2(r.cost / r.clicks) : '-'}</td>
+      <td>${gConv(r.conv)}</td>
+      <td>${r.conv ? fmtMoney2(r.cost / r.conv) : '-'}</td>
+    </tr>`).join('');
+  const sum = f => inTab.reduce((s, k) => s + k[f], 0);
+  const src = st.tab === 'all' ? G.total : gCamp(st.tab);     // ratios are the ones Google Ads shows for the account / campaign
+  const total = `<tr class="total-row">
+      <td>Total · ${inTab.length} keywords</td>${showCamp ? '<td></td>' : ''}
+      <td>${fmtMoney2(sum('cost'))}</td><td>${fmtInt(sum('impr'))}</td><td>${fmtInt(sum('clicks'))}</td>
+      <td>${gPct(src.ctr)}</td><td>${fmtMoney2(src.cpc)}</td><td>${gConv(sum('conv'))}</td><td>${fmtMoney2(src.adsCpa)}</td>
+    </tr>`;
+  gSet('g-kw-host', `<table class="g-kw">
+    <thead><tr>${cols.map(c => gSortTh(c, st)).join('')}</tr></thead>
+    <tbody>${body}${total}</tbody></table>`);
+  gWireSort(document.getElementById('g-kw-host'), st, gRenderKeywords);
+
+  gSet('g-kw-more', sorted.length > G_KW_LIMIT
+    ? `<button type="button" class="variance-toggle-btn" id="g-kw-toggle">${st.expanded ? 'Show top ' + G_KW_LIMIT + ' only' : 'Show all ' + sorted.length + ' keywords'}</button>` : '');
+  const tg = document.getElementById('g-kw-toggle');
+  if (tg) tg.onclick = () => { st.expanded = !st.expanded; gRenderKeywords(); };
+}
+
+/* ---------- conversion breakdown ---------- */
+function gEventTable(list, o){
+  const max = Math.max(1, ...list.map(e => Math.max(e.ads, e.users)));
+  const bar = (v, cls) => o.bars ? `<span class="g-bar ${cls}"><i style="width:${(v / max * 100).toFixed(1)}%"></i></span>` : '';
+  const head = `<thead><tr>
+    <th>Event</th>
+    <th><i class="g-dot ads"></i>${o.adsLabel}</th>
+    <th><i class="g-dot ga"></i>${o.gaLabel}</th>
+  </tr></thead>`;
+  const rows = list.map(e => `<tr class="${e.ads === 0 && e.users === 0 ? 'is-zero' : ''}">
+      <td class="perf-name-cell"><strong>${e.name}</strong><span class="pnc-sub">${e.code}</span></td>
+      <td><div class="g-num-cell"><span>${gConv(e.ads)}</span>${bar(e.ads, 'ads')}</div></td>
+      <td><div class="g-num-cell"><span>${fmtInt(e.users)}</span>${bar(e.users, 'ga')}</div></td>
+    </tr>`).join('');
+  const total = o.total ? `<tr class="total-row"><td>${o.total.label}</td><td>${gConv(o.total.ads)}</td><td>${fmtInt(o.total.users)}</td></tr>` : '';
+  return `<table class="g-evt">${head}<tbody>${rows}${total}</tbody></table>`;
+}
+function gRenderEvents(){
+  const G = GOOGLE;
+  gSet('g-lead-host', gEventTable(G.events.filter(e => e.lead), {
+    adsLabel: 'Google Ads conv.', gaLabel: 'GA4 conversions', bars: true,
+    total: { label: 'Total lead conversions', ads: G.leadAds, users: G.total.ga4Users }
+  }));
+  gSet('g-eng-host', gEventTable(G.events.filter(e => !e.lead), { adsLabel: 'Google Ads all conv.', gaLabel: 'GA4 users', bars: false, total: null }));
+}
+
+/* ---------- insights and recommendations (one sentence each, written from the numbers above) ---------- */
+function gRenderInsights(){
+  const G = GOOGLE, T = G.total, W = G.window, gen = gCamp('generic'), bra = gCamp('brand'), kws = G.kw;
+  const byCost = kws.slice().sort(gKwDefault);
+  const convKws = kws.filter(k => k.conv > 0).sort((a, b) => (b.conv - a.conv) || (b.cost - a.cost));
+  const covered = convKws.reduce((s, k) => s + k.conv, 0);
+  const coverTxt = Math.abs(covered - T.adsConv) < 0.01 ? `all ${gConv(T.adsConv)}` : `${gConv(covered)} of ${gConv(T.adsConv)}`;
+  const top5Share = Math.round(byCost.slice(0, 5).reduce((s, k) => s + k.cost, 0) / T.spend * 100);
+  const noConv = byCost.filter(k => k.conv === 0 && k.cost > 0);
+  const lowN = kws.filter(k => k.low).length;
+  const convShare = Math.round(bra.adsConv / T.adsConv * 100);
+  const spendShare = Math.round(bra.spend / T.spend * 100);
+  const q = k => `<strong>${gEsc(k.kw)}</strong>`;
+
+  const insights = [
+    { topic: 'Spend and traffic',
+      html: `<strong>${gRM(T.spend)}</strong> bought <strong>${fmtInt(T.clicks)}</strong> clicks over ${W.days} days, at an average CPC of ${gRM(T.cpc)} and a ${gPct(T.ctr)} CTR.` },
+    { topic: 'Conversions',
+      html: `GA4 recorded <strong>${fmtInt(T.ga4Users)}</strong> conversions at ${gRM(T.ga4Cpa)} each, against <strong>${gConv(T.adsConv)}</strong> Google Ads conversions at ${gRM(T.adsCpa)} each.` },
+    { topic: 'Brand vs Generic',
+      html: `${bra.short} delivered <strong>${convShare}%</strong> of Google Ads conversions on ${spendShare}% of spend, at ${gRM(bra.adsCpa)} per conversion against ${gRM(gen.adsCpa)} for ${gen.short}.` }
+  ];
+  if (convKws.length >= 2){
+    insights.push({ topic: 'Keywords',
+      html: `<strong>${gWord(convKws.length)}</strong> keywords produced ${coverTxt} Google Ads conversions, led by ${q(convKws[0])} (${gConv(convKws[0].conv)}) and ${q(convKws[1])} (${gConv(convKws[1].conv)}), while the five highest-cost keywords took ${top5Share}% of spend.` });
+  }
+  gSet('g-insights-host', insights.map((ins, i) => `
+    <div class="insight-card is-insight">
+      <div class="insight-num">${i + 1}</div>
+      <div class="insight-body">
+        <div class="insight-topic">${ins.topic}</div>
+        <div class="insight-text">${ins.html}</div>
+      </div>
+    </div>`).join(''));
+
+  const recs = [];
+  if (noConv.length >= 2){
+    const z = noConv[0].cost + noConv[1].cost;
+    recs.push({ topic: 'Keyword spend',
+      html: `We'd recommend reviewing the keywords that spent without a Google Ads conversion, starting with ${q(noConv[0])} (${gRM(noConv[0].cost)}) and ${q(noConv[1])} (${gRM(noConv[1].cost)}), which together took ${Math.round(z / T.spend * 100)}% of spend.` });
+  }
+  if (lowN){
+    recs.push({ topic: 'Low search volume',
+      html: `We'd recommend replacing the <strong>${lowN}</strong> keywords Google Ads flags as low search volume with higher-volume terms, as they cannot serve ads at their current volume.` });
+  }
+  recs.push(gen.lostRank >= gen.lostBudget
+    ? { topic: 'Ad rank',
+        html: `We'd recommend improving ad rank on <strong>${gen.short}</strong> before raising its budget, as ${gPct(gen.lostRank)} of its impressions were lost to rank against ${gPct(gen.lostBudget)} to budget, a gap of ${(gen.lostRank - gen.lostBudget).toFixed(1)} points.` }
+    : { topic: 'Daily budget',
+        html: `We'd recommend reviewing the daily budget on <strong>${gen.short}</strong> first, as ${gPct(gen.lostBudget)} of its impressions were lost to budget against ${gPct(gen.lostRank)} to rank, a gap of ${(gen.lostBudget - gen.lostRank).toFixed(1)} points.` });
+  recs.push({ topic: 'Early data',
+    html: `We'd recommend holding campaign comparisons for a few more weeks, as single-digit conversions and a ${W.days}-day sample can both swing the result.` });
+  gSet('g-recs-host', recs.map((r, i) => `
+    <div class="insight-card is-rec">
+      <div class="insight-num">${i + 1}</div>
+      <div class="insight-body">
+        <div class="insight-topic">${r.topic}</div>
+        <div class="insight-text">${r.html}</div>
+      </div>
+    </div>`).join(''));
+}
+
+/* ---------- header tabs: the Meta report (default) and the Google SEM report, one at a time ---------- */
+function gApplyView(v, root){
+  root = root || document;
+  const view = v === 'google' ? 'google' : 'meta';
+  const body = root.querySelector('body');
+  if (body) body.setAttribute('data-view', view);
+  root.querySelectorAll('.view-tab').forEach(b => {
+    const on = b.getAttribute('data-view') === view;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+  return view;
+}
+function gSwitchView(v){
+  const view = gApplyView(v);
+  try { history.replaceState(null, '', '#' + view); } catch(e){}
+  window.scrollTo(0, 0);
+}
+function gWireView(){
+  gApplyView(location.hash === '#google' ? 'google' : 'meta');
+  window.addEventListener('hashchange', () => gApplyView(location.hash === '#google' ? 'google' : 'meta'));
+}
+
+function renderGoogle(){
+  gPrep();
+  gRenderBreaker();
+  gRenderOverview();
+  gRenderTrend();
+  gRenderCampaigns();
+  gRenderKeywords();
+  gRenderEvents();
+  gRenderInsights();
+}
+
+/* =========================================================================
    BOOT
    ========================================================================= */
 (function init(){
@@ -5978,6 +7496,12 @@ async function loadLiveData(){
   renderInsights();
   renderRecommendations();
   wireStrategyEditor();
+
+  // header tabs: Meta report first, Google SEM report on click (or when the file is opened with #google)
+  try { gWireView(); } catch(e){ console.error('Header tabs failed', e); }
+
+  // Google SEM section (own data, own window; a failure here must never touch the Meta report)
+  try { renderGoogle(); } catch(e){ console.error('Google section failed to render', e); }
 })();
 </script>
 
